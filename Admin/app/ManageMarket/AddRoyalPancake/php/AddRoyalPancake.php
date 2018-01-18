@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -12,16 +12,6 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-
-$query_sql="SELECT MAX(IDRoyalPancake) FROM `royalpancake`";
-$result = $conn->query($query_sql);
-if ($result->num_rows <= 0) {
-  $idItems = 0;
-} else {
-  $row = $result->fetch_assoc();
-  $idItems = $row['IDRoyalPancake']+1;
-}
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -51,15 +41,13 @@ if ($result->num_rows <= 0) {
   <br/>
 
   <div class="container">
-    <form action="SubmitInsert.php" method="post" enctype="multipart/form-data">
+    <form action="SubmitInsertRP.php" method="post" enctype="multipart/form-data">
       <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <label for="name">Name</label> <input type="text" class="form-control" id="name" name="name" ><br/>
       </div>
       <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <label for="surname">Description</label> <input type="text" class="form-control" id="description" name="description"><br/>
       </div>
-
-
 
       <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -68,21 +56,20 @@ if ($result->num_rows <= 0) {
         </div>
       </div>
 
-
       <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
           <h3>Drink</h3>
-            <a href="" class = "btn btn-default btn-lg" role="button">Add</a>
+            <a href="AddDrinkInRP.php" class = "btn btn-default btn-lg" role="button">Add</a>
         </div>
       </div>
 
       <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
           <h3>Coffee</h3>
-          <a onclick="" href="#" class = "btn btn-default btn-lg" role="button">Add</a>
+          <a href="AddCoffeeInRP.php" class = "btn btn-default btn-lg" role="button">Add</a>
         </div>
       </div>
-
+    <form action="SubmitInsertRP.php" method="post" enctype="multipart/form-data">
       <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <h3>Choose seasonings</h3>
         <div class="form-check">
@@ -94,7 +81,7 @@ if ($result->num_rows <= 0) {
             while($row = $result->fetch_assoc()) {
               ?>
               <input class="form-check-input" type="checkbox" value="">
-              <label id="<?php echo $row['IDSeasoning']; ?>" class="form-check-label">
+              <label name="<?php echo $row['IDSeasoning']; ?>" id="<?php echo $row['IDSeasoning']; ?>" class="form-check-label">
                 <?php echo $row['Name']; ?>
               </label><br/>
               <?php
@@ -107,7 +94,7 @@ if ($result->num_rows <= 0) {
 
       <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
         <h3>Category</h3>
-        <select class="selectpicker" name="categoryitem" id="categoryitem">
+        <select class="selectpicker" name="categoryRP" id="categoryRP">
             <?php
             $query_sql="SELECT * FROM categoryroyalpancakes";
             $result = $conn->query($query_sql);
@@ -130,7 +117,7 @@ if ($result->num_rows <= 0) {
     </div>
 
       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-          <a onclick="Change()" href="#" class = "btn btn-default btn-lg" role="button">Back</a>
+          <a onclick="" href="#" class = "btn btn-default btn-lg" role="button">Back</a>
       </div>
       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
         <label for="submit">
@@ -142,9 +129,7 @@ if ($result->num_rows <= 0) {
 
 </div>
 <script type="text/javascript">
-  function Change() {
-    console.log(document.getElementById("categoryitem").value);
-  }
+
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>

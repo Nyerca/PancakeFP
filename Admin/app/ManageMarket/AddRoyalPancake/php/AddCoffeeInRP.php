@@ -26,7 +26,7 @@ if ($conn->connect_error) {
 <link rel="stylesheet" href="../css/AddRoyalPancake.css">
 </head>
 <body>
-  <span id="pancake" style="display:none;"></span>
+  <span id="coffee" style="display:none;"></span>
   <div class="container">
     <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -39,7 +39,7 @@ if ($conn->connect_error) {
     <br/>
     <br/>
 <?php
-$query_sql="SELECT * FROM item WHERE CategoryID=1";
+$query_sql="SELECT * FROM item WHERE CategoryID=3";
 $items = $conn->query($query_sql);
 if ($items->num_rows > 0) {
   while($row = $items->fetch_assoc()) {
@@ -61,12 +61,12 @@ $conn->close();
   function Selected(idItem) {
     $(".items").css("background-color", "#ffffff");
     $("#"+idItem).css("background-color", "red");
-    document.getElementById('pancake').innerHTML = idItem;
+    document.getElementById('coffee').innerHTML = idItem;
   }
 
-  function SubmitPancake() {
-    var pan = document.getElementById('pancake').innerHTML;
-    window.location = "SubmitPancakeInRP.php?pan="+pan;
+  function SubmitCoffee() {
+    var coffee = document.getElementById('coffee').innerHTML;
+    window.location = "SubmitCoffeeInRP.php?cof="+coffee;
   }
 </script>
 
@@ -77,7 +77,7 @@ $conn->close();
       <a onclick="#" href="#" class = "btn btn-default btn-lg" role="button">Back</a>
   </div>
   <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-    <a onclick="SubmitPancake()" class = "btn btn-default btn-lg" role="button">Add</a>
+    <a onclick="SubmitCoffee()" class = "btn btn-default btn-lg" role="button">Add</a>
   </div>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>

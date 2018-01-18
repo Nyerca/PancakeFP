@@ -46,11 +46,7 @@ $stmt->execute();
 
 $stmt->close();
 
-//This is a test for getting path of a photo from db and search locally the photo according to the path and load it
-// $query_sql="SELECT Photo FROM `item` WHERE IDItem='12'";
-// $result = $conn->query($query_sql);
-// $row = $result->fetch_assoc();
-// echo '<img src="' . htmlspecialchars($row['Photo']) . '"/>';
+
 $conn->close();
 header("Location: AddItem.php");
 ?>

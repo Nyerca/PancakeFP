@@ -92,7 +92,7 @@ if ($conn->connect_error) {
     </div>
 
       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-          <a onclick="Change()" href="#" class = "btn btn-default btn-lg" role="button">Back</a>
+          <a onclick="#" href="#" class = "btn btn-default btn-lg" role="button">Back</a>
       </div>
       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
         <label for="submit">
@@ -103,11 +103,7 @@ if ($conn->connect_error) {
   </div>
 
 </div>
-<script type="text/javascript">
-  function Change() {
-    console.log(document.getElementById("categoryitem").value);
-  }
-</script>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </body>
