@@ -1,0 +1,284 @@
+/* Header */ 
+#logo,#menu{
+	width: 40px;
+}
+#menu {
+	margin: -12px -10px -10px -10px;
+}
+#logo {
+	margin-left: 55%;
+	margin-top: 5px;
+}
+
+#menuPhone {
+	margin: -5px -10px -5px -10px;
+	float: left;
+}
+
+#signUp a, #signIn a{
+	font-size:80%;
+}
+
+#userImg {
+	width:30px;
+	float: left;
+}
+
+#user_name {
+	float: left;
+}
+#myNavbar {
+	width:50%;
+	float:left;
+}
+#navHead {
+	width: 70%;
+	float:left;
+}
+#cog {
+	border:none;
+	padding:0;
+	background-color:transparent;
+}
+
+/* Footer */ 
+footer {
+	font-size:100%;
+	background-color: #f2f2f2;
+    padding: 25px;
+
+}
+#studente{
+	padding-left: 5%;
+}
+#recensione{
+	padding-right: 10%;
+}
+#iconsSocials {
+	padding-left: 42%;
+}
+
+#facebook{
+	min-width: 30px;
+	width: 5%;
+	float:left;
+}
+
+#instagram {
+	min-width: 30px;
+	display: block;
+	width: 5%;
+	margin: 0 40% 0 20%;
+}
+
+/* Body */ 
+#bodyDiv {
+	padding-left:0;
+	padding-right:0;
+	background-color:#8cc3d1;
+}
+
+#bodyContent{
+	padding-left: 2%;
+	padding-right: 2%;
+}
+/*Review */
+#s1, #s2, #s3, #s4{
+	float: left;
+}
+
+#star1, #star2, #star3, #star4, #star5{
+	border:0;
+	background-color:transparent;
+}
+
+#stars {
+	display:none;
+}
+
+textarea {
+   resize: none;
+}
+
+/* registration */
+#loginForm {
+	margin: 10%;
+}
+
+#loginInsert {
+	background-color:lightgrey;
+}
+
+.row.display-flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+.row.display-flex > [class*='col-'] {
+  flex-grow: 1;
+}
+/* listino */
+#bannerTop {
+	width:100%;
+}
+
+
+/* userInformation */
+.modal {
+  text-align: center;
+  padding: 0!important;
+}
+
+.modal:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -4px; /* Adjusts for spacing */
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+#showEmail, #showUsername, #showTelephone, #modifyEmail, #modifyPassword, #modifyUsername, #modifyTelephone {
+	display:none;
+}
+
+#userPhoto{
+	width: 10%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media only screen and (min-width: 768px) {
+	/* Header */ 
+	#logo {
+		background-color:purple;
+		width:100%;
+		max-width: 60px;
+		margin-left: 0;
+	}
+	
+	#menu {
+		background-color:purple;
+		min-width:0;
+		width:0;
+	}
+	#user_name {
+		margin-left:10%;
+	}
+
+	#menuPhone {
+		display:none;
+	}
+	
+	#myNavbar {
+		width:70%;
+	}
+	
+	#navHead {
+		width: 10%;
+		float:left;
+	}
+
+	/* Footer */ 
+	#iconsSocials {
+		padding-left: 5%;
+	}
+	#facebook {
+		margin-right: 10%;
+	}
+	#studente, #recensione {
+		padding-left: 0;
+		padding-right: 0;
+	}
+	/* userInformation */
+	#userPhoto{
+		margin: 10% 0;
+		width: 30%;
+	}
+	
+	#showEmail, #showUsername, #showTelephone, #modifyEmail, #modifyPassword, #modifyUsername, #modifyTelephone {
+		display:block;
+	}
+	#usernameDiv, #emailDiv, #popupPassword, #telephoneDiv {
+		display:none;
+	}
+}
+
+@media only screen and (min-width: 1024px) {
+	
+	#logo {
+		background-color:pink;
+		width:100%;
+		max-width: 70px;
+	}
+	
+	#menuDesktopButtons {
+		font-size: 180%;
+	}
+}
+
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+
+  .carousel-inner img {
+      width: 100%; /* Set width to 100% */
+      margin: auto;
+      min-height:200px;
+	  max-height:500px;
+  }
+
+  /* Hide the carousel text when the screen is less than 600 pixels wide */
+  @media (max-width: 600px) {
+    .carousel-caption {
+      display: none; 
+    }
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+fieldset {
+	border: 1px solid black;
+	background-color:#c6d8f4;
+	margin-left: 20%;
+	margin-right: 20%;
+	border-radius:4px;
+	padding: 1% 0 2% 0;
+}	
+	
+legend {
+	width: 45%; 
+	border: 1px solid black;
+	border-radius: 4px; 
+	background-color: #ffffff;
+}

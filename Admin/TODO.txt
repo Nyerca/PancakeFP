@@ -1,0 +1,10 @@
+BUG: in manage staff when delete someone, the position are not refreshed
+-- try with ajax to get the new contents and newly load. SOLVED IT, to test.
+
+
+//TODO: implemet geolocalization (introducing also page for delivery man 
+which have to see the given orders and the map --just if 
+user choosed "geolocalize me" in order to and finish "orders") 
+
+//TODO: insert of RP with all needed things (seasoning for example) in order to
+complete the order view

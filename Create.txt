@@ -1,0 +1,218 @@
+create table Admin (
+     Email char(100) not null,
+     Password char(100) not null,
+     Username char(100) not null,
+     constraint IDAdmin primary key (Email));
+
+create table AdminNotification (
+     IDAdminNofitication char(100) not null,
+     Title char(100) not null,
+     Description char(100) not null,
+     Email char(100) not null,
+     constraint IDNotification primary key (IDAdminNofitication));
+
+create table CategoryItem (
+     CategoryName char(100) not null,
+     CategoryID int not null AUTO_INCREMENT,
+     constraint IDCategoryItem primary key (CategoryID));
+
+
+create table UnderCategoryItem (
+     UnderCategoryName char(100) not null,
+     UnderCategoryID int not null AUTO_INCREMENT,
+     constraint IDUnderCategoryItem primary key (UnderCategoryID));
+
+create table CategoryRoyalPancakes (
+     CategoryName char(100) not null,
+     CategoryID int not null AUTO_INCREMENT,
+     constraint IDCategoryIRoyalPancakes primary key (CategoryID));
+
+create table DeliveryMan (
+     Name char(100) not null,
+     Surname char(100) not null,
+     FiscalCode char(100) not null,
+     PhoneNumber char(100) not null,
+     Deleted char(100) not null,
+     constraint IDDeliveryMan primary key (FiscalCode));
+
+create table DeliveryMode (
+     IDDeliveryMode int not null AUTO_INCREMENT,
+     Address char(100),
+     CAP char(100),
+     Latitude char(100),
+     Longitude char(100),
+     constraint IDDeliveryMode1 primary key (IDDeliveryMode));
+
+create table Item (
+     Name char(100) not null,
+     Photo char(100) not null,
+     IDItem int not null AUTO_INCREMENT,
+     Description char(100) not null,
+     Price char(100) not null,
+     CategoryID int not null,
+     UnderCategoryID int null,
+     Deleted char(100) not null,
+     constraint IDItem primary key (IDItem));
+
+create table ItemInOrder (
+     IDItem int not null,
+     Email char(100) not null,
+     IDOrder char(100) not null,
+     Amount char(100) not null,
+     constraint IDR_6_Ord_1 primary key (IDItem, Email, IDOrder));
+
+create table ItemInRoyalPancake (
+     IDRoyalPancake int not null,
+     IDItem int not null,
+     constraint IDItemInRoyalPancake primary key (IDItem, IDRoyalPancake));
+
+create table OrderNotification (
+     IDNofitication char(100) not null,
+     Email char(100) not null,
+     IDOrder char(100) not null,
+     Title char(100) not null,
+     Description char(100) not null,
+     constraint IDNotification primary key (IDNofitication),
+     constraint FKR_3_ID unique (Email, IDOrder));
+
+create table OrderRoyalPancake (
+     Note char(100) not null,
+     Price char(100) not null,
+     Email char(100) not null,
+     IDOrder char(100) not null,
+     IDRoyalPancake int not null,
+     Amount char(100) not null,
+     constraint IDOrderRoyalPancake primary key (Note, Email, IDOrder, IDRoyalPancake));
+
+create table Orders (
+     Status char(100) not null,
+     Email char(100) not null,
+     IDOrder char(100) not null,
+     DateTime char(100),
+     TotalPrice char(100),
+     CardNumber char(100),
+     CardOwner char(100),
+     ExpireDate char(100),
+     FiscalCode char(100),
+     IDDeliveryMode int,
+     constraint IDOrder primary key (Email, IDOrder));
+
+create table Review (
+     Email char(100) not null,
+     IDReview char(100) not null,
+     Title char(100) not null,
+     Description char(100) not null,
+     Vote char(100) not null,
+     constraint IDReview primary key (Email, IDReview));
+
+create table RoyalPancake (
+     RoyalName char(100) not null,
+     IDRoyalPancake int not null AUTO_INCREMENT,
+     Photo char(100) not null,
+     Description char(100) not null,
+     CategoryID int not null,
+     Deleted char(100) not null,
+     constraint IDRoyalPancake primary key (IDRoyalPancake));
+
+create table Seasoning (
+     Name char(100) not null,
+     IDSeasoning int not null AUTO_INCREMENT,
+     Deleted char(100) not null,
+     constraint IDSeasoning primary key (IDSeasoning));
+
+create table SeasoningInRoyalPancake (
+     IDRoyalPancake int not null,
+     IDSeasoning int not null,
+     constraint IDSeasoningInRoyalPancake primary key (IDRoyalPancake, IDSeasoning));
+
+create table UserNotification (
+     IDUserNofitication char(100) not null,
+     Title char(100) not null,
+     Description char(100) not null,
+     Email char(100) not null,
+     constraint IDUserNotification primary key (IDUserNofitication));
+
+create table Users (
+     Email char(100) not null,
+     Password char(100) not null,
+     Username char(100) not null,
+     IsStudent char(100),
+     Photo char(100),
+     PhoneNumber char(100),
+     constraint IDUser primary key (Email));
+
+
+-- Constraints Section
+-- ___________________ 
+
+alter table AdminNotification add constraint FKR_9
+     foreign key (Email)
+     references Admin (Email);
+
+alter table Item add constraint FKR_4
+     foreign key (CategoryID)
+     references CategoryItem (CategoryID);
+
+alter table Item add constraint FKR_41
+     foreign key (UnderCategoryID)
+     references UnderCategoryItem (UnderCategoryID);
+
+alter table ItemInOrder add constraint FKR_6_Ord
+     foreign key (Email, IDOrder)
+     references Orders (Email, IDOrder);
+
+alter table ItemInOrder add constraint FKR_6_Ite
+     foreign key (IDItem)
+     references Item (IDItem);
+
+alter table ItemInRoyalPancake add constraint FKR_2_Ite
+     foreign key (IDItem)
+     references Item (IDItem);
+
+alter table ItemInRoyalPancake add constraint FKR_2_Roy
+     foreign key (IDRoyalPancake)
+     references RoyalPancake (IDRoyalPancake);
+
+alter table OrderNotification add constraint FKR_3_FK
+     foreign key (Email, IDOrder)
+     references Orders (Email, IDOrder);
+
+alter table OrderRoyalPancake add constraint FKR_7_Roy
+     foreign key (IDRoyalPancake)
+     references RoyalPancake (IDRoyalPancake);
+
+alter table OrderRoyalPancake add constraint FKR_7_Ord_1
+     foreign key (Email, IDOrder)
+     references Orders (Email, IDOrder);
+
+alter table Orders add constraint FKR_7_Use
+     foreign key (Email)
+     references Users (Email);
+
+alter table Orders add constraint FKR_8
+     foreign key (FiscalCode)
+     references DeliveryMan (FiscalCode);
+
+alter table Orders add constraint FKR_7_Ord
+     foreign key (IDDeliveryMode)
+     references DeliveryMode (IDDeliveryMode);
+
+alter table Review add constraint FKR_5
+     foreign key (Email)
+     references Users (Email);
+
+alter table RoyalPancake add constraint FKR_1
+     foreign key (CategoryID)
+     references CategoryRoyalPancakes (CategoryID);
+
+alter table SeasoningInRoyalPancake add constraint FKR_Sea
+     foreign key (IDSeasoning)
+     references Seasoning (IDSeasoning);
+
+alter table SeasoningInRoyalPancake add constraint FKR_Roy
+     foreign key (IDRoyalPancake)
+     references RoyalPancake (IDRoyalPancake);
+
+alter table UserNotification add constraint FKR_10
+     foreign key (Email)
+     references Users (Email);

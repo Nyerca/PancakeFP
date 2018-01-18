@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<meta name="viewport" content="width = device-width, initial-scale = 1">
+<title>Add new delivery man</title>
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/AddDeliveryMan.css">
+</head>
+<body>
+
+<div class="container">
+
+  <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+      <h1>Add new delivery man</h1>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+      <input id="bellNotification" type="image" src="../../../../res/bellNotification.png" name="bellNotification" alt="bellNotification" width="50" height="50"/>
+    </div>
+  </div>
+  <br/>
+  <br/>
+
+  <div class="container">
+    <form action="../php/AddDeliveryMan.php" method="post">
+      <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <label for="name">Name</label> <input type="text" class="form-control" id="name" name="name" ><br/>
+      </div>
+      <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <label for="surname">Surname</label> <input type="text" class="form-control" id="surname" name="surname"><br/>
+      </div>
+      <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <label for="fc">Fiscal Code</label> <input type="text" class="form-control" id="fc" name="fc"><br/>
+      </div>
+      <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <label for="usr">Phone number</label> <input type="text" class="form-control" id="phone" name="phone"><br/><br/>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+          <a href="http://127.0.0.1/TWProject/app/ManageStaff/php/ManageStaff.php" class = "btn btn-default btn-lg" role="button">Back</a>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <label for="submit">
+          <input type="submit" value="Add" class = "btn btn-default btn-lg" >
+        </label>
+      </div>
+    </form>
+  </div>
+
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</body>
+</html>

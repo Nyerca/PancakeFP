@@ -1,0 +1,41 @@
+.btn {
+  margin: 2%;
+  width: 180px;
+}
+
+.row {
+  text-align: right;
+}
+
+.row2 {
+  text-align: center;
+}
+
+@media screen and (min-width: 768px) {
+  h1 {
+    text-align: left;
+  }
+}
+
+
+@media screen and (max-width: 768px) {
+    .row {
+      text-align: center;
+    }
+}
+
+#bellNotification {
+  margin: 4%;
+}
+
+.mans {
+  background-color: #afeece;
+  margin: 2%;
+}
+
+#close {
+    float:right;
+    display:inline-block;
+    padding:2px 5px;
+    background:#ccc;
+}
