@@ -197,8 +197,9 @@ if(!empty($_SESSION["cart"])) {
 		</form>
 		<?php
 	}
-}
 	$s = serialize($u);
+}
+	
 ?>
 
 </body>

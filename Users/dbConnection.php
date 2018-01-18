@@ -5,7 +5,7 @@ function connect() {
 $servername="localhost";
 	$username ="root";
 	$password ="";
-	$database = "db";
+	$database = "dbfp";
 	//connessione al db
 	$conn =new mysqli($servername, $username, $password, $database);
 	//Check della connessione

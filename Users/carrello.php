@@ -130,7 +130,16 @@ xmlhttp.onreadystatechange = function() {
 xmlhttp.send();
 
 }
-
+function updateListinoChange() {
+	xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("txtHint").innerHTML = this.responseText;
+            }
+        };
+	xmlhttp.open("GET","listinoChange.php",true);
+	xmlhttp.send();
+}
 function manage($royal, $thisNote, $category) {
 	
 	$oldNote = $thisNote.parentNode.getAttribute("value");
@@ -144,6 +153,7 @@ function manage($royal, $thisNote, $category) {
 	xmlhttp.open("GET","royalNoteChange.php?IDRoyal="+$royal+"&oldNote="+$oldNote+"&newNote="+$newNote,true);
 	xmlhttp.send();
 	$thisNote.parentNode.setAttribute("value", $newNote);
+	updateListinoChange();
 
 }
 </script>

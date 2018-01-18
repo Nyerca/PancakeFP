@@ -219,18 +219,3 @@ xmlhttp2.send();
 });
 
 </script>
-
-
-<?php
-require_once 'cart.php'; 
-if(empty($_SESSION['user'])) {
-  if(empty($_SESSION["cart"])) {
-	
-	$s = serialize(new ShoppingCart());
-	$_SESSION["cart"] = $s;
-	
-	$cart= new ShoppingCart();
-echo "session cart defined <br/>";
-  }
-}
-?>

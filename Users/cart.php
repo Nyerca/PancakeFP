@@ -359,7 +359,6 @@ class ShoppingCart {
 		$result = $conn->query($sql);
 		if($result->num_rows > 0)	{
 			while($row = $result->fetch_assoc()) {
-				echo "order present <br/>";
 				$idOrder = $row["IDOrder"];
 				$sql2 = "SELECT * FROM Iteminorder WHERE IDOrder = ".$idOrder;
 				$result2 = $conn->query($sql2);
@@ -376,7 +375,6 @@ class ShoppingCart {
 		$result = $conn->query($sql);
 		if($result->num_rows > 0)	{
 			while($row = $result->fetch_assoc()) {
-				echo "order present <br/>";
 				$idOrder = $row["IDOrder"];
 				$sql2 = "SELECT * FROM orderroyalpancake WHERE IDOrder = ".$idOrder;
 				$result2 = $conn->query($sql2);
