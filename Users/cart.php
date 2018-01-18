@@ -278,8 +278,9 @@ class ShoppingCart {
 			}
 		} else {
 			$note = "111";
-			$sql3 = "INSERT INTO orderroyalpancake (IDRoyalPancake, Email, IDOrder, Amount, Note)
-				VALUES ('".$idItem."', '".$email."', '".$idUse."', '".$amount."', '".$note."')";
+			$totPrice = updateRoyalPrice($email, $idItem, $note);
+			$sql3 = "INSERT INTO orderroyalpancake (IDRoyalPancake, Email, IDOrder, Amount, Note,Price)
+				VALUES ('".$idItem."', '".$email."', '".$idUse."', '".$amount."', '".$note."', '".$totPrice."')";
 			$conn->query($sql3);
 		}
 	}
@@ -526,10 +527,11 @@ class ShoppingCart {
 		echo "".$amount."<br/>";
 		if($amount > 0) {
 			if($amount == 1) {
-				$stmt = $conn->prepare("INSERT INTO orderroyalpancake (Email, IDOrder, Note, Amount,IDRoyalPancake)
-							VALUES (?,?,?,?,?)");
+				$totPrice = updateRoyalPrice($email, $item, $note);
+				$stmt = $conn->prepare("INSERT INTO orderroyalpancake (Email, IDOrder, Note, Amount,IDRoyalPancake, Price)
+							VALUES (?,?,?,?,?,?)");
 				
-				$stmt->bind_param("ssssi", $email, $idOrd,$note,$amount,$item);
+				$stmt->bind_param("ssssis", $email, $idOrd,$note,$amount,$item,$totPrice);
 				$stmt->execute();
 				$stmt->fetch();
 				$stmt->close();
@@ -598,6 +600,38 @@ class ShoppingCart {
 		return 0;
 	}
 	
+	function updateRoyalPrice($email, $item, $note) {
+		$conn =connect();
+		$notes = array(substr($note, 0, 1), substr($note, 1, 1), substr($note, 2, 1) );
+		print_r(array_values($notes));
+		$totalPrice = 0;
+		$idOrd= getOrderOfUserNotBought($email);
+		$sql = "SELECT * FROM iteminroyalpancake WHERE IDRoyalPancake = '".$item."'";
+		$result = $conn->query($sql);
+		if($result->num_rows >= 0)	{
+			while($row = $result->fetch_assoc()) {
+				$sql2 = "SELECT Price, CategoryID FROM item WHERE IDItem = '".$row["IDItem"]."'";
+				$result2 = $conn->query($sql2);
+				if($result2->num_rows >= 0)	{
+					while($row2 = $result2->fetch_assoc()) {
+						$idArr = $row2["CategoryID"] -1;
+
+						if(intval($notes[$idArr]) == 1) {
+							$totalPrice += $row2["Price"];
+						}
+					}
+				}
+			}
+		}
+		echo $totalPrice."<br/>";
+		
+		if ($notes[0] + $notes[1] + $notes[2] > 1) {
+			$totalPrice = ($totalPrice * 70) / 100;
+		}
+		$totalPrice = number_format((float)$totalPrice, 2, '.', ''); 
+		echo $totalPrice."<br/>";
+		return $totalPrice;
+	}
 	
 
 //$cart= new ShoppingCart();
