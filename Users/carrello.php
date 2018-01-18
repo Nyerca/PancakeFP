@@ -148,12 +148,14 @@ function manage($royal, $thisNote, $category) {
 	$changeVal ++;
 	$changeVal = $changeVal % 2;
 	$newNote = $oldNote.substr(0, $category-1) + $changeVal + $oldNote.substr($category);
+	if ( $newNote == "000" ) {
+		$newNote = $oldNote;
+	}
 	alert($newNote);
 	xmlhttp = new XMLHttpRequest();
 	xmlhttp.open("GET","royalNoteChange.php?IDRoyal="+$royal+"&oldNote="+$oldNote+"&newNote="+$newNote,true);
 	xmlhttp.send();
 	$thisNote.parentNode.setAttribute("value", $newNote);
-	updateListinoChange();
-
+updateListinoChange();
 }
 </script>
