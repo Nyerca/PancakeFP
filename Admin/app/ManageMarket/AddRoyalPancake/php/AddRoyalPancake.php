@@ -13,6 +13,15 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+$query_sql="SELECT MAX(IDRoyalPancake) FROM `royalpancake`";
+$result = $conn->query($query_sql);
+if ($result->num_rows <= 0) {
+  $idItems = 0;
+} else {
+  $row = $result->fetch_assoc();
+  $idItems = $row['IDRoyalPancake']+1;
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,7 +31,7 @@ if ($conn->connect_error) {
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 <meta name="viewport" content="width = device-width, initial-scale = 1">
-<title>Add new delivery man</title>
+<title>Add new royal pancake</title>
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link rel="stylesheet" href="../css/AddRoyalPancake.css">
 </head>
@@ -49,16 +58,61 @@ if ($conn->connect_error) {
       <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <label for="surname">Description</label> <input type="text" class="form-control" id="description" name="description"><br/>
       </div>
-      <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <label for="fc">Price</label> <input type="text" class="form-control" id="price" name="price"><br/>
+
+
+
+      <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+          <h3>Pancake</h3>
+            <a href="AddPancakeInRP.php" class = "btn btn-default btn-lg" role="button">Add</a>
+        </div>
+      </div>
+
+
+      <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+          <h3>Drink</h3>
+            <a href="" class = "btn btn-default btn-lg" role="button">Add</a>
+        </div>
       </div>
 
       <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+          <h3>Coffee</h3>
+          <a onclick="" href="#" class = "btn btn-default btn-lg" role="button">Add</a>
+        </div>
+      </div>
+
+      <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <h3>Choose seasonings</h3>
+        <div class="form-check">
+          <?php
+          $query_sql="SELECT * FROM seasoning";
+          $result = $conn->query($query_sql);
+          if ($result->num_rows > 0) {
+
+            while($row = $result->fetch_assoc()) {
+              ?>
+              <input class="form-check-input" type="checkbox" value="">
+              <label id="<?php echo $row['IDSeasoning']; ?>" class="form-check-label">
+                <?php echo $row['Name']; ?>
+              </label><br/>
+              <?php
+            }
+          }
+          ?>
+
+        </div>
+      </div>
+
+      <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+        <h3>Category</h3>
         <select class="selectpicker" name="categoryitem" id="categoryitem">
             <?php
-            $query_sql="SELECT * FROM categoryitem";
+            $query_sql="SELECT * FROM categoryroyalpancakes";
             $result = $conn->query($query_sql);
             if ($result->num_rows > 0) {
+
               while($row = $result->fetch_assoc()) {
                 ?>
                   <option><?php echo $row["CategoryName"]; ?></option>
@@ -70,23 +124,7 @@ if ($conn->connect_error) {
       </div>
 
       <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
-        <select class="selectpicker" name="undercategoryitem" id="undercategoryitem">
-            <?php
-            $query_sql="SELECT * FROM undercategoryitem";
-            $result = $conn->query($query_sql);
-            if ($result->num_rows > 0) {
-              while($row = $result->fetch_assoc()) {
-                ?>
-                  <option><?php echo $row["UnderCategoryName"]; ?></option>
-                <?php
-              }
-            }
-            ?>
-        </select>
-      </div>
-
-
-      <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+        <h3>Select a photo</h3>
         <input type="file" name="image" value="">
       </div>
     </div>
