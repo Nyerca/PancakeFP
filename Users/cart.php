@@ -5,12 +5,25 @@ class Item{
   public $name;
   private $amount = 0;
   private $price;
+  private $photo;
 
     public function __construct($id, $name, $price){
 		$this->id = $id;
         $this->name = $name;
 		$this->price = $price;
+		$this->getPhotoFromDb();
     }
+	
+	public function getPhotoFromDb() {
+		$conn =connect();
+		$sql = "SELECT Photo from item WHERE IDItem =".$this->id;
+		$result = $conn->query($sql);
+		if($result->num_rows > 0) {
+			while($row = $result->fetch_assoc()) {
+				$this->photo = $row["Photo"];
+			}				
+		}
+	}
 	
 	public function changeAmount($change) {
 		$this->amount = $this->amount + $change;
@@ -27,6 +40,9 @@ class Item{
 	public function getAmount() {
 		return $this->amount;
 	}
+	public function getPhoto() {
+		return $this->photo;
+	}
 	public function setAmount($amount) {
 		$this->amount = $amount;
 	}
@@ -42,12 +58,25 @@ class Royal{
   private $amount = 0;
   private $price;
   private $note = 111;
+  private $photo;
 
     public function __construct($id, $name, $price){
 		$this->id = $id;
         $this->name = $name;
 		$this->price = $price;
+		$this->getPhotoFromDb();
     }
+	
+	public function getPhotoFromDb() {
+		$conn =connect();
+		$sql = "SELECT Photo from royalpancake WHERE IDRoyalPancake =".$this->id;
+		$result = $conn->query($sql);
+		if($result->num_rows > 0) {
+			while($row = $result->fetch_assoc()) {
+				$this->photo = $row["Photo"];
+			}				
+		}
+	}
 	
 	public function changeAmount($change) {
 		$this->amount = $this->amount + $change;
@@ -72,6 +101,9 @@ class Royal{
 	}
 	public function setAmount($amount) {
 		$this->amount = $amount;
+	}
+	public function getPhoto() {
+		return $this->photo;
 	}
 	public function removeOne($number) {
 		if($this->pank + $this->cof + $this->drink == 3) {

@@ -2,6 +2,7 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
+require_once 'imagesFunctions.php';
 ?>
 <html>
 <head>
@@ -39,7 +40,7 @@ if (isset($_GET["item"])) {
 							<div class="modal-body">
 								<div class="row display-flex">
 									<div class="col-xs-12 col-sm-6">
-										<img id="logo" src="PF.png" alt="Logo">
+										<?php echo '<img height="150" src="' . htmlspecialchars($row3["Photo"]) . '"/>'; ?>
 									</div>
 									<div class="col-xs-12 col-sm-6" >
 										<h3>Descrizione:</h3>

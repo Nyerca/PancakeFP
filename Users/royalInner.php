@@ -2,6 +2,7 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
+require_once 'imagesFunctions.php';
 ?>
 <html>
 <head>
@@ -37,6 +38,7 @@ $conn =connect();
 				<form action="" method="post">
 					<div class="col-xs-12">
 						<button name="item" id="<?php echo $row["IDRoyalPancake"]; ?>" type="button" onclick="AddToCart('<?php echo $row["IDRoyalPancake"]; ?>','<?php echo $row["RoyalName"]; ?>','<?php echo getRoyalPrice($row["IDRoyalPancake"],1,1,1); ?>','1', '1')">
+							<?php echo '<img height="60" src="' . htmlspecialchars($row["Photo"]) . '"/>'; ?>
 							<p><?php echo getRoyalPrice($row["IDRoyalPancake"],1,1,1); ?></p>
 							<p><?php echo $row["RoyalName"]; ?></p>
 						</button>

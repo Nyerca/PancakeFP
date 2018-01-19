@@ -76,6 +76,7 @@ echo "HEHE";
 						<form>
 							<div id="<?php echo $row2["Name"]; ?>" class="row">
 								<div class="col-xs-12 col-sm-5">
+									<?php echo '<img height="60" src="' . htmlspecialchars($row2["Photo"]) . '"/>'; ?>
 									<p><?php echo $row2["Name"]; ?></p>
 								</div>
 								<div class="col-xs-6 col-sm-4">
@@ -109,6 +110,7 @@ echo "HEHE";
 						<form>
 							<div id="<?php echo $row2r["RoyalName"]; ?>" class="row">
 								<button id="<?php echo $row2r["RoyalName"]; ?>" type="button" onclick="popRoyal('<?php echo $row2r["IDRoyalPancake"]; ?>', '<?php echo $rowr["Note"]; ?>')">
+									<?php echo '<img height="60" src="' . htmlspecialchars($row2r["Photo"]) . '"/>'; ?>
 									<p><?php echo $row2r["RoyalName"]; ?></p>
 									<p><?php echo getRoyalPrice($rowr["IDRoyalPancake"],1,1,1); ?></p>
 								</button>									
@@ -163,7 +165,6 @@ if(!empty($_SESSION["cart"])) {
 		}
 		
 				$u = unserialize($_SESSION["cart"]);
-$u->printItems();
 	}
 	$u = unserialize($_SESSION["cart"]);
 	foreach ($u->getArrayItem() as $item) {
@@ -171,6 +172,7 @@ $u->printItems();
 		<form>
 			<div id="<?php echo $item->getName(); ?>" class="row">
 				<div class="col-xs-12 col-sm-5">
+					<?php echo '<img height="60" src="' . htmlspecialchars($item->getPhoto()) . '"/>'; ?>
 					<p><?php echo $item->getName(); ?></p>
 				</div>
 				<div class="col-xs-6 col-sm-4">
@@ -189,6 +191,7 @@ $u->printItems();
 		<form>
 			<div id="<?php echo $item->getName(); ?>" class="row">
 				<button id="<?php echo $item->getName(); ?>" type="button" onclick="popRoyal('<?php echo $item->getItem(); ?>', '<?php echo $item->getNote(); ?>')">
+					<?php echo '<img height="60" src="' . htmlspecialchars($item->getPhoto()) . '"/>'; ?>
 					<p><?php echo $item->getName(); ?></p>
 					<p><?php echo $item->getPrice(); ?></p>
 				</button>	

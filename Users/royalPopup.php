@@ -2,6 +2,7 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
+require_once 'imagesFunctions.php';
 ?>
 <html>
 <head>
@@ -58,6 +59,7 @@ if (isset($_GET["item"])) {
 										while($row2 = $result2->fetch_assoc()) {
 											?>
 											<button id="<?php echo $row2["IDItem"]; ?>" type="button" onclick="manage('<?php echo $_GET["item"]; ?>',this,'<?php echo $row2["CategoryID"]; ?>')">
+											<?php echo '<img height="60" src="' . htmlspecialchars($row2["Photo"]) . '"/>'; ?>
 											<?php echo $row2["Name"]; ?>
 											</button>
 											<?php

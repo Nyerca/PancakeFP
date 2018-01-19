@@ -3,8 +3,9 @@ require_once 'dbConnection.php';
 	if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-	
+
 require_once 'cart.php'; 
+
 if(empty($_SESSION['user'])) {
   if(empty($_SESSION["cart"])) {
 	$s = serialize(new ShoppingCart());

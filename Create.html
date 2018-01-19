@@ -28,12 +28,14 @@ create table CategoryRoyalPancakes (
      constraint IDCategoryIRoyalPancakes primary key (CategoryID));
 
 create table DeliveryMan (
+	 Email char(100) not null,
+     Password char(100) not null,
      Name char(100) not null,
      Surname char(100) not null,
      FiscalCode char(100) not null,
      PhoneNumber char(100) not null,
      Deleted char(100) not null,
-     constraint IDDeliveryMan primary key (FiscalCode));
+     constraint IDDeliveryMan primary key (Email));
 
 create table DeliveryMode (
      IDDeliveryMode int not null AUTO_INCREMENT,
@@ -93,7 +95,7 @@ create table Orders (
      CardNumber char(100),
      CardOwner char(100),
      ExpireDate char(100),
-     FiscalCode char(100),
+     DeliveryManEmail char(100),
      IDDeliveryMode int,
      constraint IDOrder primary key (Email, IDOrder));
 
@@ -117,13 +119,14 @@ create table RoyalPancake (
 create table Seasoning (
      Name char(100) not null,
      IDSeasoning int not null AUTO_INCREMENT,
+	 Price char(100) not null,
      Deleted char(100) not null,
      constraint IDSeasoning primary key (IDSeasoning));
 
-create table SeasoningInRoyalPancake (
-     IDRoyalPancake int not null,
+create table SeasoningInItem (
+     IDItem int not null,
      IDSeasoning int not null,
-     constraint IDSeasoningInRoyalPancake primary key (IDRoyalPancake, IDSeasoning));
+     constraint IDSeasoningInRoyalPancake primary key (IDItem, IDSeasoning));
 
 create table UserNotification (
      IDUserNofitication char(100) not null,
@@ -190,8 +193,8 @@ alter table Orders add constraint FKR_7_Use
      references Users (Email);
 
 alter table Orders add constraint FKR_8
-     foreign key (FiscalCode)
-     references DeliveryMan (FiscalCode);
+     foreign key (DeliveryManEmail)
+     references DeliveryMan (Email);
 
 alter table Orders add constraint FKR_7_Ord
      foreign key (IDDeliveryMode)
@@ -205,14 +208,15 @@ alter table RoyalPancake add constraint FKR_1
      foreign key (CategoryID)
      references CategoryRoyalPancakes (CategoryID);
 
-alter table SeasoningInRoyalPancake add constraint FKR_Sea
+alter table SeasoningInItem add constraint FKR_Sea
      foreign key (IDSeasoning)
      references Seasoning (IDSeasoning);
 
-alter table SeasoningInRoyalPancake add constraint FKR_Roy
-     foreign key (IDRoyalPancake)
-     references RoyalPancake (IDRoyalPancake);
+alter table SeasoningInItem add constraint FKR_Roy
+     foreign key (IDItem)
+     references Item (IDItem);
 
 alter table UserNotification add constraint FKR_10
      foreign key (Email)
      references Users (Email);
+
