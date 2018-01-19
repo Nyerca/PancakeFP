@@ -120,7 +120,6 @@ create table Seasoning (
      Name char(100) not null,
      IDSeasoning int not null AUTO_INCREMENT,
 	 Price char(100) not null,
-     Deleted char(100) not null,
      constraint IDSeasoning primary key (IDSeasoning));
 
 create table SeasoningInItem (
@@ -219,4 +218,3 @@ alter table SeasoningInItem add constraint FKR_Roy
 alter table UserNotification add constraint FKR_10
      foreign key (Email)
      references Users (Email);
-
