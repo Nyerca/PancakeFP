@@ -41,14 +41,7 @@ if ($conn->connect_error) {
   <br/>
 
   <div class="container">
-    <form action="SubmitInsertRP.php" method="post" enctype="multipart/form-data">
-      <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <label for="name">Name</label> <input type="text" class="form-control" id="name" name="name" ><br/>
-      </div>
-      <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <label for="surname">Description</label> <input type="text" class="form-control" id="description" name="description"><br/>
-      </div>
-
+  
       <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
           <h3>Pancake</h3>
@@ -70,26 +63,12 @@ if ($conn->connect_error) {
         </div>
       </div>
     <form action="SubmitInsertRP.php" method="post" enctype="multipart/form-data">
+
       <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <h3>Choose seasonings</h3>
-        <div class="form-check">
-          <?php
-          $query_sql="SELECT * FROM seasoning";
-          $result = $conn->query($query_sql);
-          if ($result->num_rows > 0) {
-
-            while($row = $result->fetch_assoc()) {
-              ?>
-              <input class="form-check-input" type="checkbox" value="">
-              <label name="<?php echo $row['IDSeasoning']; ?>" id="<?php echo $row['IDSeasoning']; ?>" class="form-check-label">
-                <?php echo $row['Name']; ?>
-              </label><br/>
-              <?php
-            }
-          }
-          ?>
-
-        </div>
+        <label for="name">Name</label> <input type="text" class="form-control" id="name" name="name" ><br/>
+      </div>
+      <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <label for="surname">Description</label> <input type="text" class="form-control" id="description" name="description"><br/>
       </div>
 
       <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
@@ -115,7 +94,7 @@ if ($conn->connect_error) {
         <input type="file" name="image" value="">
       </div>
     </div>
-
+    <div class="row2">
       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
           <a onclick="" href="#" class = "btn btn-default btn-lg" role="button">Back</a>
       </div>
@@ -124,6 +103,7 @@ if ($conn->connect_error) {
           <input type="submit" value="Add" class = "btn btn-default btn-lg" >
         </label>
       </div>
+    </div>
     </form>
   </div>
 

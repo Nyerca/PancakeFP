@@ -50,5 +50,5 @@ $stmt->execute();
 $stmt->close();
 
 $conn->close();
-header("Location: AddRoyalPancakes.php");
+header("Location: AddRoyalPancake.php");
 ?>
