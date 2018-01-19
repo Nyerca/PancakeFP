@@ -60,7 +60,7 @@
 <br/>
   <div class="row2">
   <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-    <a href="#" class = "btn btn-default btn-lg" role="button">Back</a>
+    <a href="../../php/ViewSpecificOrder.php" class = "btn btn-default btn-lg" role="button">Back</a>
   </div>
 
   <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
