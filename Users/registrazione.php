@@ -88,7 +88,7 @@ require 'dbConnection.php';
 		$stmt->close();
 		//Chiusura connessione con db
 		$conn->close();
-		header("location: home.html");
+		header("location: home.php");
 	}
 ?>
 }

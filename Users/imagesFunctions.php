@@ -10,6 +10,10 @@ function savePhoto($file) {
 function getPhoto($target) {
 	return '<img src="' . htmlspecialchars($target) . '"/>';
 }
+
+function getSrc($target) {
+	return htmlspecialchars($target);
+}
  ?>
 
  

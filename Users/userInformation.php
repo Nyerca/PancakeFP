@@ -24,13 +24,15 @@ require_once 'userInformationUtility.php';
 		<div id="loginForm" class="row display-flex">
 			<div id="loginLogo" class="col-xs-12 col-sm-3">
 
-				<img id="userPhoto" src="PF.png" alt="Logo">
-				<p>Mario Rossi</p>
+				<span id="usrGliph" class="glyphicon glyphicon-user"></span>
+				<div id="txtHint">
+				</div>
+				<p id="usernameP" >Mario Rossi</p>
 			</div>
 			<div id="loginInsert" class="col-xs-12 col-sm-9" >
 				<h1>Il mio account!</h1>
-				<form class="form-horizontal" method="post">
-
+				<form class="form-horizontal" method="post"  enctype="multipart/form-data">
+<input type="file" name="image" value="">
 					<div class="form-group">
 						<label class="control-label col-xs-3 col-sm-3" for="email">Email:</label>
 						<div id="emailDiv" class="col-xs-10 col-sm-6 col-xs-offset-1">
@@ -163,7 +165,19 @@ $(document).ready(function(){
 	$("#modifyTelephone").click(function(){
         $("#myNavbar5").collapse('toggle');
     });
+
 });
+
+function createUserImage($name) {
+	var list = document.getElementById("txtHint");
+	list.removeChild(list.childNodes[0]);
+	var x = document.createElement("IMG");
+	x.setAttribute("src", $name);
+	x.setAttribute("width", "60");
+	x.setAttribute("height", "60");
+	x.setAttribute("alt", "User image");
+	list.appendChild(x);
+}
 </script>
 <?php
 if (!isset($_SESSION['user'])) {
@@ -171,10 +185,18 @@ if (!isset($_SESSION['user'])) {
 } else {
 	$result = getAllUserInfos($_SESSION['user']["email"]);
 	while($row = $result->fetch_assoc()) {
+		if(!empty($row["Photo"])) {
 		?>
 		<script type="text/javascript">
+			createUserImage('<?php echo getSrc($row["Photo"]);?>');
+		</script>
+	<?php
+		}
+		?>
+	<script type="text/javascript">
 		$("#showEmail").text("<?php echo $row["Email"];?>");
 		$("#showUsername").text("<?php echo $row["Username"];?>");
+		$("#usernameP").text("<?php echo $row["Username"];?>");
 		$("#username").val("<?php echo $row["Username"];?>");
 		$("#showTelephone").text("<?php echo $row["PhoneNumber"];?>");
 		$("#telephone").val("<?php echo $row["PhoneNumber"];?>");
@@ -199,6 +221,7 @@ if(!empty($_POST["submit"])) {
 	$("#passwordPo").val('');
   }
 	});
+	</script>
   <?php
 	if(!empty($_POST["usernameN"])) {
 		updateUsername($_SESSION['user']["email"], $_POST["usernameN"]);
@@ -214,15 +237,34 @@ if(!empty($_POST["submit"])) {
 		updatePassword($_SESSION['user']["email"], $_POST["passwordPo"], $_POST["passwordPn"], $_POST["passwordPnr"]);
 	}
 	
+	if (!file_exists($_FILES['image']['tmp_name']) || !is_uploaded_file($_FILES['image']['tmp_name'])) {
+		?>
+		<script type="text/javascript">
+		alert("<?php echo 'No upload'; ?>");
+		</script>
+		<?php 
+	} else {
+		saveUserPhoto($_SESSION['user']["email"], $_FILES['image']);
+	}
+	
 	$result = getAllUserInfos($_SESSION['user']["email"]);
 	while($row = $result->fetch_assoc()) {
+		if(!empty($row["Photo"])) {
 		?>
+		<script type="text/javascript">
+			createUserImage('<?php echo getSrc($row["Photo"]);?>');
+		</script>
+	<?php
+		}
+		?>
+<script type="text/javascript">
 		$("#showEmail").text("<?php echo $row["Email"];?>");
 		$("#showUsername").text("<?php echo $row["Username"];?>");
+		$("#usernameP").text("<?php echo $row["Username"];?>");
 		$("#username").val("<?php echo $row["Username"];?>");
 		$("#showTelephone").text("<?php echo $row["PhoneNumber"];?>");
 		$("#telephone").val("<?php echo $row["PhoneNumber"];?>");
-
+</script>
 		<?php
 	}
 }
@@ -233,4 +275,3 @@ if(!empty($_POST["update"])) {
 	}
 }
 ?>
-</Script>
