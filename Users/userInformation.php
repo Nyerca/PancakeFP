@@ -23,7 +23,7 @@ require_once 'userInformationUtility.php';
 	<div id="bodyContent">
 		<div id="loginForm" class="row display-flex">
 			<div id="loginLogo" class="col-xs-12 col-sm-3">
-				<p>Carica foto</p>
+
 				<img id="userPhoto" src="PF.png" alt="Logo">
 				<p>Mario Rossi</p>
 			</div>
@@ -33,22 +33,8 @@ require_once 'userInformationUtility.php';
 
 					<div class="form-group">
 						<label class="control-label col-xs-3 col-sm-3" for="email">Email:</label>
-						<label id="showEmail" class="control-label col-sm-6" for="emailValue"></label>
-						<div id="emailDiv" class="col-xs-10 col-xs-offset-1">
-							<input type="email" class="form-control" id="email" placeholder="ciao@gmail.com" name="email">
-						</div>
-						<button id="modifyEmail" type="button" class="btn btn-default">
-							Modify
-						</button>
-						
-						<div class="collapse" id="myNavbar2">
-						<div id="collapsedEmail" class="col-sm-12">
-							
-								<label class="control-label col-sm-4" for="emailN">New email:</label>
-								<div class="col-sm-7 col-sm-offset-1">
-									<input type="email" class="form-control" id="emailN" placeholder="Enter the new email." name="emailN">
-								</div>
-							</div>
+						<div id="emailDiv" class="col-xs-10 col-sm-6 col-xs-offset-1">
+							<label id="showEmail" class="control-label" for="emailValue"></label>
 						</div>
 					</div>
 
@@ -153,11 +139,7 @@ require_once 'userInformationUtility.php';
 							</div>
 						</div>
 					</div>
-					<div class="form-group">        
-						<div class="col-sm-offset-2 col-sm-10">
-							<input type="submit" class="btn btn-default" name="submit" value="Submit">
-						</div>
-					</div>
+					<input type="submit" class="btn btn-default" name="submit" value="Submit">
 
 				</form>
 			</div>
@@ -172,9 +154,6 @@ require_once 'userInformationUtility.php';
 
 <script type="text/javascript">
 $(document).ready(function(){
-    $("#modifyEmail").click(function(){
-        $("#myNavbar2").collapse('toggle');
-    });
 	$("#modifyUsername").click(function(){
         $("#myNavbar3").collapse('toggle');
     });
@@ -185,7 +164,7 @@ $(document).ready(function(){
         $("#myNavbar5").collapse('toggle');
     });
 });
-
+</script>
 <?php
 if (!isset($_SESSION['user'])) {
 	header('Location: home.php');
@@ -193,16 +172,22 @@ if (!isset($_SESSION['user'])) {
 	$result = getAllUserInfos($_SESSION['user']["email"]);
 	while($row = $result->fetch_assoc()) {
 		?>
+		<script type="text/javascript">
 		$("#showEmail").text("<?php echo $row["Email"];?>");
 		$("#showUsername").text("<?php echo $row["Username"];?>");
+		$("#username").val("<?php echo $row["Username"];?>");
 		$("#showTelephone").text("<?php echo $row["PhoneNumber"];?>");
+		$("#telephone").val("<?php echo $row["PhoneNumber"];?>");
+		</script>
 		<?php
 	}
 	
 }
 
+
 if(!empty($_POST["submit"])) {
 	?>
+	<script type="text/javascript">
 	$(window).resize(function() {
   if ($(this).width() >= 768) {
 	$("#passwordTnr").val('');
@@ -217,12 +202,28 @@ if(!empty($_POST["submit"])) {
   <?php
 	if(!empty($_POST["usernameN"])) {
 		updateUsername($_SESSION['user']["email"], $_POST["usernameN"]);
+	} else if(!empty($_POST["username"])) {
+		updateUsername($_SESSION['user']["email"], $_POST["username"]);
 	}
 	if(!empty($_POST["telephoneN"])) {
 		updateTelephone($_SESSION['user']["email"], $_POST["telephoneN"]);
+	}else if(!empty($_POST["telephone"])) {
+		updateTelephone($_SESSION['user']["email"], $_POST["telephone"]);
 	}
 	if(!empty($_POST["passwordPn"]) && (!empty($_POST["passwordPnr"])) && (!empty($_POST["passwordPo"]))) {
 		updatePassword($_SESSION['user']["email"], $_POST["passwordPo"], $_POST["passwordPn"], $_POST["passwordPnr"]);
+	}
+	
+	$result = getAllUserInfos($_SESSION['user']["email"]);
+	while($row = $result->fetch_assoc()) {
+		?>
+		$("#showEmail").text("<?php echo $row["Email"];?>");
+		$("#showUsername").text("<?php echo $row["Username"];?>");
+		$("#username").val("<?php echo $row["Username"];?>");
+		$("#showTelephone").text("<?php echo $row["PhoneNumber"];?>");
+		$("#telephone").val("<?php echo $row["PhoneNumber"];?>");
+
+		<?php
 	}
 }
 

@@ -89,7 +89,7 @@ class Royal{
 		}
 	}
 	public function printItem() {
-		echo "IDItem: ".$this->id." Nome: ".$this->name." x".$this->amount."   ".$this->price."<br/>"; 
+		echo "IDItem: ".$this->id." Nome: ".$this->name." Note: ".$this->note." x".$this->amount."   ".$this->price."<br/>"; 
 	}
 }
 
@@ -219,6 +219,8 @@ class ShoppingCart {
 		for ($i=0;$i<$this->nItem; $i++) {
 			if($this->arrayItem[$i] instanceof Item) {
 				searchForActiveOrder($usrEmail, $this->arrayItem[$i]->getItem(), $this->arrayItem[$i]->getAmount());
+			} else {
+				searchForActiveOrderRoyal($usrEmail, $this->arrayItem[$i]->getItem(), $this->arrayItem[$i]->getAmount(), $this->arrayItem[$i]->getNote());
 			}
 		}
 	}
@@ -255,7 +257,7 @@ class ShoppingCart {
 	
 	
 	
-	function searchForActiveOrderRoyal($email, $idItem, $amount) {
+	function searchForActiveOrderRoyal($email, $idItem, $amount, $note) {
 		$idO = getOrderOfUserNotBought($email);
 		echo "idO = ".$idO." <br/>";
 		$idUse = $idO;
@@ -268,16 +270,15 @@ class ShoppingCart {
 			$conn->query($sql);
 		}
 
-		$sql2 = "SELECT * FROM orderroyalpancake WHERE Email = '".$email."' AND IDOrder = ".$idUse." AND IDRoyalPancake = ".$idItem." AND Note = 111";
+		$sql2 = "SELECT * FROM orderroyalpancake WHERE Email = '".$email."' AND IDOrder = ".$idUse." AND IDRoyalPancake = ".$idItem." AND Note =".$note;
 		$result2 = $conn->query($sql2);
 		if($result2->num_rows > 0)	{
 			while($row2 = $result2->fetch_assoc()) {
 				$newAmount = $row2["Amount"] + $amount;
-				$sql3 = "UPDATE orderroyalpancake SET Amount = ".$newAmount." WHERE Email = '".$email."' AND IDOrder = ".$idUse." AND IDRoyalPancake = ".$idItem." AND Note = 111";
+				$sql3 = "UPDATE orderroyalpancake SET Amount = ".$newAmount." WHERE Email = '".$email."' AND IDOrder = ".$idUse." AND IDRoyalPancake = ".$idItem." AND Note=".$note;
 				$conn->query($sql3);
 			}
 		} else {
-			$note = "111";
 			$totPrice = updateRoyalPrice($email, $idItem, $note);
 			$sql3 = "INSERT INTO orderroyalpancake (IDRoyalPancake, Email, IDOrder, Amount, Note,Price)
 				VALUES ('".$idItem."', '".$email."', '".$idUse."', '".$amount."', '".$note."', '".$totPrice."')";
@@ -631,6 +632,20 @@ class ShoppingCart {
 		$totalPrice = number_format((float)$totalPrice, 2, '.', ''); 
 		echo $totalPrice."<br/>";
 		return $totalPrice;
+	}
+	
+	function cartEmpty($email) {
+		$conn =connect();
+		$amounts = 0;
+		$idOrd= getOrderOfUserNotBought($email);
+		$sql = "SELECT * FROM orderroyalpancake WHERE Email = '".$email."' AND IDOrder = '".$idOrd."'";
+		$result = $conn->query($sql);
+		$amounts += $result->num_rows;
+		
+		$sql2 = "SELECT * FROM iteminorder WHERE Email = '".$email."' AND IDOrder = '".$idOrd."'";
+		$result2 = $conn->query($sql2);
+		$amounts += $result2->num_rows;
+		return $amounts;
 	}
 	
 

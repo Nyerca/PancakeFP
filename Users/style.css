@@ -141,7 +141,7 @@ textarea {
   text-align: left;
   vertical-align: middle;
 }
-#showEmail, #showUsername, #showTelephone, #modifyEmail, #modifyPassword, #modifyUsername, #modifyTelephone {
+#showUsername, #showTelephone, #modifyPassword, #modifyUsername, #modifyTelephone {
 	display:none;
 }
 
@@ -212,7 +212,7 @@ textarea {
 	#showEmail, #showUsername, #showTelephone, #modifyEmail, #modifyPassword, #modifyUsername, #modifyTelephone {
 		display:block;
 	}
-	#usernameDiv, #emailDiv, #popupPassword, #telephoneDiv {
+	#usernameDiv, #popupPassword, #telephoneDiv {
 		display:none;
 	}
 }

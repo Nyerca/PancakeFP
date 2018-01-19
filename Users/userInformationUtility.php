@@ -1,5 +1,6 @@
 <?php
 require_once 'dbConnection.php';
+require_once 'imagesFunctions.php';
 function getAllUserInfos($email) {
 	$conn =connect();
 	$sql = "SELECT * from Users WHERE Email = '".$email."'";
@@ -41,5 +42,12 @@ function updatePassword($email, $pO, $pN, $pNr) {
 			}
 		}
 	}
+}
+
+function saveUserPhoto($email, $file) {
+	$conn =connect();
+	$targer = savePhoto($file);
+	$sql = "UPDATE users SET Photo = '".$target."' WHERE Email = '".$email."'";
+	$conn->query($sql);
 }
 ?>

@@ -46,7 +46,7 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 require_once 'dbConnection.php';
 require_once 'cart.php';
-
+echo "HEHE";
 
 	$conn = connect();
 	if(!empty($_SESSION['user'])) {
@@ -55,7 +55,7 @@ require_once 'cart.php';
 			if(!isset($_GET['royals'])) {
 				searchForActiveOrder($email, $_GET['itemChange'], 1);
 			} else {
-				searchForActiveOrderRoyal($email, $_GET['itemChange'], 1);
+				searchForActiveOrderRoyal($email, $_GET['itemChange'], 1, 111);
 			}
 		}
 	} else {
@@ -68,7 +68,6 @@ require_once 'cart.php';
 		?>
 			<div id="divIt">
 			<?php
-				$empty=0;
 				$sql2 = "SELECT * from item WHERE IDItem = ".$row["IDItem"];
 				$result2 = $conn->query($sql2);
 				if($result2->num_rows > 0) {
@@ -95,14 +94,13 @@ require_once 'cart.php';
 			<?php
 		}
 	}
-	
+	echo "HEHE2";
 	$resultr = getRoyalInOrder($email);
 	if($resultr->num_rows > 0) {
 		while($rowr = $resultr->fetch_assoc()) {
 		?>
 			<div id="divRo">
 			<?php
-				$empty=0;
 				$sql2r = "SELECT * from royalpancake WHERE IDRoyalPancake = ".$rowr["IDRoyalPancake"];
 				$result2r = $conn->query($sql2r);
 				if($result2r->num_rows > 0) {
@@ -128,11 +126,14 @@ require_once 'cart.php';
 		<?php
 		}
 	}
-	
+	echo "HEHE3";
 
 if(!empty($_SESSION["cart"])) {	
+
 	if(isset($_GET['inc'])) {
+
 		if(isset($_GET['royals'])) {
+			echo "inc royal";
 			$conn =connect();
 			$sql2 = "SELECT * from royalpancake WHERE IDRoyalPancake = ".$_GET['itemChange'];
 			$result2 = $conn->query($sql2);
@@ -146,6 +147,7 @@ if(!empty($_SESSION["cart"])) {
 				}
 			}
 		} else {
+			echo "inc ITEM";
 			$conn =connect();
 			$sql2 = "SELECT * from item WHERE IDItem = ".$_GET['itemChange'];
 			$result2 = $conn->query($sql2);
@@ -159,6 +161,9 @@ if(!empty($_SESSION["cart"])) {
 				}
 			}
 		}
+		
+				$u = unserialize($_SESSION["cart"]);
+$u->printItems();
 	}
 	$u = unserialize($_SESSION["cart"]);
 	foreach ($u->getArrayItem() as $item) {

@@ -15,6 +15,36 @@ $conn = connect();
 
 	
 ?>
+<script type="text/javascript">
+function insert($email, $item, $amount) {
+xmlhttp = new XMLHttpRequest();
+xmlhttp.open("GET","carrelloChangeQuantity.php?eml=".concat($email)
+.concat("&idItm=").concat($item).concat("&amt=").concat($amount),true);
+xmlhttp.send();
+}
+function insertRoyal($email, $item, $amount, $note) {
+xmlhttp = new XMLHttpRequest();
+xmlhttp.open("GET","carrelloChangeQuantityR.php?eml=".concat($email)
+.concat("&idItm=").concat($item).concat("&amt=").concat($amount).concat("&note=").concat($note),true);
+xmlhttp.send();
+}
+function insertOffline($item, $amount) {
+xmlhttp = new XMLHttpRequest();
+xmlhttp.open("GET","listinoChangeQuantityOffline.php?idItm=".concat($item).concat("&amt=").concat($amount),true);
+xmlhttp.send();
+}
+function insertRoyalOffline($item, $amount, $note) {
+xmlhttp = new XMLHttpRequest();
+xmlhttp.open("GET","listinoChangeQuantityOffline.php?idItm=".concat($item).concat("&amt=").concat($amount).concat("&note=").concat($note),true);
+xmlhttp.send();
+}
+
+function ifZero($val) {
+	if($val.value<1) {
+		$val.parentNode.parentNode.style.display="none";
+	}
+}
+</script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,43 +62,19 @@ $conn = connect();
 
 <div id="bodyDiv" class="container text-center">
 	<h1>Carrello</h1>
+	<form class="form-horizontal" method="post">
 	<div class="container-fluid text-center">
-		
-		<?php
-			require 'listinoChange.php';
-			
-			
-			
-			
-			if(empty($_SESSION['user'])) {
-					if(!empty($_SESSION["cart"])) {
-						$u = unserialize($_SESSION["cart"]);
-						$arr =$u->getArrayItem();
-						
-						for($i=0; $i<sizeof($arr); $i++) {
-							?>
-							<div class="row">
-								<div class="col-xs-12 col-sm-5">
-									<p><?php echo $arr[$i]->getName(); ?></p>
-								</div>
-								<div class="col-xs-6 col-sm-4">
-									<p><?php echo $arr[$i]->getPrice(); ?></p>
-								</div>
-								<div class="col-xs-6 col-sm-3">
-									<p><?php echo $arr[$i]->getAmount(); ?></p>
-								</div>
-							</div>
-							<?php
-						}
-					}
-			}
-		?>
-		
-		
-		
+		<div id="txtHint"><b>Person info will be listed here...</b></div>
+
+		<div class="form-group">        
+					<div class="col-sm-offset-2 col-sm-10">
+						<input type="submit" class="btn btn-default" name="avanti" value="Avanti">
+					</div>
+		</div>
 	</div>
 	<button type="button" class="btn btn-default" onclick="home()">Home</button>
-	<button type="button" class="btn btn-default" onclick="avanti()">Avanti</button>
+
+	</form>
 </div>
 
 <?php require 'footer.php' ?>
@@ -87,28 +93,46 @@ $conn = connect();
 <?php
 unset($_SESSION['url']);
 $conn->close();
-?>
-<script type="text/javascript">
-function avanti() {
-	<?php
+if(!empty($_POST["avanti"])) {
 	if(empty($_SESSION['user'])) {
 		$_SESSION['url'] = "carrello.php";
 		?>
-		alert("you have to be logged in to buy");
+	<script type="text/javascript">
+	alert("In order to buy you hyave to be logged in!");
 	window.location.href= "login.php";
-	<?php } else {
-		if($empty==0) {
-		?>
+	</script>
+	<?php
+	} else {
+		echo cartEmpty($_SESSION['user']["email"]);
+		if(cartEmpty($_SESSION['user']["email"]) > 0) {
+			?>
+	<script type="text/javascript">
 	window.location.href= "consegna.php";
+	</script>
 	<?php
 		} else {
 			?>
-			alert("Non ci sono elementi nel carrello");
-			<?php
+	<script type="text/javascript">
+	alert("There are no products to buy!");
+	</script>
+	<?php
 		}
 	}
-	?>
 }
+
+?>
+<script type="text/javascript">
+$( document ).ready(function() {
+	xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("txtHint").innerHTML = this.responseText;
+            }
+        };
+	xmlhttp.open("GET","listinoChange.php",true);
+	xmlhttp.send();
+
+});
 function home() {
 	window.location.href= "home.php";
 }
