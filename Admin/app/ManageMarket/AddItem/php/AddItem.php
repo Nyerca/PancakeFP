@@ -91,6 +91,28 @@ if ($conn->connect_error) {
       </div>
     </div>
 
+    <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <h3>Choose seasonings</h3>
+      <div class="form-check">
+        <?php
+        $query_sql="SELECT * FROM seasoning";
+        $result = $conn->query($query_sql);
+        if ($result->num_rows > 0) {
+
+          while($row = $result->fetch_assoc()) {
+            ?>
+            <input name="<?php echo $row['IDSeasoning']; ?>" class="form-check-input" type="checkbox" value="">
+            <label id="<?php echo $row['IDSeasoning']; ?>" class="form-check-label">
+              <?php echo $row['Name']; ?>
+            </label><br/>
+            <?php
+          }
+        }
+        ?>
+
+      </div>
+    </div>
+
       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
           <a onclick="#" href="#" class = "btn btn-default btn-lg" role="button">Back</a>
       </div>
@@ -100,7 +122,7 @@ if ($conn->connect_error) {
         </label>
       </div>
     </form>
-  </div>
+
 
 </div>
 

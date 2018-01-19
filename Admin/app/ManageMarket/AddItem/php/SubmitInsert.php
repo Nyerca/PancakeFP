@@ -24,7 +24,6 @@ $result = $conn->query($query_sql);
 $row = $result->fetch_assoc();
 $underCategory = $row['UnderCategoryID'];
 
-
 // prepare and bind
 $stmt = $conn->prepare("INSERT INTO `item` (`CategoryID`, `Deleted`, `Description`, `Name`,  `Photo`, `Price`, `UnderCategoryID`) VALUES(?, ?, ?, ?, ?, ?, ?)");
 $stmt->bind_param("sssssss", $mainCategory, $Deleted, $Description, $Name, $Photo, $Price, $underCategory);
@@ -43,9 +42,36 @@ $Name = $_POST['name'];
 $Price = $_POST['price'];
 
 $stmt->execute();
-
 $stmt->close();
 
+$query_sql="SELECT * FROM `item`";
+$result = $conn->query($query_sql);
+$idItem = 0;
+while($row = $result->fetch_assoc()) {
+  if($row['IDItem'] > $idItem) {
+    $idItem = $row['IDItem'];
+  }
+}
+
+//HARDCODED
+$numberOfSeasoning = 7;
+$a=array();
+
+for($i = 1; $i < $numberOfSeasoning; $i++) {
+  if(isset($_POST[$i])) {
+    array_push($a, $i);
+  }
+}
+
+for($i = 0; $i < count($a); $i++) {
+  $stmt = $conn->prepare("INSERT INTO `seasoninginitem` (`IDItem`, `IDSeasoning`) VALUES(?, ?)");
+  $stmt->bind_param("ss", $idItemToInsert, $idSeasoningToInsert);
+
+  $idItemToInsert = $idItem;
+  $idSeasoningToInsert = $a[$i];
+  $stmt->execute();
+  $stmt->close();
+}
 
 $conn->close();
 header("Location: AddItem.php");
