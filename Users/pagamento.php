@@ -3,25 +3,6 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 ?>
-<?php
-if(!empty($_POST["buy"])) {
-	if(isset($_SESSION['user']) && (!empty($_POST["cc"])) && (!empty($_POST["owner"])) 
-	&& (!empty($_POST["expire"]))) {
-		require 'cart.php'; 
-		$email = $_SESSION['user']["email"];
-		$cardNumber = $_POST["cc"];
-		$cardOwner = $_POST["owner"];
-		$expireDate = $_POST["expire"];
-		addCardInfos($email, $cardNumber, $cardOwner, $expireDate);
-		header('Location: home.php');
-	} else if(isset($_SESSION['user']) && $_POST["optradio"]==0) {
-		require 'cart.php'; 
-		$email = $_SESSION['user']["email"];
-		setOrderAsBought($email);
-		header('Location: home.php');
-	}
-}
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -36,18 +17,17 @@ if(!empty($_POST["buy"])) {
 </head>
 <body>
 
-<?php require 'header.php' ?>
 
-<div id="bodyDiv" class="container text-center">
+
 	<div class="container-fluid text-center">
 	<form method="post">
 		<div class="row">
 			<h1>Pagamento</h1>
 			<div class="radio">
-			  <label><input type="radio" value="0" name="optradio" onclick="Card(0)" checked="checked">Contanti</label>
+			  <label><input type="radio" value="0" name="optradioPay" onclick="Card(0)" checked="checked">Contanti</label>
 			</div>
 			<div class="radio">
-			  <label><input type="radio" value="1" name="optradio" onclick="Card(1)">Carta</label>
+			  <label><input type="radio" value="1" name="optradioPay" onclick="Card(1)">Carta</label>
 			</div>
 		</div>
 		
@@ -71,12 +51,9 @@ if(!empty($_POST["buy"])) {
 			
 		</div>	
 	
-	<button type="button" class="btn btn-default">Indietro</button>
-	<input type="submit" class="btn btn-default" name="buy" value="Buy">
 	</form>
 	</div>
-</div>
-<?php require 'footer.php' ?>
+
 
 </body>
 </html>

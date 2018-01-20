@@ -6,6 +6,21 @@ if (session_status() == PHP_SESSION_NONE) {
 
 	if(isset($_POST["email"]) ){ 
 		$conn = connect();
+		$stmt2 = $conn->prepare("SELECT Email, Username FROM admin WHERE Email=?");
+		$emails = $_POST["email"];
+		$stmt2->bind_param("s", $emails);
+		$stmt2->execute();
+		$stmt2->bind_result($email, $username);
+        $stmt2->store_result();
+        $stmt2->fetch();          
+        if($stmt2->num_rows > 0)
+        {
+			$_SESSION['admin']["email"] = $email;
+			$_SESSION['admin']["username"] = $username;
+			header("location: WelcomeBoss.html");
+		}
+		
+		
 		$stmt = $conn->prepare("SELECT Email, Username FROM Users WHERE Email=?");
 		$emails = $_POST["email"];
 		$stmt->bind_param("s", $emails);

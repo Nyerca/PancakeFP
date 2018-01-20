@@ -63,8 +63,33 @@ function show(categoryID) {
 xmlhttp.open("GET","listinoInner.php?showCat=" + categoryID,true);
 xmlhttp.send();
 }
-function AddToCart(id, name, price, amount) {
-	xmlhttp = new XMLHttpRequest();
+
+function getOffset(el) {
+  el = el.getBoundingClientRect();
+  return {
+    left: el.left + window.scrollX,
+    top: el.top + window.scrollY
+  }
+}
+
+function AddToCart(elem,id, name, price, amount) {
+	var img = elem.getElementsByTagName('img')[0];
+	elem.disabled = true;
+	var img2 = img.cloneNode(true);
+	img2.id = "fake" + id;
+	img2.style.zIndex="100";
+	img2.style.position = "absolute";
+	document.getElementById(""+name).insertBefore(img2, document.getElementById(""+name).childNodes[0]);
+var position = 0;
+var p = $('form > div.row').each(function() {
+  var id = $(this).attr("id").substring(3);
+  if(id == name) {
+	  position = $(this).position();
+  }
+});
+var newPos = position.top - +getOffset(elem).top;
+$("#fake"+id).animate({opacity: '0.4', top: +newPos}, 700, function() {
+   xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById("txtHint").innerHTML = this.responseText;
@@ -72,6 +97,16 @@ function AddToCart(id, name, price, amount) {
         };
 	xmlhttp.open("GET","listinoChange.php?inc=1&itemChange=".concat(id),true);
 	xmlhttp.send();
+   $("#fake"+id).fadeOut(300, function() { $("#fake"+id).remove(); 
+   
+	});
+  });
+
+setTimeout(function() {
+	elem.disabled = false;
+}, 1000);
+	
+	
 }
 
 </script>

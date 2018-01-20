@@ -40,6 +40,7 @@ function ifZero($val) {
 </script>
 </head>
 <body>
+<div class="listinoSearch">
 <?php
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
@@ -170,7 +171,7 @@ if(!empty($_SESSION["cart"])) {
 	foreach ($u->getArrayItem() as $item) {
 		?>
 		<form>
-			<div id="<?php echo $item->getName(); ?>" class="row">
+			<div id="id <?php echo $item->getName();?>" class="row">
 				<div class="col-xs-12 col-sm-5">
 					<?php echo '<img height="60" src="' . htmlspecialchars($item->getPhoto()) . '"/>'; ?>
 					<p><?php echo $item->getName(); ?></p>
@@ -209,6 +210,6 @@ if(!empty($_SESSION["cart"])) {
 }
 	
 ?>
-
+</div>
 </body>
 </html>

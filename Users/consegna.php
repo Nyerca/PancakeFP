@@ -2,114 +2,9 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-require_once 'cart.php'; 
-
-  if(isset($_GET["addr"]) && isset($_GET["cap"]))  {
-	  $email = $_SESSION['user']["email"];
-					$addr = $_GET["addr"];
-					$cap = $_GET["cap"];
-					
-					insertAddressInOrder($email, $addr, $cap);
-					
-					$data = $_GET["data"];
-					updateOrderTime($email, $data);
-					echo "NON CAPISCO";
-					header('Location: pagamento.php');
-  }
-  else if(isset($_GET["data"]))  {
-					$email = $_SESSION['user']["email"];
-					$data = $_GET["data"];
-					updateOrderTime($email, $data);
-					//if(isset( && !(empty($_GET["address"])) && !(empty($_GET["cap"])) 
-					header('Location: pagamento.php');
-				}
 
 ?>
-<script type="text/javascript">
-function timeCheck() {
-	var d = new Date();
-	var data = $("#dateField").val();
-	var anno = data.substring(0, 4);
-	var mese = data.substring(5, 7);
-	var giorno = data.substring(8, 10);
-	if (anno == d.getFullYear()) {
-		var cMese = d.getMonth() + 1;
-		if (mese == cMese) {
-			if(giorno == d.getDay()) {
-				var m = d.getMinutes();
-				var h = d.getHours();
-				var insTime = $("#time").val();
-				var insM = insTime.substring(3, 5);
-				var insH = insTime.substring(0, 2);
-				if (insH == h) {
-					if (insM>= m) {
-						alert("ok2");
-						return true;
-					}
-				} else if(insH > h) {
-					alert("ok2");
-					return true;
-				}
-			}else if (giorno > d.getDay()) {
-				alert("ok1");
-				return true;
-			}
-		} else if (mese > cMese) {
-			return true;
-		}
-	}else if(anno > d.getFullYear()) {
-		return true;
-	}
-	return false;
-}
 
-function DeliverSupport() {
-if(timeCheck()==true) {
-			<?php
-			if(isset($_SESSION['user'])) {
-				?>
-				$data = $("#dateField").val();
-				$anno = $data.substring(0, 4);
-				$mese = $data.substring(5, 7);
-				$giorno = $data.substring(8, 10);
-				
-				$insTime = $("#time").val();
-				$insM = $insTime.substring(3, 5);
-				$insH = $insTime.substring(0, 2);
-				
-				$dateTime = "".concat($anno).concat("/").concat($mese).concat("/").concat($giorno)
-				.concat(" ").concat($insH).concat(":").concat($insM);
-				return $dateTime;
-
-				<?php
-			}
-			?>
-		}
-}
-
-function CheckAddress() {
-	$datetime = DeliverSupport();
-	$addr = document.getElementById("address").value;
-	$cap = document.getElementById("cap").value;
-	if($addr && $cap && $datetime) {
-		window.location.replace("consegna.php?addr="+$addr+"&cap="+$cap+"&data="+$datetime);
-	}
-
-}
-
-function Deliver() {
-	if(document.querySelector('input[name="optradio"]:checked').value==0) {
-		$datetime = DeliverSupport();
-		window.location.replace("consegna.php?data=".concat($dateTime));
-	} else {
-		if(document.querySelector('input[name="optradio2"]:checked').value==1) {
-			CheckAddress();
-		} else {
-			alert("Geolocalizzami DA IMPLEMENTARE");
-		}
-	}
-}
-</script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -123,9 +18,7 @@ function Deliver() {
 </head>
 <body>
 
-<?php require 'header.php' ?>
 
-<div id="bodyDiv" class="container text-center">
 	<div class="container-fluid text-center">
 		<form method="post">
 		<div class="row">
@@ -178,13 +71,8 @@ function Deliver() {
 		</div>
 		</form>
 	</div>
-	
-	
-	<button type="button" class="btn btn-default">Indietro</button>
-	<button type="button" class="btn btn-default" onclick="Deliver()">Avanti</button>
-</div>
 
-<?php require 'footer.php' ?>
+
 
 </body>
 </html>

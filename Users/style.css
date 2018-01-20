@@ -121,6 +121,18 @@ textarea {
 	width:100%;
 }
 
+@keyframes example {
+    0%   {background-color: red;}
+    25%  {background-color: yellow;}
+    50%  {background-color: blue;}
+    100% {background-color: green;}
+}
+
+@keyframes bigger {
+    from {top: 0px;}
+    to {top: 270%; display:none;}
+}
+
 
 /* userInformation */
 .modal {
