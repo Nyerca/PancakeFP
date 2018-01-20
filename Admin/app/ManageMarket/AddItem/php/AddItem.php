@@ -49,9 +49,6 @@ if ($conn->connect_error) {
       <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <label for="surname">Description</label> <input type="text" class="form-control" id="description" name="description"><br/>
       </div>
-      <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <label for="fc">Price</label> <input type="text" class="form-control" id="price" name="price"><br/>
-      </div>
 
       <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
         <select class="selectpicker" name="categoryitem" id="categoryitem">
