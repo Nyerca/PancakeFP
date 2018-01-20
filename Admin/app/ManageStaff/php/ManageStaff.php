@@ -41,7 +41,7 @@
 
   <div class="row2">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-      <a href="http://127.0.0.1/TWProject/app/ManageStaff/AddDeliveryMan/html/AddDeliveryMan.html" class = "btn btn-default btn-lg" role="button">Add delivery man</a>
+      <a href="../AddDeliveryMan/html/AddDeliveryMan.html" class = "btn btn-default btn-lg" role="button">Add delivery man</a>
     </div>
     <p>&nbsp;</p>
   </div>
@@ -52,16 +52,19 @@
             while($row = $result->fetch_assoc()) {
               ?>
               <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <div class="mans" id="<?php echo $row["FiscalCode"] ?>" style="display: block;">
+                <div class="mans" id="<?php echo $row["Email"] ?>" style="display: block;">
                   <div>
-                    <button type="button" class="close" data-toggle="modal" data-target="#myModal" onclick="SaveId('<?php echo $row["FiscalCode"] ?>')" aria-label="Close">
+                    <button type="button" class="close" data-toggle="modal" data-target="#myModal" onclick="SaveId('<?php echo $row["Email"] ?>')" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
                   <label>Name: </label>  <?php echo $row["Name"]; ?> <br/>
                   <label>Surname: </label>  <?php echo $row["Surname"]; ?> <br/>
                   <label>Fiscal code: </label>  <?php echo $row["FiscalCode"]; ?> <br/>
+                  <label>Email: </label>  <?php echo $row["Email"]; ?> <br/>
+                  <label>Password: </label>  <?php echo $row["Password"]; ?> <br/>
                   <label>Phone Number: </label>  <?php echo $row["PhoneNumber"]; ?> <br/>
+
                 </div>
             </div>
               <?php
@@ -75,26 +78,26 @@
 <br/>
   <div class="row2">
   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-    <a href="http://127.0.0.1/TWProject/app/WelcomeBoss/html/WelcomeBoss.html" class = "btn btn-default btn-lg" role="button">Back</a>
+    <a href="#" class = "btn btn-default btn-lg" role="button">Back</a>
   </div>
 
 </div>
 
 <script type="text/javascript">
-function DeleteDeliveryMan(fc) {
+function DeleteDeliveryMan(email) {
 
 if($("#shared").text() == 1) {
     //Ajax request
     xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-           document.getElementById(fc).style.display = 'none';
+           document.getElementById(email).style.display = 'none';
            document.location.reload();
         }
     };
     var PageToSendTo = "UpdateDeliveryMan.php?";
     var VariablePlaceholder = "del=";
-    var UrlToSend = PageToSendTo + VariablePlaceholder + fc;
+    var UrlToSend = PageToSendTo + VariablePlaceholder + email;
     xmlhttp.open("GET", UrlToSend, true);
     xmlhttp.send();
   }
