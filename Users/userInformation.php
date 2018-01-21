@@ -17,18 +17,9 @@ require_once 'userInformationUtility.php';
 </head>
 <body>
 
-<?php require 'header.php' ?>
-
-<div id="bodyDiv" class="container text-center">    
 	<div id="bodyContent">
 		<div id="loginForm" class="row display-flex">
-			<div id="loginLogo" class="col-xs-12 col-sm-3">
 
-				<span id="usrGliph" class="glyphicon glyphicon-user"></span>
-				<div id="txtHint">
-				</div>
-				<p id="usernameP" >Mario Rossi</p>
-			</div>
 			<div id="loginInsert" class="col-xs-12 col-sm-9" >
 				<h1>Il mio account!</h1>
 				<form class="form-horizontal" method="post"  enctype="multipart/form-data">
@@ -147,9 +138,7 @@ require_once 'userInformationUtility.php';
 			</div>
 		</div>
 	</div>
-</div>
 
-<?php require 'footer.php' ?>
 
 </body>
 </html>
@@ -167,17 +156,6 @@ $(document).ready(function(){
     });
 
 });
-
-function createUserImage($name) {
-	var list = document.getElementById("txtHint");
-	list.removeChild(list.childNodes[0]);
-	var x = document.createElement("IMG");
-	x.setAttribute("src", $name);
-	x.setAttribute("width", "60");
-	x.setAttribute("height", "60");
-	x.setAttribute("alt", "User image");
-	list.appendChild(x);
-}
 </script>
 <?php
 if (!isset($_SESSION['user'])) {
@@ -185,18 +163,11 @@ if (!isset($_SESSION['user'])) {
 } else {
 	$result = getAllUserInfos($_SESSION['user']["email"]);
 	while($row = $result->fetch_assoc()) {
-		if(!empty($row["Photo"])) {
-		?>
-		<script type="text/javascript">
-			createUserImage('<?php echo getSrc($row["Photo"]);?>');
-		</script>
-	<?php
-		}
 		?>
 	<script type="text/javascript">
 		$("#showEmail").text("<?php echo $row["Email"];?>");
 		$("#showUsername").text("<?php echo $row["Username"];?>");
-		$("#usernameP").text("<?php echo $row["Username"];?>");
+		
 		$("#username").val("<?php echo $row["Username"];?>");
 		$("#showTelephone").text("<?php echo $row["PhoneNumber"];?>");
 		$("#telephone").val("<?php echo $row["PhoneNumber"];?>");
@@ -249,13 +220,6 @@ if(!empty($_POST["submit"])) {
 	
 	$result = getAllUserInfos($_SESSION['user']["email"]);
 	while($row = $result->fetch_assoc()) {
-		if(!empty($row["Photo"])) {
-		?>
-		<script type="text/javascript">
-			createUserImage('<?php echo getSrc($row["Photo"]);?>');
-		</script>
-	<?php
-		}
 		?>
 <script type="text/javascript">
 		$("#showEmail").text("<?php echo $row["Email"];?>");

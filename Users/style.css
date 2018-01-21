@@ -16,6 +16,7 @@
 }
 
 #signUp a, #signIn a{
+	background-color:red;
 	font-size:80%;
 }
 
@@ -242,26 +243,6 @@ textarea {
 	}
 }
 
-    /* Remove the navbar's default margin-bottom and rounded borders */ 
-    .navbar {
-      margin-bottom: 0;
-      border-radius: 0;
-    }
-
-  .carousel-inner img {
-      width: 100%; /* Set width to 100% */
-      margin: auto;
-      min-height:200px;
-	  max-height:500px;
-  }
-
-  /* Hide the carousel text when the screen is less than 600 pixels wide */
-  @media (max-width: 600px) {
-    .carousel-caption {
-      display: none; 
-    }
-  }
-  
   
   
   
