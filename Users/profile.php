@@ -26,7 +26,7 @@ if (!isset($_SESSION['user'])) {
 <?php require 'header.php' ?>
   
 <div id="bodyDiv" class="container text-center">    
-	<div class="col-lg-6 col-sm-6">
+	<div class="col-xs-10 col-xs-offset-1">
     <div class="card hovercard">
         <div id="blurred" class="card-background">
 		<img id= src="">

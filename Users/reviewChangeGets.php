@@ -6,9 +6,7 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 require_once 'dbConnection.php';
 require_once 'userInformationUtility.php';
-if (!isset($_SESSION['user'])) {
-	header('Location: home.php');
-}
+
 					$conn = connect();
 					$sql = "SELECT * FROM review ORDER BY RAND() LIMIT 3";
 $i=0;

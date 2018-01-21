@@ -49,8 +49,6 @@ if (session_status() == PHP_SESSION_NONE) {
 </head>
 <body>
 
-<?php require 'header.php' ?>
-
 <div id="bodyDiv" class="container text-center">    
 	<div class="row" id="bodyContent">
 		<div id="viewOrdersChange"></div>
@@ -61,7 +59,6 @@ if (session_status() == PHP_SESSION_NONE) {
 	
 </div>
 
-<?php require 'footer.php' ?>
 
 </body>
 </html>
