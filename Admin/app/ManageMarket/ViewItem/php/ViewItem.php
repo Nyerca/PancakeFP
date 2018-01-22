@@ -44,6 +44,7 @@ if ($conn->connect_error) {
           $query_sql="SELECT * FROM categoryitem";
           $result = $conn->query($query_sql);
           if ($result->num_rows > 0) {
+            echo '<option>Select the category!</option>';
             while($row = $result->fetch_assoc()) {
               ?>
                 <option><?php echo $row["CategoryName"]; ?></option>
@@ -59,7 +60,7 @@ if ($conn->connect_error) {
     <br/>
 <?php
 $idFil = $_GET['fil'];
-$query_sql="SELECT * FROM item WHERE CategoryID=$idFil"; //need to create a filer for category
+$query_sql="SELECT * FROM item WHERE CategoryID=$idFil";
 $items = $conn->query($query_sql);
 if ($items->num_rows > 0) {
   while($row = $items->fetch_assoc()) {
@@ -83,10 +84,9 @@ $conn->close();
     var PageToSendTo = "GetIdFromFilter.php?";
     var VariablePlaceholder = "fil=";
     var UrlToSend = PageToSendTo + VariablePlaceholder + $("#categoryitem").val();
-    console.log(UrlToSend);
+    var toSet = $("#categoryitem").val();
     window.location.href = UrlToSend;
   }
-
 </script>
 
 </div>

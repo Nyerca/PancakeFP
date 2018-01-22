@@ -17,5 +17,5 @@ $query_sql="SELECT * FROM `categoryitem` WHERE CategoryName='$fil'";
 $items = $conn->query($query_sql);
 $row = $items->fetch_assoc();
 $idCategory = $row['CategoryID'];
-header("Location: ViewItem.php?fil='$idCategory'");
+header("location: ViewItem.php?fil=".$idCategory);
 ?>
