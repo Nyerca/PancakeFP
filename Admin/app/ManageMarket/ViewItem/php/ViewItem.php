@@ -36,10 +36,30 @@ if ($conn->connect_error) {
         <input id="bellNotification" type="image" src="../../../../res/bellNotification.png" name="bellNotification" alt="bellNotification" width="50" height="50"/>
       </div>
     </div>
+
+
+    <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+      <select onchange="Filter()" lass="selectpicker" name="categoryitem" id="categoryitem">
+          <?php
+          $query_sql="SELECT * FROM categoryitem";
+          $result = $conn->query($query_sql);
+          if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+              ?>
+                <option><?php echo $row["CategoryName"]; ?></option>
+              <?php
+            }
+          }
+          ?>
+      </select>
+    </div>
+
+
     <br/>
     <br/>
 <?php
-$query_sql="SELECT * FROM item WHERE CategoryID=1"; //need to create a filer for category
+$idFil = $_GET['fil'];
+$query_sql="SELECT * FROM item WHERE CategoryID=$idFil"; //need to create a filer for category
 $items = $conn->query($query_sql);
 if ($items->num_rows > 0) {
   while($row = $items->fetch_assoc()) {
@@ -59,20 +79,18 @@ $conn->close();
 ?>
 
 <script type="text/javascript">
-  function Selected(idItem) {
-    $(".items").css("background-color", "#ffffff");
-    $("#"+idItem).css("background-color", "red");
-    document.getElementById('pancake').innerHTML = idItem;
+  function Filter() {
+    var PageToSendTo = "GetIdFromFilter.php?";
+    var VariablePlaceholder = "fil=";
+    var UrlToSend = PageToSendTo + VariablePlaceholder + $("#categoryitem").val();
+    console.log(UrlToSend);
+    window.location.href = UrlToSend;
   }
 
-  function SubmitPancake() {
-    var pan = document.getElementById('pancake').innerHTML;
-    window.location = "SubmitPancakeInRP.php?pan="+pan;
-  }
 </script>
 
-
 </div>
+
 <div class="row2">
   <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12">
       <a onclick="#" href="#" class = "btn btn-default btn-lg" role="button">Back</a>
