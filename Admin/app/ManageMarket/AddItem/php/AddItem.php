@@ -51,7 +51,7 @@ if ($conn->connect_error) {
       </div>
 
       <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
-        <select class="selectpicker" name="categoryitem" id="categoryitem">
+        <select onchange="CheckIfPancake()" lass="selectpicker" name="categoryitem" id="categoryitem">
             <?php
             $query_sql="SELECT * FROM categoryitem";
             $result = $conn->query($query_sql);
@@ -88,7 +88,7 @@ if ($conn->connect_error) {
       </div>
     </div>
 
-    <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div id="seasoning" class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
       <h3>Choose seasonings</h3>
       <div class="form-check">
         <?php
@@ -119,9 +119,18 @@ if ($conn->connect_error) {
         </label>
       </div>
     </form>
-
-
 </div>
+
+<script type="text/javascript">
+  function CheckIfPancake() {
+    if($("#categoryitem").val() == "drink" || "coffee") {
+       $("#seasoning").fadeOut();
+    }
+    if($("#categoryitem").val() == "pancake"){
+      $("#seasoning").fadeIn();
+    }
+  }
+</script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>

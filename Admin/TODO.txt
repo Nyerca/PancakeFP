@@ -1,11 +1,14 @@
 BUG: in manage staff when delete someone, the position are not refreshed
 -- try with ajax to get the new contents and newly load. SOLVED IT, to test.
 
-//TODO: view of all elements (items + royal pancakes). Todo also selector for example
+//TODO: view of all elements (items + royal pancakes) and possibility
+to delete them. Todo also selector for example
 for Items need to do filter for Pancake, Drink and coffee. 
 
 //TODO: page of DeliveryMan that is kind of "View Orders" of Admin where he can see
 the orders that have been assign to him
+
+//TODO: view of orders incomplete and complete
 
 //TODO: implemet geolocalization (introducing also page for delivery man 
 which have to see the given orders and the map --just if 
