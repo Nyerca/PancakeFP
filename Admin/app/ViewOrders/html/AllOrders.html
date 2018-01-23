@@ -6,9 +6,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 <meta name="viewport" content="width = device-width, initial-scale = 1">
-<title>Welcome Boss</title>
+<title>View all orders</title>
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-<link rel="stylesheet" href="../css/WelcomeBoss.css">
+<link rel="stylesheet" href="../css/ViewOrders.css">
 </head>
 <body>
 
@@ -16,7 +16,7 @@
 
   <div class="row">
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-      <h1>Welcome Boss</h1>
+      <h1>View all orders</h1>
     </div>
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
       <input id="bellNotification" type="image" src="../../../res/bellNotification.png" name="bellNotification" alt="bellNotification" width="50" height="50"/>
@@ -26,19 +26,15 @@
   <br/>
 
   <div class="row2">
-    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-      <a href="../../ManageMarket/html/ManageMarket.html" class = "btn btn-default btn-lg" role="button">Manage Market</a>
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <a href="../php/ViewOrders.php?st=0" class = "btn btn-default btn-lg" role="button">Incomplete</a>
     </div>
-    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-      <a href="../../ManageStaff/php/ManageStaff.php" class = "btn btn-default btn-lg" role="button">Manage Staff</a>
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <a href="../php/ViewOrders.php?st=1" class = "btn btn-default btn-lg" role="button">Delivered</a>
     </div>
-    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-      <a href="../../NewNotification/html/NewNotification.html" class = "btn btn-default btn-lg" role="button">New Notification</a>
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <a href="../php/ViewOrders.php?st=2" class = "btn btn-default btn-lg" role="button">Completed</a>
     </div>
-    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-      <a href="../../ViewOrders/html/AllOrders.html" class = "btn btn-default btn-lg" role="button">View Orders</a>
-    </div>
-
   </div>
 </div>
 

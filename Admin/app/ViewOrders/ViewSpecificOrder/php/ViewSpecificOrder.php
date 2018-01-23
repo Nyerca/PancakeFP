@@ -5,10 +5,6 @@
   $database = "dbfp";
 
   $conn = new mysqli($servername, $username, $password, $database);
-
-
-  $sql = "SELECT * FROM orders";
-  $result = $conn->query($sql);
 ?>
 
 
@@ -118,12 +114,16 @@ $RPancakes = $conn->query($query_sql2);
         echo '</div>';
       }
       ?>
-
-  <div class="row2">
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-      <a href="../SetDelivery/php/SetDelivery.php?id=<?php echo $id ?>" class = "btn btn-default btn-lg" role="button">Set delivery man</a>
-    </div>
-  </div>
+<?php
+  $status = $_GET['st'];
+  if($status === 0) {
+    echo '<div class="row2">';
+    echo '<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">';
+    echo '<a href="../SetDelivery/php/SetDelivery.php?id='.$id.'" class = "btn btn-default btn-lg" role="button">Set delivery man</a>';
+    echo '</div>';
+    echo '</div>';
+  }
+    ?>
 <br/>
 <br/>
   <div class="row2">

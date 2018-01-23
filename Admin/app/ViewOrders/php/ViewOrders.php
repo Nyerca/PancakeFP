@@ -6,9 +6,6 @@
 
   $conn = new mysqli($servername, $username, $password, $database);
 
-
-  $sql = "SELECT * FROM orders";
-  $result = $conn->query($sql);
 ?>
 
 
@@ -40,7 +37,8 @@
 
   <div>
   	<?php
-  			$query_sql="SELECT IDOrder, Email FROM orders";
+        $status = $_GET['st'];
+  			$query_sql="SELECT IDOrder, Email FROM orders WHERE Status='$status'";
   			$result = $conn->query($query_sql);
   			if($result !== false){
   			?>
@@ -56,7 +54,7 @@
   				if ($result->num_rows > 0) {
   					while($row = $result->fetch_assoc()) {
   						?>
-  						<tr onclick="myFunction('<?php echo $row["IDOrder"] ?>')">
+  						<tr onclick="myFunction('<?php echo $row["IDOrder"] ?>', '<?php echo $status ?>')">
   							<td><?php echo $row["IDOrder"]; ?></td>
   							<td><?php echo $row["Email"]; ?></td>
   						</tr>
@@ -77,17 +75,18 @@
 <br/>
   <div class="row2">
   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-    <a href="http://127.0.0.1/TWProject/app/WelcomeBoss/html/WelcomeBoss.html" class = "btn btn-default btn-lg" role="button">Back</a>
+    <a href="#" class = "btn btn-default btn-lg" role="button">Back</a>
   </div>
 
 </div>
 
 
 <script type="text/javascript">
-function myFunction(fc) {
+function myFunction(fc, status) {
   var VariablePlaceholder = "id=";
   var UrlToSend = VariablePlaceholder + fc;
-  window.location.href = "../ViewSpecificOrder/php/ViewSpecificOrder.php?" + UrlToSend;
+  var st = "&" + "st=" +status;
+  window.location.href = "../ViewSpecificOrder/php/ViewSpecificOrder.php?" + UrlToSend + st;
 }
 </script>
 
