@@ -26,7 +26,6 @@ if ($conn->connect_error) {
 <link rel="stylesheet" href="../css/ViewItem.css">
 </head>
 <body>
-  <span id="pancake" style="display:none;"></span>
   <div class="container">
     <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">

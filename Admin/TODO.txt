@@ -1,7 +1,7 @@
 BUG: in manage staff when delete someone, the position are not refreshed
 -- try with ajax to get the new contents and newly load. SOLVED IT, to test.
 
-//TODO: view of all elements (items + royal pancakes--filter) and possibility
+//TODO: view of all elements (items + royal pancakes) and possibility
 to delete them. 
 
 //TODO: page of DeliveryMan that is kind of "View Orders" of Admin where he can see
