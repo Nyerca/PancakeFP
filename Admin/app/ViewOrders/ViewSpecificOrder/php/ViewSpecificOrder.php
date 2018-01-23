@@ -77,24 +77,23 @@ $RPancakes = $conn->query($query_sql2);
   			?>
   			  </tbody>
   			</table>
-
-        <div class="pancakes" class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-          <h3>Items</h3>
-            <?php
-            if ($items->num_rows > 0) {
-              while($row = $items->fetch_assoc()) {
-                echo '<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">';
-                echo '<h4>'.$row['Name'].'</h4>';
-                echo '<figure class="figure">';
-                echo '<img  class="figure-img img-fluid rounded" width="100" height="100" src="' . htmlspecialchars($row['Photo']) . '"/>';
-                echo '<figcaption class="figure-caption"> Price:'.$row['Price'].'</figcaption>';
-                echo '<h4> Quantity: '.$row['Amount'].'</h4>';
-                echo '</figure>';
-                echo '</div>';
-              }
+        <?php
+          if ($items->num_rows > 0) {
+            echo '<div class="pancakes" class="col-lg-4 col-md-4 col-sm-6 col-xs-12">';
+            echo  '<h3>Items</h3>';
+            while($row = $items->fetch_assoc()) {
+              echo '<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">';
+              echo '<h4>'.$row['Name'].'</h4>';
+              echo '<figure class="figure">';
+              echo '<img  class="figure-img img-fluid rounded" width="100" height="100" src="' . htmlspecialchars($row['Photo']) . '"/>';
+              echo '<figcaption class="figure-caption"> Price:'.$row['Price'].'</figcaption>';
+              echo '<h4> Quantity: '.$row['Amount'].'</h4>';
+              echo '</figure>';
+              echo '</div>';
             }
+            echo '</div>';
+          }
             ?>
-        </div>
 
   		  <?php
   			}
@@ -102,10 +101,10 @@ $RPancakes = $conn->query($query_sql2);
   	?>
   </div>
 
-  <div class="royalPancakes"  class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-    <h3>Royal Pancakes</h3>
-      <?php
+  <?php
       if ($RPancakes->num_rows > 0) {
+        echo '<div class="royalPancakes"  class="col-lg-4 col-md-4 col-sm-6 col-xs-12">';
+        echo '<h3>Royal Pancakes</h3>';
         while($row = $RPancakes->fetch_assoc()) {
           echo '<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">';
           echo '<h4>'.$row['RoyalName'].'</h4>';
@@ -116,9 +115,9 @@ $RPancakes = $conn->query($query_sql2);
           echo '</figure>';
           echo '</div>';
         }
+        echo '</div>';
       }
       ?>
-  </div>
 
   <div class="row2">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -133,6 +132,7 @@ $RPancakes = $conn->query($query_sql2);
     </div>
   </div>
 </div>
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
