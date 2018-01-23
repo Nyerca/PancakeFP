@@ -29,7 +29,6 @@ if (!isset($_SESSION['user'])) {
 	<div class="col-xs-10 col-xs-offset-1">
     <div class="card hovercard">
         <div id="blurred" class="card-background">
-		<img id= src="">
         </div>
         <div id="userPht" class="useravatar">
         </div>

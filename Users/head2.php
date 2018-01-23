@@ -13,6 +13,16 @@ function showNotifications() {
 	xmlhttp.send();
 	getCurrent();
 	$last=0;
+	
+	xmlhttp2 = new XMLHttpRequest();
+	xmlhttp2.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			document.getElementById("notifications").innerHTML = this.responseText;
+		}
+	};
+	xmlhttp2.open("GET","showNotifications.php",true);
+	xmlhttp2.send();
+	
 	var el= document.getElementById("not");
 	el.classList.remove('show-count');
 	el.setAttribute('data-count', 0);
@@ -56,6 +66,7 @@ function setNotifications($val) {
 
 	<div id="notificationSpace"><b>Person info will be listed here...</b></div>
 	<div id="currentNotification"><b>Person info will be listed here...</b></div>
+	
 </body>
 </html>
 
