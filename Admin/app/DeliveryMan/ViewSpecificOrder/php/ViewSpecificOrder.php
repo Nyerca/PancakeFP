@@ -18,12 +18,12 @@
 <meta name="viewport" content="width = device-width, initial-scale = 1">
 <title>View orders</title>
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-<link rel="stylesheet" href="../../css/ViewOrders.css">
+<link rel="stylesheet" href="../../css/DeliveryOrders.css">
 </head>
 <body>
 <?php
 $id = $_GET["id"];
-$query_sql="SELECT * FROM orders o, iteminorder io, item i, deliverymode d WHERE o.IDOrder=io.IDOrder AND io.IDItem=i.IDItem AND io.Email=o.Email AND o.IDOrder='$id' AND o.IDDeliveryMode=d.IDDeliveryMode";
+$query_sql="SELECT * FROM orders o, iteminorder io, item i WHERE o.IDOrder=io.IDOrder AND io.IDItem=i.IDItem AND io.Email=o.Email AND o.IDOrder='$id'";
 $items = $conn->query($query_sql);
 
 $query_sql2="SELECT * FROM orders o, orderroyalpancake orp , royalpancake r WHERE o.IDOrder=orp.IDOrder AND orp.IDRoyalPancake=r.IDRoyalPancake AND orp.Email=o.Email AND o.IDOrder='$id'";
@@ -75,15 +75,11 @@ $RPancakes = $conn->query($query_sql2);
                 echo '<td>'.$row["CAP"].'</td>';
                 echo'</tr>';
               } else if(strlen($row['Latitude']) > 0 ) {
-                echo '<tr>';
-                echo '<td>Delivery mode:</td>';
-                echo '<td>Geolocalization</td>';
-                echo'</tr>';
+                echo '<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">';
+                echo '<button onclick=Geolocalize('.$row['Latitude'].','.$row['Longitude'].') class = "btn btn-default btn-lg" role="button">See coordinates</button>';
+                echo '</div>';
               } else {
-                echo '<tr>';
-                echo '<td>Delivery mode:</td>';
-                echo '<td>In market</td>';
-                echo'</tr>';
+                echo '<p>In market</p>';
               }
               ?>
               <?php
@@ -132,17 +128,7 @@ $RPancakes = $conn->query($query_sql2);
         echo '</div>';
       }
       ?>
-<?php
-  $status = $_GET['st'];
-  $row = $items->fetch_assoc();
-  if($status == 0 || (strlen($row["Address"]) == 0 && strlen($row["Longitude"]) == 0 )) {
-    echo '<div class="row2">';
-    echo '<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">';
-    echo '<a href="../SetDelivery/php/SetDelivery.php?id='.$id.'" class = "btn btn-default btn-lg" role="button">Set delivery man</a>';
-    echo '</div>';
-    echo '</div>';
-  }
-    ?>
+
 <br/>
 <br/>
   <div class="row2">
@@ -152,6 +138,11 @@ $RPancakes = $conn->query($query_sql2);
   </div>
 </div>
 
+<script type="text/javascript">
+  function Geolocalize(lat, long) {
+    window.location.href = "Geolocalization/Geolocalization.php?"+ "lat=" + lat + "&long=" + long;
+  }
+</script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>

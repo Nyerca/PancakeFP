@@ -15,7 +15,7 @@ if ($conn->connect_error) {
 
 // prepare and bind
 $stmt = $conn->prepare("INSERT INTO `deliveryman` (`Deleted`, `Email`, `FiscalCode`, `Name`,  `Password`, `PhoneNumber`, `Surname`) VALUES(?, ?, ?, ?, ?, ?, ?)");
-$stmt->bind_param("sssssss", $Deleted, $Email, $FiscalCode, $Name, $Password, $Surname, $Phone);
+$stmt->bind_param("sssssss", $Deleted, $Email, $FiscalCode, $Name, $Password, $Phone, $Surname);
 if(!isset($_POST["email1"]) || !isset($_POST["password1"]) || !isset($_POST["name"]) || !isset($_POST["surname"]) || !isset($_POST["fc"]) || !isset($_POST["phone"]) ) {
   die("Fill all the fields.");
 }
@@ -25,8 +25,8 @@ $Email = $_POST['email1'];
 $Password = $_POST['password1'];
 $Name = $_POST['name'];
 $Surname = $_POST['surname'];
-$FiscalCode = $_POST['fc'];
 $Phone = $_POST['phone'];
+$FiscalCode = $_POST['fc'];
 
 $stmt->execute();
 $stmt->close();

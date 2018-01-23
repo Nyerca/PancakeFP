@@ -46,9 +46,12 @@
     </style>
   </head>
   <body>
+    <?php
+      $lat = $_GET['lat'];
+      $long = $_GET['long'];
+     ?>
     <div hidden id="floating-panel">
-      <input id="latlng" type="text" hidden value="44.3537312,11.7217857">
-      <input id="submit" type="button" hidden value="Geolocalize">
+      <input id="latlng" type="text" value="<?php echo $lat ?>, <?php echo $long ?>">
     </div>
     <div id="map"></div>
     <script>
@@ -59,10 +62,7 @@
         });
         var geocoder = new google.maps.Geocoder;
         var infowindow = new google.maps.InfoWindow;
-
-      //  document.getElementById('submit').addEventListener('click', function() {
-          geocodeLatLng(geocoder, map, infowindow);
-      //  });
+        geocodeLatLng(geocoder, map, infowindow);
       }
 
       function geocodeLatLng(geocoder, map, infowindow) {

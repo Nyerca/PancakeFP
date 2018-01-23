@@ -40,11 +40,17 @@
       <?php
       if ($result->num_rows > 0) {
           while($row = $result->fetch_assoc()) {
+            $mail = $row["Email"];
+            $first = strtok($mail, "@");
+            $second = strtok(".");
+            $third = strtok("");
+            $mail = $first."X".$second."Y".$third;
             ?>
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-              <div class="mans" onclick="SelectDelivery('<?php echo $row["FiscalCode"] ?>')" id="<?php echo $row["FiscalCode"] ?>" style="display: block;">
+              <div class="mans" onclick="SelectDelivery('<?php echo $mail ?>')" id="<?php echo $mail ?>" style="display: block;">
                 <label>Name: </label>  <?php echo $row["Name"]; ?> <br/>
                 <label>Surname: </label>  <?php echo $row["Surname"]; ?> <br/>
+                <label>Email: </label>  <?php echo $row["Email"]; ?> <br/>
                 <label>Fiscal code: </label>  <?php echo $row["FiscalCode"]; ?> <br/>
                 <label>Phone Number: </label>  <?php echo $row["PhoneNumber"]; ?> <br/>
               </div>
