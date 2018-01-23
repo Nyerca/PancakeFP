@@ -48,10 +48,39 @@ function setNotifications($val) {
 </head>
 <body>
 
-<div id="notifyContainer" class="container">
-<button onclick="showNotifications()" data-count="<?php if(isset($_GET["numb"])) {  if($_GET["numb"] > 0) { echo  $_GET["numb"];} }?>"
+	
+	
+	
+		
+		
+
+
+
+<div id="menuCog" class="btn-group">
+	<button data-toggle="dropdown" data-target="#notificationCheck" onclick="showNotifications()" data-count="<?php if(isset($_GET["numb"])) {  if($_GET["numb"] > 0) { echo  $_GET["numb"];} }?>"
 id="not" class="notification <?php if(isset($_GET["numb"])) {  if($_GET["numb"] > 0) { echo  "notify show-count";} }?>"></button>
-    <button onclick="addNotifications()"  id="notify">Increment Notifications</button>
-</div>
+			
+			<div id="notificationCheck">
+			<ul class="dropdown-menu dropdown-menu-right">
+				<div id="notifications"><b>Person info will be listed here...</b></div>
+
+              <li class="divider"></li>
+              <li><a class="text-center" href="">View All</a></li>                  
+			</ul>
+		</div>
+		</div>
+
+
 </body>
 </html>
+
+<script type="text/javascript">
+$( document ).ready(function() {
+	$("#not").click(function() {
+	  $("a.dropdown-toggle").dropdown("toggle");
+	});
+
+	
+
+});
+</script>

@@ -7,7 +7,7 @@
 	margin: -12px -10px -10px -10px;
 }
 #logo {
-	margin-left: 55%;
+	margin-left: 70%;
 	margin-top: 5px;
 }
 
@@ -21,12 +21,13 @@
 	font-size:80%;
 }
 
-#userImg {
+#userMainPht {
 	width:30px;
 	float: left;
 }
 
 #user_name {
+	margin-left:15%;
 	float: left;
 }
 #myNavbar {
@@ -34,15 +35,21 @@
 	float:left;
 }
 #navHead {
-	width: 70%;
+	width: 60%;
 	float:left;
 }
 #cog {
 	border:none;
 	padding:0;
 	background-color:transparent;
+	float:left;
 }
-
+#shop {
+	float:left;
+}
+#notificationSpace {
+	float:left;
+}
 /* Footer */ 
 footer {
 	font-size:100%;
@@ -190,7 +197,7 @@ textarea {
 		width:0;
 	}
 	#user_name {
-		margin-left:10%;
+		margin-left:5%;
 	}
 
 	#menuPhone {
@@ -198,7 +205,7 @@ textarea {
 	}
 	
 	#myNavbar {
-		width:70%;
+		width:67%;
 	}
 	
 	#navHead {
