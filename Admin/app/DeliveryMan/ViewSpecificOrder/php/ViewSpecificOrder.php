@@ -79,7 +79,10 @@ $RPancakes = $conn->query($query_sql2);
                 echo '<button onclick=Geolocalize('.$row['Latitude'].','.$row['Longitude'].') class = "btn btn-default btn-lg" role="button">See coordinates</button>';
                 echo '</div>';
               } else {
-                echo '<p>In market</p>';
+                echo '<tr>';
+                echo '<td>Delivery mode:</td>';
+                echo '<td>In market</td>';
+                echo'</tr>';
               }
               ?>
               <?php

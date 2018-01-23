@@ -34,6 +34,7 @@ session_start(); // TODO session for delivery
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
       <input id="bellNotification" type="image" src="../../../res/bellNotification.png" name="bellNotification" alt="bellNotification" width="50" height="50"/>
     </div>
+    <span class="glyphicon glyphicon-log-out">Logout</span>
   </div>
 
   <div>
