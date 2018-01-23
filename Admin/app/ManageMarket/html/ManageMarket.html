@@ -33,7 +33,7 @@
       <a href="../AddItem/php/AddItem.php" class = "btn btn-default btn-lg" role="button">Add</a>
     </div>
     <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-      <button onclick="Test()" class = "btn btn-default btn-lg" role="button">View</button>
+      <button onclick="ViewOfItem()" class = "btn btn-default btn-lg" role="button">View</button>
     </div>
     <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
       <h3>RoyalPancakes</h3>
@@ -42,15 +42,21 @@
       <a href="../AddRoyalPancake/php/AddRoyalPancake.php" class = "btn btn-default btn-lg" role="button">Add</a>
     </div>
     <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-      <a href="../ViewRoyalPancake/php/ViewRoyalPancake.php" class = "btn btn-default btn-lg" role="button">View</a>
+      <button onclick="ViewOfRoyalPancake()" class = "btn btn-default btn-lg" role="button">View</button>
     </div>
   </div>
 </div>
 
 <script type="text/javascript">
-  function Test() {
+  function ViewOfItem() {
     window.location.href = "../ViewItem/php/ViewItem.php?"+"fil=1";
   }
+
+  function ViewOfRoyalPancake() {
+    window.location.href = "../ViewRoyalPancake/php/ViewRoyalPancake.php?"+"fil=1";
+  }
+
+
 </script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>

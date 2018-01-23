@@ -38,8 +38,26 @@ if ($conn->connect_error) {
     </div>
     <br/>
     <br/>
+    <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <select onchange="Filter()" lass="selectpicker" name="categoryitem" id="categoryitem">
+          <?php
+          $query_sql="SELECT * FROM categoryroyalpancakes";
+          $result = $conn->query($query_sql);
+          if ($result->num_rows > 0) {
+            echo '<option>Select the category!</option>';
+            while($row = $result->fetch_assoc()) {
+              ?>
+                <option><?php echo $row["CategoryName"]; ?></option>
+              <?php
+            }
+          }
+          ?>
+      </select>
+    </div>
+
 <?php
-$query_sql="SELECT * FROM royalpancake";
+$idFil = $_GET['fil'];
+$query_sql="SELECT * FROM royalpancake  WHERE CategoryID=$idFil";
 $royal = $conn->query($query_sql);
 if ($royal->num_rows > 0) {
   while($row = $royal->fetch_assoc()) {
@@ -67,7 +85,8 @@ function calculatePrice($idRP) {
       $priceRP = $priceRP + $row['Price'];
     }
   }
-  return $priceRP;
+  $discountedPriceRP = $priceRP * 0.7; // 30% of discount
+  return $discountedPriceRP;
 }
 
 
@@ -85,6 +104,14 @@ $conn->close();
     var pan = document.getElementById('royalpancake').innerHTML;
     window.location = "SubmitPancakeInRP.php?pan="+pan;
   }
+
+  function Filter() {
+      var PageToSendTo = "GetIdFromFilterRP.php?";
+      var VariablePlaceholder = "fil=";
+      var UrlToSend = PageToSendTo + VariablePlaceholder + $("#categoryitem").val();
+      var toSet = $("#categoryitem").val();
+      window.location.href = UrlToSend;
+    }
 </script>
 
 
