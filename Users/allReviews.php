@@ -1,23 +1,7 @@
 <?php
 require_once 'dbConnection.php';
-		$conn =connect();
-		$sql = "SELECT AVG(Vote) as average FROM review";
-		
-		$result = $conn->query($sql);
+require_once 'allReviewsUtility.php';
 ?>
-<script type="text/javascript">
-function AddToCart(id, name, price, amount) {
-	xmlhttp = new XMLHttpRequest();
-	xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-				alert("ok");
-                document.getElementById("divReviews").innerHTML = this.responseText;
-            }
-        };
-	xmlhttp.open("GET","allReviews.php",true);
-	xmlhttp.send();
-}
-</script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,7 +11,8 @@ function AddToCart(id, name, price, amount) {
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" type="text/css" title="stylesheet" href="reviewStyle.css">
+  <link rel="stylesheet" type="text/css" title="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" title="stylesheet" href="allReviews.css">
 </head>
 <body>
 
@@ -38,20 +23,86 @@ function AddToCart(id, name, price, amount) {
 	<div id="firstReview">
 		<h1>Recensioni</h1><br>
 		
-		<div class="container">  
-		<h1>Media voti</h1><br>
-		<?php
-		if($result->num_rows > 0)	{
-			while($row = $result->fetch_assoc()) {
-				?>
-				<p><?php echo $row["average"]; ?> / 5</p>
-				<?php
-			}
-		}
-		?>
-
-		</div>
 		
+
+
+        <div class="col-xs-12">
+            <div class="well">
+                <div class="row">
+                    <div class="col-xs-12">
+						<p class="rating-num"><?php echo getAvg();?> <span id="bigStar" class="glyphicon glyphicon-star"></p> 
+						
+
+                    </div>
+					<div class="col-xs-12">
+                        <span class="glyphicon glyphicon-user"></span><?php echo getReviewsNumber();?> total
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="row rating-desc">
+                            <div class="col-xs-2 text-right">
+                                <span class="glyphicon glyphicon-star"></span>5
+                            </div>
+                            <div class="col-xs-9">
+                                <div class="progress progress-striped">
+                                    <div  id="w5" class="progress-bar progress-bar-success" role="progressbar" data-transitiongoal="75">
+                                        <span class="sr-only"><?php echo getStarPercentage(5); ?>%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end 5 -->
+                            <div class="col-xs-2 text-right">
+                                <span class="glyphicon glyphicon-star"></span>4
+                            </div>
+                            <div class="col-xs-9">
+                                <div class="progress">
+                                    <div id="w4" class="progress-bar progress-bar-success" role="progressbar" data-transitiongoal="75">
+                                        <span class="sr-only"><?php echo getStarPercentage(4);?>%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end 4 -->
+                            <div class="col-xs-2 text-right">
+                                <span class="glyphicon glyphicon-star"></span>3
+                            </div>
+                            <div class="col-xs-9">
+                                <div class="progress">
+                                    <div id="w3" class="progress-bar progress-bar-info" role="progressbar" data-transitiongoal="75">
+                                        <span class="sr-only"><?php echo getStarPercentage(3);?>%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end 3 -->
+                            <div class="col-xs-2 text-right">
+                                <span class="glyphicon glyphicon-star"></span>2
+                            </div>
+                            <div class="col-xs-9">
+                                <div class="progress">
+                                    <div id="w2" class="progress-bar progress-bar-warning" role="progressbar" data-transitiongoal="75">
+                                        <span class="sr-only"><?php echo getStarPercentage(2);?>%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end 2 -->
+                            <div class="col-xs-2 text-right">
+                                <span class="glyphicon glyphicon-star"></span>1
+                            </div>
+                            <div class="col-xs-9">
+                                <div class="progress">
+                                    <div id="w1" class="progress-bar progress-bar-danger" role="progressbar" data-transitiongoal="75">
+                                        <span class="sr-only"><?php echo getStarPercentage(1);?>%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end 1 -->
+                        </div>
+                        <!-- end row -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
 		<div class="container">  
 		<p>Scegli la stella di cui vuoi vedere le recensioni</p>
 		<button id="star1" type="button" onclick="Shine(1)">
@@ -95,6 +146,17 @@ $( document ).ready(function() {
         };
 	xmlhttp.open("GET","allReviewsChange.php",true);
 	xmlhttp.send();
+	
+<?php
+	for($i=1; $i<6; $i++) {
+		$perc = getStarPercentage($i);
+		?>
+		$percentage = <?php echo $perc;?> + "%";
+		var e1 = document.getElementById("w"+<?php echo $i;?>);
+		e1.style.width = $percentage;
+		<?php
+	}
+	?>
 });
 
 function Shine($number) {

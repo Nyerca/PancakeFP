@@ -113,10 +113,11 @@ create table SeasoningInItem (
      constraint IDSeasoningInRoyalPancake primary key (IDItem, IDSeasoning));
 
 create table UserNotification (
-     IDUserNofitication char(100) not null,
+     IDUserNofitication int not null AUTO_INCREMENT,
      Title char(100) not null,
      Description char(100) not null,
      Email char(100) not null,
+	 Status char(1) not null,
      constraint IDUserNotification primary key (IDUserNofitication));
 
 create table Users (
@@ -124,7 +125,7 @@ create table Users (
      Password char(100) not null,
      Username char(100) not null,
      IsStudent char(100),
-     Photo char(100),
+     Photo char(100) DEFAULT "0",
      PhoneNumber char(100),
      constraint IDUser primary key (Email));
 

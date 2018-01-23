@@ -31,7 +31,26 @@ function ViewReview() {
 		</div>
 	</div>
 	
-	
+	<div class="container">
+	<div class="row-fluid">
+        <div class="col-xs-12 col-sm-8">
+        	<iframe width="100%" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" 
+			 src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJXYBY6JakLBMR8evItrbN89Y&key=AIzaSyAyyNlt6JQ-5Na8Sqq73AMh57zXfdd9gBI">
+			</iframe>
+    	</div>
+    	
+      	<div class="col-xs-12 col-sm-4">
+    		<h2>PF Pancakes</h2>
+    		<address>
+    			Via Sangro 66<br>
+    			47522<br>
+    			Cesena<br>
+    			Italia<br>
+    			01234 567 890
+    		</address>
+    	</div>
+    </div>
+</div>
 
 	<div class="container">
 	<div class="row">
