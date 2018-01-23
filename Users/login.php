@@ -20,6 +20,19 @@ if (session_status() == PHP_SESSION_NONE) {
 			header("location: WelcomeBoss.html");
 		}
 		
+		$stmt3 = $conn->prepare("SELECT Email FROM deliveryman WHERE Email=?");
+		$emails = $_POST["email"];
+		$stmt3->bind_param("s", $emails);
+		$stmt3->execute();
+		$stmt3->bind_result($email);
+        $stmt3->store_result();
+        $stmt3->fetch();          
+        if($stmt3->num_rows > 0)
+        {
+			$_SESSION['delivery']["email"] = $email;
+			header("location: WelcomeDelivery.php");
+		}
+		
 		
 		$stmt = $conn->prepare("SELECT Email, Username FROM Users WHERE Email=?");
 		$emails = $_POST["email"];
