@@ -1,6 +1,12 @@
 BUG: in manage staff when delete someone, the position are not refreshed
 -- try with ajax to get the new contents and newly load. SOLVED IT, to test.
 
+//TODO: to set usernotificaton database table and rearrange code for notificaion.
+
+//TODO: do notification in adminnotificaion and in deliverymannotification -- give
+the option to delivery man to set "complete" an order
+
+//TODO: payment visualization in order
 
 //TODO: sql injection
 
