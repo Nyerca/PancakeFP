@@ -14,7 +14,7 @@ $conn = connect();
 	$result = getItemInOrder($email);
 ?>
 <script type="text/javascript">
-$stringGeo="";
+var stringGeo = "";
 function nextOne() {
 	var $active = $('.wizard .nav-tabs li.active');
     $active.next().removeClass('disabled');
@@ -29,7 +29,7 @@ function end() {
 		if(document.querySelector('input[name="optradio2"]:checked').value==1) {
 			$stringAddr = CheckAddress();
 		} else {
-			alert(Geolocalization());
+			$stringAddr = stringGeo;
 		}
 	}
 	$dateTime = DeliverSupport();
@@ -150,7 +150,16 @@ function CheckAddress() {
 }
 
 function showPosition(position) {
-	return "&latitude="+position.coords.latitude+"&longitude="+position.coords.longitude;
+	xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+				stringGeo = stringGeo + this.responseText;
+                document.getElementById("latlong").innerHTML = this.responseText;
+            }
+        };
+	xmlhttp.open("GET","geo.php?latitude="+position.coords.latitude+"&longitude="+position.coords.longitude,true);
+	xmlhttp.send();
+
 }
 
 function Geolocalization() {
@@ -200,6 +209,7 @@ function CheckPay() {
 <?php require 'header.php' ?>
 
 <div id="bodyDiv" class="container text-center">
+<div hidden id="latlong"></div>
 
 <div class="row">
 		<section>
@@ -485,6 +495,8 @@ function Address(address) {
 	if(address==1) {
 		$("#indirizzoSelected").show();
 	} else {
+		alert("geolocalizzazione in corso");
+		Geolocalization();
 		$("#indirizzoSelected").hide();
 	}
 }

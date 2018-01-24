@@ -14,6 +14,11 @@ if(isset($_GET["addr"]) && isset($_GET["cap"]))  {
 	$cap = $_GET["cap"];
 	insertAddressInOrder($email, $addr, $cap);
 }
+if(isset($_GET["latitude"]) && isset($_GET["longitude"]))  {
+	$latitude = $_GET["latitude"];
+	$longitude = $_GET["longitude"];
+	insertGeolocalizationInOrder($email, $latitude, $longitude);
+}
 if(isset($_GET["cc"]) && isset($_GET["owner"]) && isset($_GET["expire"]))  {
 	$cardNumber = $_GET["cc"];
 	$cardOwner = $_GET["owner"];

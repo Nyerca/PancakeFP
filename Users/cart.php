@@ -357,6 +357,31 @@ class ShoppingCart {
 			}
 		}
 	}
+	function insertGeolocalizationInOrder($email, $latitude, $longitude) {
+		$conn =connect();
+		$sql = "SELECT IDOrder from Orders WHERE Status =0 AND Email = '".$email."'";
+		
+		$result = $conn->query($sql);
+		if($result->num_rows > 0)	{
+			while($row = $result->fetch_assoc()) {
+				$idOrder = $row["IDOrder"];
+				
+				$sql2 = "INSERT INTO deliverymode (Latitude, Longitude) VALUES ('".$latitude."', '".$longitude."')";
+				$conn->query($sql2);
+				
+				$sql3 = "SELECT MAX(IDDeliveryMode) AS max FROM deliverymode";
+				$result2 = $conn->query($sql3);
+				if($result2->num_rows > 0)	{
+					while($row2 = $result2->fetch_assoc()) {
+						$idDelivery= $row2["max"];
+						$sql4 = "UPDATE orders SET IDDeliveryMode = '".$idDelivery."' WHERE Email = '".$email."' AND IDOrder = ".$idOrder;
+						$conn->query($sql4);
+					}
+				}					
+				
+			}
+		}
+	}
 	
 	function addCardInfos($email, $cardNumber, $cardOwner, $expireDate) {
 		$conn =connect();

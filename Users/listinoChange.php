@@ -75,7 +75,7 @@ echo "HEHE";
 					while($row2 = $result2->fetch_assoc()) {
 					?>
 						<form>
-							<div id="<?php echo $row2["Name"]; ?>" class="row">
+							<div id="id <?php echo $row2["Name"]; ?>" class="row">
 								<div class="col-xs-12 col-sm-5">
 									<?php echo '<img height="60" src="' . htmlspecialchars($row2["Photo"]) . '"/>'; ?>
 									<p><?php echo $row2["Name"]; ?></p>
