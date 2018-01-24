@@ -14,6 +14,7 @@ $conn = connect();
 	$result = getItemInOrder($email);
 ?>
 <script type="text/javascript">
+$stringGeo="";
 function nextOne() {
 	var $active = $('.wizard .nav-tabs li.active');
     $active.next().removeClass('disabled');
@@ -28,7 +29,7 @@ function end() {
 		if(document.querySelector('input[name="optradio2"]:checked').value==1) {
 			$stringAddr = CheckAddress();
 		} else {
-			alert("Geolocalizzami DA IMPLEMENTARE");
+			alert(Geolocalization());
 		}
 	}
 	$dateTime = DeliverSupport();
@@ -146,6 +147,18 @@ function CheckAddress() {
 	if($addr && $cap) {
 		 return "&addr="+$addr+"&cap="+$cap;
 	}
+}
+
+function showPosition(position) {
+	return "&latitude="+position.coords.latitude+"&longitude="+position.coords.longitude;
+}
+
+function Geolocalization() {
+	if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+        alert("Geolocation is not supported by this browser.");
+    }
 }
 
 function Deliver() {

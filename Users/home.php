@@ -95,11 +95,13 @@ function ViewReview() {
 
 <?php require 'footer.php'; ?>
 
+
 </body>
 </html>
 
 <script type="text/javascript">
 $( document ).ready(function() {
+	 
 	
 	$("#carousel-reviews").on('slide.bs.carousel', function () {
 		if($('#carousel-reviews .active').index('#carousel-reviews .item')==0) {
