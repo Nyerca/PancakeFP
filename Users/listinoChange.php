@@ -6,6 +6,9 @@ if (session_status() == PHP_SESSION_NONE) {
 <html>
 <head>
 <script type="text/javascript">
+function showMoreDesc(id) {
+      $('#' + id).toggle(400)
+}
 function insert($email, $item, $amount) {
 xmlhttp = new XMLHttpRequest();
 xmlhttp.open("GET","carrelloChangeQuantity.php?eml=".concat($email)
@@ -14,6 +17,7 @@ xmlhttp.send();
 }
 
 function insertRoyal($email, $item, $amount, $note) {
+
 xmlhttp = new XMLHttpRequest();
 xmlhttp.open("GET","carrelloChangeQuantityR.php?eml=".concat($email)
 .concat("&idItm=").concat($item).concat("&amt=").concat($amount).concat("&note=").concat($note),true);
@@ -47,7 +51,6 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 require_once 'dbConnection.php';
 require_once 'cart.php';
-echo "HEHE";
 
 	$conn = connect();
 	if(!empty($_SESSION['user'])) {
@@ -63,78 +66,10 @@ echo "HEHE";
 		$email = "";
 	}
 
-	$result = getItemInOrder($email);
-	if($result->num_rows > 0) {
-		while($row = $result->fetch_assoc()) {
-		?>
-			<div id="divIt">
-			<?php
-				$sql2 = "SELECT * from item WHERE IDItem = ".$row["IDItem"];
-				$result2 = $conn->query($sql2);
-				if($result2->num_rows > 0) {
-					while($row2 = $result2->fetch_assoc()) {
-					?>
-						<form>
-							<div id="id <?php echo $row2["Name"]; ?>" class="row">
-								<div class="col-xs-12 col-sm-5">
-									<?php echo '<img height="60" src="' . htmlspecialchars($row2["Photo"]) . '"/>'; ?>
-									<p><?php echo $row2["Name"]; ?></p>
-								</div>
-								<div class="col-xs-6 col-sm-4">
-									<p><?php echo $row2["Price"]; ?></p>
-								</div>
-								<div class="col-xs-6 col-sm-3">
-									<input min="0" onclick="ifZero(this)" class="hiddenToZero" id="<?php echo $row2["IDItem"]; ?>" type="number" onchange="insert('<?php echo $email;?>','<?php echo $row2["IDItem"]; ?>',this.value)" value="<?php echo $row["Amount"]?>">
-								</div>
-							</div>
-						</form>
-<?php
-					}
-				}
-					?>
-			</div>
-			<?php
-		}
-	}
-	echo "HEHE2";
-	$resultr = getRoyalInOrder($email);
-	if($resultr->num_rows > 0) {
-		while($rowr = $resultr->fetch_assoc()) {
-		?>
-			<div id="divRo">
-			<?php
-				$sql2r = "SELECT * from royalpancake WHERE IDRoyalPancake = ".$rowr["IDRoyalPancake"];
-				$result2r = $conn->query($sql2r);
-				if($result2r->num_rows > 0) {
-					while($row2r = $result2r->fetch_assoc()) {
-?>
-						<form>
-							<div id="<?php echo $row2r["RoyalName"]; ?>" class="row">
-								<button id="<?php echo $row2r["RoyalName"]; ?>" type="button" onclick="popRoyal('<?php echo $row2r["IDRoyalPancake"]; ?>', '<?php echo $rowr["Note"]; ?>')">
-									<?php echo '<img height="60" src="' . htmlspecialchars($row2r["Photo"]) . '"/>'; ?>
-									<p><?php echo $row2r["RoyalName"]; ?></p>
-									<p><?php echo getRoyalPrice($rowr["IDRoyalPancake"],1,1,1); ?></p>
-								</button>									
-								<?php echo "LE NOTE SONO: ".$rowr["Note"]."<br/>";?>
-								<div class="col-xs-6 col-sm-3">
-									<input min="0" onclick="ifZero(this)" class="hiddenToZero" id="<?php echo $row2r["IDRoyalPancake"]; ?>" type="number" onchange="insertRoyal('<?php echo $email;?>','<?php echo $row2r["IDRoyalPancake"]; ?>',this.value, '<?php echo $rowr["Note"]; ?>')" value="<?php echo $rowr["Amount"]?>">
-								</div>
-							</div>
-						</form>
-<?php
-					}
-				}
-			?>
-			</div>
-		<?php
-		}
-	}
-	echo "HEHE3";
 
 if(!empty($_SESSION["cart"])) {	
 
 	if(isset($_GET['inc'])) {
-
 		if(isset($_GET['royals'])) {
 			echo "inc royal";
 			$conn =connect();
@@ -167,49 +102,228 @@ if(!empty($_SESSION["cart"])) {
 		
 				$u = unserialize($_SESSION["cart"]);
 	}
+	
+}
+	
+?>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="container">
+
+						<?php
+
+	$result = getItemInOrder($email);
+	if($result->num_rows > 0) {
+		while($row = $result->fetch_assoc()) {
+		?>
+			<div id="divIt">
+			<?php
+				$sql2 = "SELECT * from item WHERE IDItem = ".$row["IDItem"];
+				$result2 = $conn->query($sql2);
+				if($result2->num_rows > 0) {
+					while($row2 = $result2->fetch_assoc()) {
+					?>
+					
+					
+							<div id="<?php echo $row2["Name"]; ?>" class="btn-group col-md-3 col-sm-6 col-xs-12">
+									<div class="thumbnail">
+									<p><?php echo $row2["Price"]; ?></p>
+									 <?php echo '<img height="20" src="' . htmlspecialchars($row2["Photo"]) . '"/>'; ?>
+									  <div class="caption">
+											<div class="contentInline clearfix">
+												  <div class="responsive contentPart">
+														<div class="clearfix">
+															  <h3 class="pull-left"><?php echo $row2["Name"]; ?></h3>
+														</div>
+												  </div>
+												  <div class="responsive cartPart">
+														<div class="clearfix pull-right">
+															  <button id="<?php echo $row2["IDItem"]; ?>" onclick="insert('<?php echo $email;?>','<?php echo $row2["IDItem"]; ?>','<?php echo $row["Amount"] + 1; ?>')" class="btn btn-sm btn-primary addRemoveButton addButton addButton">+</button>
+															  <span>
+																	<?php echo $row["Amount"]?>
+															  </span>
+															  <button id="<?php echo $row2["IDItem"]; ?>" onclick="insert('<?php echo $email;?>','<?php echo $row2["IDItem"]; ?>','<?php echo $row["Amount"] - 1; ?>')" class="btn btn-sm btn-default addRemoveButton removeButton">-</button>
+														</div>
+												  </div>
+											</div>
+									  </div>
+								</div>
+							</div>
+<?php
+					}
+				}
+					?>
+			</div>
+			<?php
+		}
+	}
+
+	$resultr = getRoyalInOrder($email);
+	if($resultr->num_rows > 0) {
+		while($rowr = $resultr->fetch_assoc()) {
+		?>
+			<div id="divRo">
+			<?php
+				$sql2r = "SELECT * from royalpancake WHERE IDRoyalPancake = ".$rowr["IDRoyalPancake"];
+				$result2r = $conn->query($sql2r);
+				if($result2r->num_rows > 0) {
+					while($row2r = $result2r->fetch_assoc()) {
+?>
+						
+							<div id="<?php echo $row2r["RoyalName"]; ?>" class="btn-group col-md-3 col-sm-6 col-xs-12">
+									<div class="thumbnail">
+									<p><?php echo getRoyalPrice($rowr["IDRoyalPancake"],1,1,1); ?></p>
+									  <?php echo '<img height="20" src="' . htmlspecialchars($row2r["Photo"]) . '"/>'; ?>
+									  <div class="caption">
+											<div class="contentInline clearfix">
+												  <div class="responsive contentPart">
+														<div class="clearfix">
+														<button id="<?php echo $row2r["RoyalName"]; ?>" type="button" onclick="popRoyal('<?php echo $row2r["IDRoyalPancake"]; ?>', '<?php echo $rowr["Note"]; ?>')">
+									TMPP
+								</button>	
+															  <h3 class="pull-left"><?php echo $row2r["RoyalName"]; ?></h3>
+														</div>
+														<p class="foodDesc">
+															  <a href="javascript:void(0)" onclick="showMoreDesc('moreDesc4')">Description</a>
+														</p>
+												  </div>
+												  <div class="responsive cartPart">
+														<div class="clearfix pull-right">
+															  <button id="<?php echo $row2r["IDRoyalPancake"];?>" onclick="insertRoyal('<?php echo $email;?>','<?php echo $row2r["IDRoyalPancake"]; ?>',<?php echo $rowr["Amount"] + 1;?>, '<?php echo $rowr["Note"]; ?>')" class="btn btn-sm btn-primary addRemoveButton addButton addButton">+</button>
+															  <span>
+																	<?php echo $rowr["Amount"]?>
+															  </span>
+															  <button id="<?php echo $row2r["IDRoyalPancake"];?>" onclick="insertRoyal('<?php echo $email;?>','<?php echo $row2r["IDRoyalPancake"]; ?>',<?php echo $rowr["Amount"] - 1;?>, '<?php echo $rowr["Note"]; ?>')" class="btn btn-sm btn-default addRemoveButton removeButton">-</button>
+														</div>
+												  </div>
+											</div>
+									  </div>
+									  <div class="foodMoreDesc" id="moreDesc4">
+                              <a href="javascript:void(0)" onclick="showMoreDesc('moreDesc4')">
+                                    <span class="closeDesc">
+                                          <i class="fa fa-times"></i> Close
+                                    </span>
+                              </a>
+                              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+                        </div>
+								</div>
+							</div>
+						
+<?php
+					}
+				}
+			?>
+			</div>
+		<?php
+		}
+	}
+	if(!empty($_SESSION["cart"])) {	
 	$u = unserialize($_SESSION["cart"]);
 	foreach ($u->getArrayItem() as $item) {
 		?>
-		<form>
-			<div id="id <?php echo $item->getName();?>" class="row">
-				<div class="col-xs-12 col-sm-5">
-					<?php echo '<img height="60" src="' . htmlspecialchars($item->getPhoto()) . '"/>'; ?>
-					<p><?php echo $item->getName(); ?></p>
-				</div>
-				<div class="col-xs-6 col-sm-4">
-					<p><?php echo $item->getPrice(); ?></p>
-				</div>
-				<div class="col-xs-6 col-sm-3">
-					<input min="0" onclick="ifZero(this)" class="hiddenToZero" id="<?php echo $item->getItem(); ?>" type="number" onchange="insertOffline('<?php echo $item->getItem(); ?>',this.value)" value="<?php echo $item->getAmount(); ?>">
-				</div>
-			</div>
-		</form>
+		<div id="id <?php echo $item->getName();?>" class="btn-group col-md-3 col-sm-6 col-xs-12">
+									<div class="thumbnail">
+									<p><?php echo $item->getPrice(); ?></p>
+									 <?php echo '<img height="20" src="' . htmlspecialchars($item->getPhoto()) . '"/>'; ?>
+									  <div class="caption">
+											<div class="contentInline clearfix">
+												  <div class="responsive contentPart">
+														<div class="clearfix">
+															  <h3 class="pull-left"><?php echo $item->getName(); ?></h3>
+														</div>
+												  </div>
+												  <div class="responsive cartPart">
+														<div class="clearfix pull-right">
+															  <button id="<?php echo $item->getItem(); ?>" onclick="insertOffline('<?php echo $item->getItem(); ?>',<?php echo $item->getAmount() + 1; ?>)" class="btn btn-sm btn-primary addRemoveButton addButton addButton">+</button>
+															  <span>
+																	<?php echo $item->getAmount();?>
+															  </span>
+															  <button id="<?php echo $item->getItem(); ?>" onclick="insertOffline('<?php echo $item->getItem(); ?>',<?php echo $item->getAmount() - 1; ?>)" class="btn btn-sm btn-default addRemoveButton removeButton">-</button>
+														</div>
+												  </div>
+											</div>
+									  </div>
+								</div>
+							</div>
 		<?php
 	}
 	
 	foreach ($u->getArrayRoyal() as $item) {
 		?>
-		<form>
-			<div id="<?php echo $item->getName(); ?>" class="row">
-				<button id="<?php echo $item->getName(); ?>" type="button" onclick="popRoyal('<?php echo $item->getItem(); ?>', '<?php echo $item->getNote(); ?>')">
-					<?php echo '<img height="60" src="' . htmlspecialchars($item->getPhoto()) . '"/>'; ?>
-					<p><?php echo $item->getName(); ?></p>
-					<p><?php echo $item->getPrice(); ?></p>
-				</button>	
-				
-				<?php echo $item->getNote();?>
-								
-				<div class="col-xs-6 col-sm-3">
-					<input min="0" onclick="ifZero(this)" class="hiddenToZero" id="<?php echo $item->getItem(); ?>" type="number" onchange="insertRoyalOffline('<?php echo $item->getItem(); ?>',this.value, '<?php echo $item->getNote(); ?>')" value="<?php echo $item->getAmount(); ?>">
-				</div>
-			</div>
-		</form>
+				<div id="id <?php echo $item->getName();?>" class="btn-group col-md-3 col-sm-6 col-xs-12">
+									<div class="thumbnail">
+									<p><?php echo $item->getPrice(); ?></p>
+									 <?php echo '<img height="20" src="' . htmlspecialchars($item->getPhoto()) . '"/>'; ?>
+									  <div class="caption">
+											<div class="contentInline clearfix">
+												  <div class="responsive contentPart">
+														<div class="clearfix">
+														<button id="<?php echo $item->getName(); ?>" type="button" onclick="popRoyal('<?php echo $item->getItem(); ?>', '<?php echo $item->getNote(); ?>')">
+									TMPP
+								</button>	
+															  <h3 class="pull-left"><?php echo $item->getName(); ?></h3>
+														</div>
+														<p class="foodDesc">
+															  <a href="javascript:void(0)" onclick="showMoreDesc('moreDesc4')">Description</a>
+														</p>
+												  </div>
+												  <div class="responsive cartPart">
+														<div class="clearfix pull-right">
+															  <button id="<?php echo $item->getItem(); ?>" onclick="insertRoyalOffline('<?php echo $item->getItem(); ?>'<?php echo $item->getAmount() + 1; ?>, '<?php echo $item->getNote(); ?>')" class="btn btn-sm btn-primary addRemoveButton addButton addButton">+</button>
+															  <span>
+																	<?php echo $item->getAmount();?>
+															  </span>
+															  <button id="<?php echo $item->getItem(); ?>" onclick="insertRoyalOffline('<?php echo $item->getItem(); ?>'<?php echo $item->getAmount() - 1; ?>, '<?php echo $item->getNote(); ?>')" class="btn btn-sm btn-default addRemoveButton removeButton">-</button>
+														</div>
+												  </div>
+											</div>
+									  </div>
+									  <div class="foodMoreDesc" id="moreDesc4">
+                              <a href="javascript:void(0)" onclick="showMoreDesc('moreDesc4')">
+                                    <span class="closeDesc">
+                                          <i class="fa fa-times"></i> Close
+                                    </span>
+                              </a>
+                              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+                        </div>
+								</div>
+								</div>
 		<?php
 	}
 	$s = serialize($u);
-}
-	
+	}
 ?>
+
+
+
+
 </div>
+
+
 </body>
 </html>

@@ -25,22 +25,29 @@ xmlhttp = new XMLHttpRequest();
 xmlhttp.open("GET","carrelloChangeQuantity.php?eml=".concat($email)
 .concat("&idItm=").concat($item).concat("&amt=").concat($amount),true);
 xmlhttp.send();
+updateListinoChange()
 }
 function insertRoyal($email, $item, $amount, $note) {
+		
 xmlhttp = new XMLHttpRequest();
 xmlhttp.open("GET","carrelloChangeQuantityR.php?eml=".concat($email)
 .concat("&idItm=").concat($item).concat("&amt=").concat($amount).concat("&note=").concat($note),true);
 xmlhttp.send();
+updateListinoChange()
 }
 function insertOffline($item, $amount) {
+updateListinoChange();
 xmlhttp = new XMLHttpRequest();
 xmlhttp.open("GET","listinoChangeQuantityOffline.php?idItm=".concat($item).concat("&amt=").concat($amount),true);
 xmlhttp.send();
+updateListinoChange();
+
 }
 function insertRoyalOffline($item, $amount, $note) {
 xmlhttp = new XMLHttpRequest();
 xmlhttp.open("GET","listinoChangeQuantityOffline.php?idItm=".concat($item).concat("&amt=").concat($amount).concat("&note=").concat($note),true);
 xmlhttp.send();
+updateListinoChange();
 }
 
 function ifZero($val) {
@@ -113,7 +120,9 @@ setTimeout(function() {
 	
 	
 }
-
+function showMoreDesc(id) {
+      $('#' + id).toggle(400)
+}
 </script>
 
 <!DOCTYPE html>
@@ -125,7 +134,10 @@ setTimeout(function() {
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" title="stylesheet" href="listinoChangeStyle.css">
   <link rel="stylesheet" type="text/css" title="stylesheet" href="style.css">
+
+  <link rel="stylesheet" type="text/css" title="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 </head>
 <body>
 
