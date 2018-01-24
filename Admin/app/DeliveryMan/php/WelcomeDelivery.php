@@ -1,12 +1,17 @@
 <?php
-session_start(); // TODO session for delivery
+session_start();
   $servername="localhost";
   $username ="root";
   $password ="";
   $database = "dbfp";
 
   $conn = new mysqli($servername, $username, $password, $database);
-
+  $mail = $_SESSION['delivery']["email"];
+  $query_sql="SELECT * FROM deliveryman WHERE Email='$mail'";
+  $result = $conn->query($query_sql);
+  $credential = $result->fetch_assoc();
+  $nameDelivery = $credential['Name'];
+  $surnameDelivery = $credential['Surname'];
 ?>
 
 
@@ -29,17 +34,16 @@ session_start(); // TODO session for delivery
 
   <div class="row">
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-      <h1>Welcome TODO:deliveryname</h1>
+      <h1>Welcome <?php echo $credential['Name']. " " .$credential['Surname'];?></h1>
     </div>
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
       <input id="bellNotification" type="image" src="../../../res/bellNotification.png" name="bellNotification" alt="bellNotification" width="50" height="50"/>
     </div>
-    <span class="glyphicon glyphicon-log-out">Logout</span>
   </div>
 
   <div>
-  	<?php //DeliveryManEmail should be the value email in SESSION array
-  			$query_sql="SELECT IDOrder, Email FROM orders WHERE Status=1 AND DeliveryManEmail='pp@gmail.com'"; //instead of IDOrder and Email actually need Data&Time and Total Price of order
+  	<?php
+  			$query_sql="SELECT IDOrder, Email FROM orders WHERE Status=1 AND DeliveryManEmail='$mail'";
   			$result = $conn->query($query_sql);
   			if($result !== false){
   			?>
@@ -78,16 +82,25 @@ session_start(); // TODO session for delivery
   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
     <a href="#" class = "btn btn-default btn-lg" role="button">Back</a>
   </div>
-
+  <div class="row3">
+    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+      <span onclick="Logout()" class="glyphicon glyphicon-log-out">Logout</span>
+    </div>
+  </div>
 </div>
 
 
 <script type="text/javascript">
-function myFunction(fc) {
-  var VariablePlaceholder = "id=";
-  var UrlToSend = VariablePlaceholder + fc;
-  window.location.href = "../ViewSpecificOrder/php/ViewSpecificOrder.php?" + UrlToSend;
-}
+  function myFunction(fc) {
+    var VariablePlaceholder = "id=";
+    var UrlToSend = VariablePlaceholder + fc;
+    window.location.href = "../ViewSpecificOrder/php/ViewSpecificOrder.php?" + UrlToSend;
+  }
+
+  function Logout() {
+    window.location.href = "DestroySession.php";
+  }
+
 </script>
 
 
