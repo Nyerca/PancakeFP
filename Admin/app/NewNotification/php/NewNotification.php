@@ -9,12 +9,23 @@ $conn = new mysqli($servername, $username, $password, $database);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
+$query_sql="SELECT * FROM users";
+$result = $conn->query($query_sql);
+while($row = $result->fetch_assoc()) {
+  $stmt = $conn->prepare("INSERT INTO `usernotification` (`Description`, `Email`, `Title`) VALUES (?, ?, ?)");
+  $stmt->bind_param("sss", $Description, $Email, $Title);
+  if(!isset($_POST["description"]) || !isset($_POST["title"])) {
+    die("Fill all the fields.");
+  }
 
-if(isset($_POST["textAreaDescription"]) && isset($_POST["title"])) {
-  $sql = "INSERT INTO `adminnotification`(`Description`, `Email`, `IDAdminNofitication`, `Title`) VALUES ('".$_POST['textAreaDescription'] ."','". "admin@gmail.com" ."','". "3" ."','".$_POST['title']."')";
-  $conn->query($sql);
-  header('Location: ../html/NewNotification.html');
+  $Description = $_POST["description"];
+  $Email = $row['Email'];
+  $Title = $_POST["title"];
+
+  $stmt->execute();
+  $stmt->close();
 }
-$conn->error;
+
 $conn->close();
+header('Location: ../html/NewNotification.html');
 ?>
