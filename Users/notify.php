@@ -32,6 +32,7 @@ function setNotifications($val) {
 	el.classList.add('show-count');
 
 }
+
 </script>
 
 <!DOCTYPE html>
@@ -56,7 +57,7 @@ function setNotifications($val) {
 
 
 
-<div id="menuCog" class="btn-group">
+<div id="menuNot" class="btn-group">
 	<button data-toggle="dropdown" data-target="#notificationCheck" onclick="showNotifications()" data-count="<?php if(isset($_GET["numb"])) {  if($_GET["numb"] > 0) { echo  $_GET["numb"];} }?>"
 id="not" class="notification <?php if(isset($_GET["numb"])) {  if($_GET["numb"] > 0) { echo  "notify show-count";} }?>"></button>
 			

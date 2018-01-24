@@ -115,6 +115,7 @@ function getCurrent() {
 	xmlhttp2.send();
 }
 setInterval(function(){
+	alert("checkkkk");
 	document.getElementById("not").disabled = true; 
 	getCurrent();
 $newN = document.getElementById("currentNotification").innerHTML;

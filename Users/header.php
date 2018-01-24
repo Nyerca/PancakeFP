@@ -14,7 +14,6 @@ $last = <?php echo notificationOfUser($_SESSION['user']["email"]);?>;
 }
 ?>
 function showNotifications() {
-	
 	xmlhttp = new XMLHttpRequest();
 	xmlhttp.open("GET","processNotification.php",true);
 	xmlhttp.send();
@@ -55,6 +54,25 @@ function setNotifications($val) {
     el.offsetWidth = el.offsetWidth;
     el.classList.add('notify');
     el.classList.add('show-count');
+}
+function deleteNotification(elem) {
+	xmlhttp = new XMLHttpRequest();
+	xmlhttp.open("GET","deleteNotification.php?notificationID="+elem.id,true);
+	xmlhttp.send();
+	$(".fadeMe"+elem.id).parent().parent().parent().fadeOut( "slow", function() {
+    xmlhttp2 = new XMLHttpRequest();
+	xmlhttp2.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			document.getElementById("notifications").innerHTML = this.responseText;
+		}
+	};
+	xmlhttp2.open("GET","showNotifications.php",true);
+	xmlhttp2.send();
+  });
+	//elem.parentElement.parentElement.parentElement.style.display = 'none';
+}
+function collapseNotification($id) {
+$("#collapseExample"+$id).collapse("toggle");
 }
 </script>
 <!DOCTYPE html>
@@ -128,7 +146,7 @@ function setNotifications($val) {
 			</ul>
 		</div>
 		<div id="notificationSpace"><b></b></div>
-		<div id="currentNotification"><b></b></div>
+		<div hidden id="currentNotification"><b></b></div>
 		<button id="shop" type="button" onclick="cart()"> 
 			<span class="glyphicon glyphicon-shopping-cart"></span>
 		</button>
@@ -142,6 +160,9 @@ function setNotifications($val) {
 </html>
 
 <script type="text/javascript">
+$('body').on("click", ".dropdown-menu", function (e) {
+    $(this).parent().is(".open") && e.stopPropagation();
+});
 function createUserImgN($name) {
 	var list = document.getElementById("userMainPht");
 	list.removeChild(list.childNodes[0]);

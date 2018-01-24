@@ -29,11 +29,19 @@ if($result->num_rows > 0)	{
                   <span class="item">
                     <span class="item-left">
                         <span class="item-info">
-							<span><?php echo $row["Title"];?></span>
+						<button class="btn btn-primary" type="button" data-toggle="collapse" onclick="collapseNotification(<?php echo $row["IDUserNotification"];?>)">
+    <?php echo $row["Title"];?>
+  </button>
+
+							<div class="collapse" id="collapseExample<?php echo $row["IDUserNotification"];?>">
+							  <div class="card card-body">
+								Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+							  </div>
+							</div>
                         </span>
                     </span>
                     <span class="item-right">
-                        <button class="btn btn-xs btn-danger pull-right">x</button>
+                        <button id="<?php echo $row["IDUserNotification"];?>" onclick="deleteNotification(this)" class="btn btn-xs btn-danger pull-right fadeMe<?php echo $row["IDUserNotification"];?>">x</button>
                     </span>
                 </span>
               </li>

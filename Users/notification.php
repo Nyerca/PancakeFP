@@ -14,7 +14,7 @@ function notificationOfUser($email) {
 	
 function showNotificationOfUser($email) {
 		$conn =connect();
-		$sql2 = "SELECT * FROM usernotification WHERE Email = '".$email."' ORDER BY IDUserNofitication DESC LIMIT 5";
+		$sql2 = "SELECT * FROM usernotification WHERE Email = '".$email."' ORDER BY IDUserNotification DESC LIMIT 5";
 		$result2 = $conn->query($sql2);
 		
 		return $result2;
@@ -24,5 +24,11 @@ function showNotificationOfUser($email) {
 		$conn =connect();
 		$sql2 = "UPDATE usernotification SET Status = 1 WHERE Email = '".$email."' AND Status=0";
 		$result2 = $conn->query($sql2);
+	}
+	
+	function deleteNotificationNumber($email, $notification) {
+		$conn =connect();		
+		$sql = "DELETE FROM usernotification WHERE Email = '".$email."' AND IDUserNotification = '".$notification."'";
+		$conn->query($sql);
 	}
 ?>
