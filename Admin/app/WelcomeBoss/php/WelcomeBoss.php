@@ -30,11 +30,6 @@
         <li class="dropdown">
          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="label label-pill label-danger count" style="border-radius:10px;"></span> <span class="glyphicon glyphicon-envelope" style="font-size:18px;"></span></a>
          <ul class="dropdown-menu">
-           <li>
-            <a onclick="" href="#">
-             <strong>View all..</strong><br />
-            </a>
-           </li>
            <li class="divider"></li>
          </ul>
         </li>
@@ -59,7 +54,62 @@
   </div>
 
 </div>
-<script src="Notification.js">
+<script type="text/javascript">
+$(document).ready(function(){
+
+ function load_unseen_notification(view = '')
+ {
+  $.ajax({
+   url:"fetch.php",
+   method:"POST",
+   data:{view:view},
+   dataType:"json",
+   success:function(data)
+   {
+    $('.dropdown-menu').html(data.notification);
+    if(data.unseen_notification > 0)
+    {
+     $('.count').html(data.unseen_notification);
+    }
+   }
+  });
+ }
+
+  load_unseen_notification();
+
+ $(document).on('click', '.dropdown-toggle', function(){
+  $('.count').html('');
+  load_unseen_notification('yes');
+ });
+
+ setInterval(function(){
+  load_unseen_notification();
+}, 1000);
+
+});
+
+function GoToOrder(id) {
+  window.location.href ="../../ViewOrders/ViewSpecificOrder/php/ViewSpecificOrder.php?" + "id=" + id + "&st=0";
+}
+
+function DeleteNotification(id){
+  //Ajax request
+  xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        load_unseen_notification();
+      }
+  };
+  var PageToSendTo = "DeleteNotification.php?";
+  var VariablePlaceholder = "id=";
+  var UrlToSend = PageToSendTo + VariablePlaceholder + id;
+  xmlhttp.open("GET", UrlToSend, true);
+  xmlhttp.send();
+}
+
+function ViewAllNotification() {
+    window.location.href ="ViewAllNotification.php";
+}
 </script>
 </body>
 </html>

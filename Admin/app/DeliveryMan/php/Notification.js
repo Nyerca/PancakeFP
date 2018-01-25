@@ -19,7 +19,7 @@ $(document).ready(function(){
   });
  }
 
-  load_unseen_notification();
+ load_unseen_notification();
 
  $(document).on('click', '.dropdown-toggle', function(){
   $('.count').html('');
@@ -32,9 +32,6 @@ $(document).ready(function(){
 
 });
 
-function GoToOrder(id) {
-  window.location.href ="../../ViewOrders/ViewSpecificOrder/php/ViewSpecificOrder.php?" + "id=" + id + "&st=0";
-}
 
 function DeleteNotification(id){
   //Ajax request
@@ -49,8 +46,4 @@ function DeleteNotification(id){
   var UrlToSend = PageToSendTo + VariablePlaceholder + id;
   xmlhttp.open("GET", UrlToSend, true);
   xmlhttp.send();
-}
-
-function ViewAllNotification() {
-    window.location.href ="ViewAllNotification.php";
 }

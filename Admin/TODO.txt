@@ -4,8 +4,7 @@ BUG: in manage staff when delete someone, the position are not refreshed
 TOTEST: when click on "view all.." and then click to a specific order, need to set status of
 a order in GET, i setted "0" by default but need to be tested.
 
-//TODO: do notification in adminnotificaion and in deliverymannotification -- give
-the option to delivery man to set "complete" an order
+//TODO: do notification in deliverymannotification
 
 //TODO: for ordes with status 2 remove "set delivery man"
 

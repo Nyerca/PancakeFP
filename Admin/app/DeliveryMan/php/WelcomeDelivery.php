@@ -25,22 +25,35 @@ session_start();
 <meta name="viewport" content="width = device-width, initial-scale = 1">
 <title>Welcome delivery</title>
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" title="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="../css/DeliveryOrders.css">
 </head>
 <body>
 
 
 <div class="container">
-
   <div class="row">
-    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-      <h1>Welcome <?php echo $credential['Name']. " " .$credential['Surname'];?></h1>
-    </div>
-    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-      <input id="bellNotification" type="image" src="../../../res/bellNotification.png" name="bellNotification" alt="bellNotification" width="50" height="50"/>
-    </div>
-  </div>
-
+  <br/>
+  <br/>
+     <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+       <div class="navbar-header">
+        <a class="navbar-brand" href="#">Welcome <?php echo  $nameDelivery.' '.$surnameDelivery ?></a>
+       </div>
+       <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="label label-pill label-danger count" style="border-radius:10px;"></span> <span class="glyphicon glyphicon-envelope" style="font-size:18px;"></span></a>
+         <ul class="dropdown-menu">
+           <li class="divider"></li>
+         </ul>
+        </li>
+       </ul>
+      </div>
+     </nav>
+</div>
   <div>
   	<?php
   			$query_sql="SELECT IDOrder, Email FROM orders WHERE Status=1 AND DeliveryManEmail='$mail'";
@@ -100,11 +113,7 @@ session_start();
   function Logout() {
     window.location.href = "DestroySession.php";
   }
-
 </script>
-
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="Notification.js"></script>
 </body>
 </html>

@@ -28,19 +28,3 @@
       text-align: center;
     }
 }
-
-#bellNotification {
-  margin: 4%;
-}
-
-.mans {
-  background-color: #afeece;
-  margin: 2%;
-}
-
-#close {
-    float:right;
-    display:inline-block;
-    padding:2px 5px;
-    background:#ccc;
-}
