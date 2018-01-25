@@ -13,13 +13,41 @@ $last = <?php echo notificationOfUser($_SESSION['user']["email"]);?>;
 <?php
 }
 ?>
+function load_unseen_notification(view = '')
+ {
+  $.ajax({
+   url:"fetch.php",
+   method:"POST",
+   data:{view:view},
+   dataType:"json",
+   success:function(data)
+   {
+	$('#bell').html(data.notificationBell);
+    $('.dropdown-menu').html(data.notification);
+    if(data.unseen_notification > 0)
+    {
+     $('.count').html(data.unseen_notification);
+	 if(data.unseen_notification > tmpCount) {
+		tmpCount = data.unseen_notification;
+		} else {
+			$( "#not" ).attr( "class", "dropdown-toggle notification show-count" );
+		}
+    } else {
+		$( "#not" ).attr( "class", "dropdown-toggle notification" );
+		tmpCount = 0;
+	}
+   }
+  });
+ }
 function deleteNotification(elem) {
 	xmlhttp = new XMLHttpRequest();
 	xmlhttp.open("GET","deleteNotification.php?notificationID="+elem.id,true);
 	xmlhttp.send();
+	$(".fadeMe"+elem.id).parent().next().fadeOut( "slow");
 	$(".fadeMe"+elem.id).parent().fadeOut( "slow", function() {
-    alert("faded");
+    load_unseen_notification();
   });
+
 	//elem.parentElement.parentElement.parentElement.style.display = 'none';
 }
 function collapseNotification($id) {
@@ -214,33 +242,6 @@ $result = getAllUserInfos($_SESSION['user']["email"]);
 $(document).ready(function(){
 var tmpCount = 0;
 
- function load_unseen_notification(view = '')
- {
-  $.ajax({
-   url:"fetch.php",
-   method:"POST",
-   data:{view:view},
-   dataType:"json",
-   success:function(data)
-   {
-	$('#bell').html(data.notificationBell);
-    $('.dropdown-menu').html(data.notification);
-    if(data.unseen_notification > 0)
-    {
-     $('.count').html(data.unseen_notification);
-	 if(data.unseen_notification > tmpCount) {
-		tmpCount = data.unseen_notification;
-		} else {
-			$( "#not" ).attr( "class", "dropdown-toggle notification show-count" );
-		}
-    } else {
-		$( "#not" ).attr( "class", "dropdown-toggle notification" );
-		tmpCount = 0;
-	}
-   }
-  });
- }
-
  load_unseen_notification();
 
  $(document).on('click', '.dropdown-toggle', function(){
@@ -249,7 +250,7 @@ var tmpCount = 0;
  });
 
  setInterval(function(){
-  load_unseen_notification();;
+  load_unseen_notification();
 }, 5000);
 
 });
