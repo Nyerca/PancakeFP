@@ -131,6 +131,12 @@ textarea {
 	width:100%;
 }
 
+.grey {
+    -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%);
+}
+
+
 @keyframes example {
     0%   {background-color: red;}
     25%  {background-color: yellow;}
@@ -237,6 +243,7 @@ textarea {
 	#usernameDiv, #popupPassword, #telephoneDiv {
 		display:none;
 	}
+
 }
 
 @media only screen and (min-width: 1024px) {

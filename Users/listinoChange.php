@@ -149,7 +149,6 @@ if(!empty($_SESSION["cart"])) {
 					while($row2 = $result2->fetch_assoc()) {
 					?>
 					
-					
 							<div id="<?php echo $row2["Name"]; ?>" class="btn-group col-md-3 col-sm-6 col-xs-12">
 									<div class="thumbnail">
 									<p><?php echo $row2["Price"]; ?></p>
@@ -174,6 +173,7 @@ if(!empty($_SESSION["cart"])) {
 									  </div>
 								</div>
 							</div>
+
 <?php
 					}
 				}
@@ -195,7 +195,7 @@ if(!empty($_SESSION["cart"])) {
 					while($row2r = $result2r->fetch_assoc()) {
 ?>
 						
-							<div id="<?php echo $row2r["RoyalName"]; ?>" class="btn-group col-md-3 col-sm-6 col-xs-12">
+							<div id="<?php echo $row2r["RoyalName"]; ?>" class="btn-group col-md-6 col-sm-6 col-xs-12">
 									<div class="thumbnail">
 									<p><?php echo getRoyalPrice($rowr["IDRoyalPancake"],1,1,1); ?></p>
 									  <?php echo '<img height="20" src="' . htmlspecialchars($row2r["Photo"]) . '"/>'; ?>
@@ -209,7 +209,7 @@ if(!empty($_SESSION["cart"])) {
 															  <h3 class="pull-left"><?php echo $row2r["RoyalName"]; ?></h3>
 														</div>
 														<p class="foodDesc">
-															  <a href="javascript:void(0)" onclick="showMoreDesc('moreDesc4')">Description</a>
+															  <a href="javascript:void(0)" onclick="showMoreDesc('moreDesc<?php echo $row2r["IDRoyalPancake"];?><?php echo $rowr['Note'];?>')">Description</a>
 														</p>
 												  </div>
 												  <div class="responsive cartPart">
@@ -223,13 +223,35 @@ if(!empty($_SESSION["cart"])) {
 												  </div>
 											</div>
 									  </div>
-									  <div class="foodMoreDesc" id="moreDesc4">
-                              <a href="javascript:void(0)" onclick="showMoreDesc('moreDesc4')">
-                                    <span class="closeDesc">
-                                          <i class="fa fa-times"></i> Close
-                                    </span>
-                              </a>
-                              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+									  <div class="collapse foodMoreDesc container-fluid" id="moreDesc<?php echo $row2r["IDRoyalPancake"];?><?php echo $rowr['Note'];?>">
+									  <div class="row col-xs-12">
+									  
+								<?php
+
+		$result_ro = getItemInRoyal($row2r["IDRoyalPancake"]);
+
+		while($row_ro = $result_ro->fetch_assoc()) {
+			$sql_nro = "SELECT * FROM item WHERE IDItem = '".$row_ro["IDItem"]."'";
+			$result_nro = $conn->query($sql_nro);
+			$row_nro = $result_nro->fetch_assoc();
+				echo "<div class='col col-xs-4'>";
+				$val = itemOwned($rowr['Note'],$row_nro['CategoryID']);
+				echo "<button onclick='manage(".$row2r['IDRoyalPancake'].", ".$rowr['Note'].", ".$row_nro['CategoryID'].")'>";
+				if($val == 0) {
+					echo '<img class="grey" height="60" src="' . htmlspecialchars($row_nro["Photo"]) . '"/>'; 
+				} else {
+					echo '<img height="60" src="' . htmlspecialchars($row_nro["Photo"]) . '"/>'; 
+				}
+				
+				echo $row_nro["Name"];
+				echo "</button>";
+				echo "</div>";
+
+		}
+
+
+								?>
+								</div>
                         </div>
 								</div>
 							</div>
@@ -249,7 +271,7 @@ if(!empty($_SESSION["cart"])) {
 		<div id="id <?php echo $item->getName();?>" class="btn-group col-md-3 col-sm-6 col-xs-12">
 									<div class="thumbnail">
 									<p><?php echo $item->getPrice(); ?></p>
-									 <?php echo '<img height="20" src="' . htmlspecialchars($item->getPhoto()) . '"/>'; ?>
+									 <?php echo '<img height="20" width="20" src="' . htmlspecialchars($item->getPhoto()) . '"/>'; ?>
 									  <div class="caption">
 											<div class="contentInline clearfix">
 												  <div class="responsive contentPart">
@@ -278,7 +300,7 @@ if(!empty($_SESSION["cart"])) {
 				<div id="id <?php echo $item->getName();?>" class="btn-group col-md-3 col-sm-6 col-xs-12">
 									<div class="thumbnail">
 									<p><?php echo $item->getPrice(); ?></p>
-									 <?php echo '<img height="20" src="' . htmlspecialchars($item->getPhoto()) . '"/>'; ?>
+									 <?php echo '<img height="20" width="20" src="' . htmlspecialchars($item->getPhoto()) . '"/>'; ?>
 									  <div class="caption">
 											<div class="contentInline clearfix">
 												  <div class="responsive contentPart">

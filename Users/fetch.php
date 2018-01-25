@@ -20,8 +20,9 @@ if(isset($_POST["view"]))
   while($row = mysqli_fetch_array($result))
   {
    $output .= '
+
    <li>
-   <div class="col-xs-12">
+   <div class="col-xs-12 fadeMe'.$row["IDUserNotification"].'">
    <div class="col-xs-10">
     <a class="href="#">
 	
@@ -35,6 +36,7 @@ if(isset($_POST["view"]))
 	</div>
    </li>
    <li class="divider"></li>
+
    ';
   }
    $output .= '

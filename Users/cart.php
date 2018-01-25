@@ -582,23 +582,10 @@ class ShoppingCart {
 		$idOrd= getOrderOfUserNotBought($email);
 		$amount=getRoyalNoteAmount($email, $item, $note);
 		$amount=$amount+$change;
-		echo "".$amount."<br/>";
+		echo "<br/>AMOUNT--x".$amount."x--<br/>";
 		if($amount > 0) {
-			if($amount == 1) {
-				$totPrice = updateRoyalPrice($email, $item, $note);
-				$stmt = $conn->prepare("INSERT INTO orderroyalpancake (Email, IDOrder, Note, Amount,IDRoyalPancake, Price)
-							VALUES (?,?,?,?,?,?)");
-				
-				$stmt->bind_param("ssssis", $email, $idOrd,$note,$amount,$item,$totPrice);
-				$stmt->execute();
-				$stmt->fetch();
-				$stmt->close();
-
-			} else {
-				echo "non mi dire1.1";
-				$sql = "UPDATE orderroyalpancake SET Amount = '".$amount."' WHERE Email = '".$email."' AND IDOrder = '".$idOrd."' AND IDRoyalPancake = '".$item."' AND Note= '".$note."'";
+			$sql = "UPDATE orderroyalpancake SET Amount = '".$amount."' WHERE Email = '".$email."' AND IDOrder = '".$idOrd."' AND IDRoyalPancake = '".$item."' AND Note= '".$note."'";
 				$conn->query($sql);
-			}
 			
 		} else {
 			echo "non mi dire2";
@@ -705,6 +692,10 @@ class ShoppingCart {
 		return $amounts;
 	}
 	
+	function itemOwned( $note, $categoryItem) {
+		return substr($note, $categoryItem - 1, 1);
+	}
+
 
 //$cart= new ShoppingCart();
 //$item= new Item(1,"pomodoro", "2.40");

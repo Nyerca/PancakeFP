@@ -20,6 +20,22 @@ echo "session cart defined <br/>";
 }
  ?>
 <script type="text/javascript">
+function manage($royal, $thisNote, $category) {
+	$oldNote = "" + $thisNote;
+	alert($oldNote);
+	$changeVal = $oldNote.substring($category-1, $category);
+	$changeVal ++;
+	$changeVal = $changeVal % 2;
+	$newNote = $oldNote.substr(0, $category-1) + $changeVal + $oldNote.substr($category);
+	if ( $newNote == "000" ) {
+		$newNote = $oldNote;
+	}
+	alert($newNote);
+	xmlhttp = new XMLHttpRequest();
+	xmlhttp.open("GET","royalNoteChange.php?IDRoyal="+$royal+"&oldNote="+$oldNote+"&newNote="+$newNote,true);
+	xmlhttp.send();
+	updateListinoChange();
+}
 function insert($email, $item, $amount) {
 xmlhttp = new XMLHttpRequest();
 xmlhttp.open("GET","carrelloChangeQuantity.php?eml=".concat($email)
@@ -110,18 +126,16 @@ $("#fake"+id).animate({opacity: '0.4', top: +newPos, left: newPosL}, 700, functi
 	xmlhttp.open("GET","listinoChange.php?inc=1&itemChange=".concat(id),true);
 	xmlhttp.send();
    $("#fake"+id).fadeOut(300, function() { $("#fake"+id).remove(); 
-   
+   elem.disabled = false;
 	});
   });
-
-setTimeout(function() {
-	elem.disabled = false;
-}, 1000);
 	
 	
 }
+
+
 function showMoreDesc(id) {
-      $('#' + id).toggle(400)
+      $('#' + id).collapse("toggle");
 }
 </script>
 
@@ -204,42 +218,6 @@ xmlhttp.onreadystatechange = function() {
         };
 xmlhttp.send();
 
-}
-function popRoyal(nomeItem, note) {
-
-	//window.location.href = "listino.php?item=" + nomeItem + "&showCat=" + categoryID;
-
-xmlhttp = new XMLHttpRequest();
-xmlhttp.open("GET","royalPopup.php?item="+nomeItem+"&note="+note,true);
-xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-				
-                //document.getElementById("txtHint2").innerHTML = this.responseText;
-				$("#modCont").html(this.responseText);
-				$("#popItemInfo").modal("toggle");
-            }
-        };
-xmlhttp.send();
-
-}
-
-function manage($royal, $thisNote, $category) {
-	
-	$oldNote = $thisNote.parentNode.getAttribute("value");
-	alert($oldNote);
-	$changeVal = $oldNote.substring($category-1, $category);
-	$changeVal ++;
-	$changeVal = $changeVal % 2;
-	$newNote = $oldNote.substr(0, $category-1) + $changeVal + $oldNote.substr($category);
-	if ( $newNote == "000" ) {
-		$newNote = $oldNote;
-	}
-	alert($newNote);
-	xmlhttp = new XMLHttpRequest();
-	xmlhttp.open("GET","royalNoteChange.php?IDRoyal="+$royal+"&oldNote="+$oldNote+"&newNote="+$newNote,true);
-	xmlhttp.send();
-	$thisNote.parentNode.setAttribute("value", $newNote);
-updateListinoChange();
 }
 
 function updateListinoChange() {
