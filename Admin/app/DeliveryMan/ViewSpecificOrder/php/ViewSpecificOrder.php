@@ -135,16 +135,22 @@ $RPancakes = $conn->query($query_sql2);
 
 <br/>
 <br/>
-  <div class="row2">
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-      <a href="#" class = "btn btn-default btn-lg" role="button">Back</a>
-    </div>
+</div>
+<div class="row2">
+  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+    <button href="#" class = "btn btn-default btn-lg" role="button">Back</button>
+  </div>
+  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+    <button onclick="DeclareDelivered('<?php echo $_GET['id']?>')" class = "btn btn-default btn-lg" role="button">Declare delivered</button>
   </div>
 </div>
-
 <script type="text/javascript">
   function Geolocalize(lat, long) {
     window.location.href = "Geolocalization/Geolocalization.php?"+ "lat=" + lat + "&long=" + long;
+  }
+
+  function DeclareDelivered(id) {
+    window.location.href = "SubmitDeclareDelivered.php?" + "id=" + id;
   }
 </script>
 
