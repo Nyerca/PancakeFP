@@ -8,7 +8,7 @@ if(isset($_POST["view"]))
   $update_query = "UPDATE adminnotification SET Status=1 WHERE Status=0";
   mysqli_query($conn, $update_query);
  }
- $query = "SELECT * FROM adminnotification ORDER BY IDOrder ASC LIMIT 5";
+ $query = "SELECT * FROM adminnotification ORDER BY IDOrder DESC LIMIT 5";
  $result = mysqli_query($conn, $query);
  $output = '';
 

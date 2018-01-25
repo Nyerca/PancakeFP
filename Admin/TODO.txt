@@ -7,6 +7,8 @@ a order in GET, i setted "0" by default but need to be tested.
 //TODO: do notification in adminnotificaion and in deliverymannotification -- give
 the option to delivery man to set "complete" an order
 
+//TODO: for ordes with status 2 remove "set delivery man"
+
 //TODO: payment visualization in order
 
 //TODO: sql injection
