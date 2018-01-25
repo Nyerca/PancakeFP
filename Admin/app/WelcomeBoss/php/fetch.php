@@ -18,17 +18,25 @@ if(isset($_POST["view"]))
   {
    $output .= '
    <li>
-    <a onclick=DeleteNotification('.$row["IDAdminNotification"].') href="#">
-    <button onclick=Fun('.$row["IDOrder"].') type="button" class="close" data-toggle="modal" data-target="#myModal aria-label="Close">
+    <a>
+    <button onclick=DeleteNotification('.$row["IDAdminNotification"].') type="button" class="close" data-toggle="modal" data-target="#myModal aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
-     <strong>'.$row["Title"].'</strong><br />
+    <div onclick=GoToOrder('.$row["IDOrder"].')>
+     <strong >'.$row["Title"].'</strong><br />
      <small><em>'.$row["Description"].'</em></small>
+     </div>
     </a>
    </li>
    <li class="divider"></li>
    ';
   }
+  $output = $output.'<li>
+   <a onclick="ViewAllNotification()" href="#">
+    <small><em>View all..</em></small>
+   </a>
+  </li>
+  <li class="divider"></li>';
  }
  else
  {

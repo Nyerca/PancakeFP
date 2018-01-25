@@ -31,7 +31,14 @@
        <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="label label-pill label-danger count" style="border-radius:10px;"></span> <span class="glyphicon glyphicon-envelope" style="font-size:18px;"></span></a>
-         <ul class="dropdown-menu"></ul>
+         <ul class="dropdown-menu">
+           <li>
+            <a onclick="" href="#">
+             <strong>View all..</strong><br />
+            </a>
+           </li>
+           <li class="divider"></li>
+         </ul>
         </li>
        </ul>
       </div>
@@ -97,12 +104,12 @@ $(document).ready(function(){
 
  setInterval(function(){
   load_unseen_notification();
-}, 500);
+}, 100);
 
 });
 
-function  Fun(id) {
-  //window.location.href ="../../ViewOrders/ViewSpecificOrder/php/ViewSpecificOrder.php?" + "id=" + id + "&st=0";
+function GoToOrder(id) {
+  window.location.href ="../../ViewOrders/ViewSpecificOrder/php/ViewSpecificOrder.php?" + "id=" + id + "&st=0";
 }
 
 function DeleteNotification(id){
