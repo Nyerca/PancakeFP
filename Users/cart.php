@@ -695,6 +695,16 @@ class ShoppingCart {
 	function itemOwned( $note, $categoryItem) {
 		return substr($note, $categoryItem - 1, 1);
 	}
+	function sendNotification($email) {
+		$conn =connect();
+		$sql = "SELECT MAX(IDOrder) AS max FROM orders WHERE Email = '".$email."'";
+		$result = $conn->query($sql);
+		$row = $result->fetch_assoc();
+		$title = "Un nuovo ordine!";
+		$description = "C'e' un nuovo ordine da preparare.";
+		$sql2 = 'INSERT INTO adminnotification(Title,Description,Email,IDOrder) VALUES ("'.$title.'", "'.$description.'", "'.$email.'", "'.$row["max"].'");';
+		$conn->query($sql2);
+}
 
 
 //$cart= new ShoppingCart();

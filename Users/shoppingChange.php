@@ -27,5 +27,5 @@ if(isset($_GET["cc"]) && isset($_GET["owner"]) && isset($_GET["expire"]))  {
 } else {
 	setOrderAsBought($email);
 }
-  
+  sendNotification($email);
 ?>
