@@ -152,7 +152,7 @@ if(!empty($_SESSION["cart"])) {
 							<div id="<?php echo $row2["Name"]; ?>" class="btn-group col-md-3 col-sm-6 col-xs-12">
 									<div class="thumbnail">
 									<p><?php echo $row2["Price"]; ?></p>
-									 <?php echo '<img height="20" src="' . htmlspecialchars($row2["Photo"]) . '"/>'; ?>
+									 <?php echo '<img width="200" src="' . htmlspecialchars($row2["Photo"]) . '"/>'; ?>
 									  <div class="caption">
 											<div class="contentInline clearfix">
 												  <div class="responsive contentPart">
@@ -198,14 +198,11 @@ if(!empty($_SESSION["cart"])) {
 							<div id="<?php echo $row2r["RoyalName"]; ?>" class="btn-group col-md-6 col-sm-6 col-xs-12">
 									<div class="thumbnail">
 									<p><?php echo getRoyalPrice($rowr["IDRoyalPancake"],1,1,1); ?></p>
-									  <?php echo '<img height="20" src="' . htmlspecialchars($row2r["Photo"]) . '"/>'; ?>
+									  <?php echo '<img width="200" src="' . htmlspecialchars($row2r["Photo"]) . '"/>'; ?>
 									  <div class="caption">
 											<div class="contentInline clearfix">
 												  <div class="responsive contentPart">
 														<div class="clearfix">
-														<button id="<?php echo $row2r["RoyalName"]; ?>" type="button" onclick="popRoyal('<?php echo $row2r["IDRoyalPancake"]; ?>', '<?php echo $rowr["Note"]; ?>')">
-									TMPP
-								</button>	
 															  <h3 class="pull-left"><?php echo $row2r["RoyalName"]; ?></h3>
 														</div>
 														<p class="foodDesc">
@@ -271,7 +268,7 @@ if(!empty($_SESSION["cart"])) {
 		<div id="id <?php echo $item->getName();?>" class="btn-group col-md-3 col-sm-6 col-xs-12">
 									<div class="thumbnail">
 									<p><?php echo $item->getPrice(); ?></p>
-									 <?php echo '<img height="20" width="20" src="' . htmlspecialchars($item->getPhoto()) . '"/>'; ?>
+									 <?php echo '<img width="200" src="' . htmlspecialchars($item->getPhoto()) . '"/>'; ?>
 									  <div class="caption">
 											<div class="contentInline clearfix">
 												  <div class="responsive contentPart">
@@ -297,21 +294,18 @@ if(!empty($_SESSION["cart"])) {
 	
 	foreach ($u->getArrayRoyal() as $item) {
 		?>
-				<div id="id <?php echo $item->getName();?>" class="btn-group col-md-3 col-sm-6 col-xs-12">
+				<div id="id <?php echo $item->getName();?>" class="btn-group col-md-6 col-sm-6 col-xs-12">
 									<div class="thumbnail">
 									<p><?php echo $item->getPrice(); ?></p>
-									 <?php echo '<img height="20" width="20" src="' . htmlspecialchars($item->getPhoto()) . '"/>'; ?>
+									 <?php echo '<img width="200" src="' . htmlspecialchars($item->getPhoto()) . '"/>'; ?>
 									  <div class="caption">
 											<div class="contentInline clearfix">
 												  <div class="responsive contentPart">
 														<div class="clearfix">
-														<button id="<?php echo $item->getName(); ?>" type="button" onclick="popRoyal('<?php echo $item->getItem(); ?>', '<?php echo $item->getNote(); ?>')">
-									TMPP
-								</button>	
 															  <h3 class="pull-left"><?php echo $item->getName(); ?></h3>
 														</div>
 														<p class="foodDesc">
-															  <a href="javascript:void(0)" onclick="showMoreDesc('moreDesc4')">Description</a>
+															  <a href="javascript:void(0)" onclick="showMoreDesc('OffmoreDesc<?php echo $item->getItem();?><?php echo $item->getNote();?>')">Description</a>
 														</p>
 												  </div>
 												  <div class="responsive cartPart">
@@ -325,13 +319,35 @@ if(!empty($_SESSION["cart"])) {
 												  </div>
 											</div>
 									  </div>
-									  <div class="foodMoreDesc" id="moreDesc4">
-                              <a href="javascript:void(0)" onclick="showMoreDesc('moreDesc4')">
-                                    <span class="closeDesc">
-                                          <i class="fa fa-times"></i> Close
-                                    </span>
-                              </a>
-                              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+									  									  <div class="collapse foodMoreDesc container-fluid" id="OffmoreDesc<?php echo $item->getItem();?><?php echo $item->getNote();?>">
+									  <div class="row col-xs-12">
+									  
+								<?php
+
+		$result_ro = getItemInRoyal($item->getItem());
+
+		while($row_ro = $result_ro->fetch_assoc()) {
+			$sql_nro = "SELECT * FROM item WHERE IDItem = '".$row_ro["IDItem"]."'";
+			$result_nro = $conn->query($sql_nro);
+			$row_nro = $result_nro->fetch_assoc();
+				echo "<div class='col col-xs-4'>";
+				$val = itemOwned($item->getNote(),$row_nro['CategoryID']);
+				echo "<button onclick='manage(".$item->getItem().", ".$item->getNote().", ".$row_nro['CategoryID'].")'>";
+				if($val == 0) {
+					echo '<img class="grey" height="60" src="' . htmlspecialchars($row_nro["Photo"]) . '"/>'; 
+				} else {
+					echo '<img height="60" src="' . htmlspecialchars($row_nro["Photo"]) . '"/>'; 
+				}
+				
+				echo $row_nro["Name"];
+				echo "</button>";
+				echo "</div>";
+
+		}
+
+
+								?>
+								</div>
                         </div>
 								</div>
 								</div>

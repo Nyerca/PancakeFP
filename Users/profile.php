@@ -79,12 +79,21 @@ if (!isset($_SESSION['user'])) {
 </html>
 
 <script type="text/javascript">
+<?php
+if(isset($_GET["orderN"])) {
+	?>
+	$( "#myOrders" ).trigger( "click" );
+	SelectOrder(<?php echo $_GET["orderN"];?>);
+	<?php
+}
+?>
 $(document).ready(function() {
 $(".btn-pref .btn").click(function () {
     $(".btn-pref .btn").removeClass("btn-primary").addClass("btn-default");
     // $(".tab").addClass("active"); // instead of this do the below 
     $(this).removeClass("btn-default").addClass("btn-primary");   
 });
+
 });
 function createUserImg($name) {
 	var list = document.getElementById("userPht");

@@ -13,6 +13,7 @@ $last = <?php echo notificationOfUser($_SESSION['user']["email"]);?>;
 <?php
 }
 ?>
+var tmpCount = 0;
 function load_unseen_notification(view = '')
  {
   $.ajax({
@@ -240,7 +241,6 @@ $result = getAllUserInfos($_SESSION['user']["email"]);
 	
 <script>
 $(document).ready(function(){
-var tmpCount = 0;
 
  load_unseen_notification();
 

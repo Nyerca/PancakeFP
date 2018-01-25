@@ -1,17 +1,21 @@
 <?php
 //fetch.php;
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 require_once 'dbConnection.php';
 $conn =connect();
 
-if(isset($_POST["view"]))
+if(isset($_POST["view"]) && isset($_SESSION['user']))
 {
+
  include("connect.php");
  if($_POST["view"] != '')
  {
-  $update_query = "UPDATE usernotification SET Status=1 WHERE Status=0";
+  $update_query = "UPDATE usernotification SET Status=1 WHERE Status=0 AND Email ='".$_SESSION['user']["email"]."'";
  $conn->query($update_query);
  }
- $query = "SELECT * FROM usernotification ORDER BY IDOrder ASC LIMIT 5";
+ $query = "SELECT * FROM usernotification  WHERE Email ='".$_SESSION['user']["email"]."' ORDER BY IDUserNotification DESC LIMIT 5";
  $result = $conn->query($query);
  $output = '';
 
@@ -24,7 +28,14 @@ if(isset($_POST["view"]))
    <li>
    <div class="col-xs-12 fadeMe'.$row["IDUserNotification"].'">
    <div class="col-xs-10">
-    <a class="href="#">
+   ';
+   if($row["IDOrder"] != "") {
+	   $a = '<a href="profile.php?orderN='.$row["IDOrder"].'">';
+   } else {
+	   $a = '<a href="#">';
+   }
+   $output .= $a.'
+    
 	
      <strong>'.$row["Title"].'</strong><br />
      <small><em>'.$row["Description"].'</em></small>
@@ -57,7 +68,7 @@ if(isset($_POST["view"]))
 
 
 
- $query_1 = "SELECT * FROM usernotification WHERE Status=0";
+ $query_1 = "SELECT * FROM usernotification WHERE Status=0 AND Email ='".$_SESSION['user']["email"]."'";
  $result_1 = $conn->query($query_1);
  $count = mysqli_num_rows($result_1);
  if ($count > 0) {
