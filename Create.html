@@ -5,13 +5,13 @@ create table Admin (
      constraint IDAdmin primary key (Email));
 
 create table AdminNotification (
-     IDAdminNofitication char(100) not null,
+     IDAdminNotification int not null AUTO_INCREMENT,
      Title char(100) not null,
      Description char(100) not null,
 	 Email char(100) not null,
 	 IDOrder char(100) not null,
 	 Status char(1) DEFAULT "0",
-     constraint IDNotificationA primary key (IDAdminNofitication));
+     constraint IDNotificationA primary key (IDAdminNotification));
 
 create table CategoryItem (
      CategoryName char(100) not null,
@@ -38,7 +38,7 @@ create table DeliveryMan (
      PhoneNumber char(100) not null,
      Deleted char(100) not null,
      constraint IDDeliveryMan primary key (Email));
-	 
+
 create table DeliveryManNotification (
      IDDeliveryManNotification char(100) not null,
      Title char(100) not null,
@@ -214,14 +214,14 @@ alter table DeliveryManNotification add constraint FKR_DelNot
      foreign key (Email)
      references DeliveryMan (Email);
 
-alter table AdminNotification add constraint FKR_9
-     foreign key (Email)
-     references Admin (Email);
-	 
 alter table AdminNotification add constraint FKR_AddOrderA
      foreign key (Email, IDOrder)
      references Orders (Email, IDOrder);
-	 
+
+alter table AdminNotification add constraint FKR_9
+     foreign key (Email)
+     references Users (Email);
+
 alter table UserNotification add constraint FKR_AddOrderU
      foreign key (Email, IDOrder)
      references Orders (Email, IDOrder);

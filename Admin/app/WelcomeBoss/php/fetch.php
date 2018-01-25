@@ -5,10 +5,10 @@ if(isset($_POST["view"]))
  include("connect.php");
  if($_POST["view"] != '')
  {
-  $update_query = "UPDATE usernotification SET Status=1 WHERE Status=0";
+  $update_query = "UPDATE adminnotification SET Status=1 WHERE Status=0";
   mysqli_query($connect, $update_query);
  }
- $query = "SELECT * FROM usernotification ORDER BY IDOrder ASC LIMIT 5";
+ $query = "SELECT * FROM adminnotification ORDER BY IDOrder ASC LIMIT 5";
  $result = mysqli_query($connect, $query);
  $output = '';
 
@@ -32,7 +32,7 @@ if(isset($_POST["view"]))
   $output .= '<li><a href="#" class="text-bold text-italic">No Notification Found</a></li>';
  }
 
- $query_1 = "SELECT * FROM usernotification WHERE Status=0";
+ $query_1 = "SELECT * FROM adminnotification WHERE Status=0";
  $result_1 = mysqli_query($connect, $query_1);
  $count = mysqli_num_rows($result_1);
  $data = array(
