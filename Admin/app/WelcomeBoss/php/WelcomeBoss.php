@@ -19,13 +19,6 @@
 <div class="container">
 
   <div class="row">
-    <!-- <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-      <h1>Welcome Boss</h1>
-    </div>
-    <div class="container2">
-      <div class="notification" ></div>
-    </div>
-  </div> -->
   <br/>
   <br/>
 
@@ -45,10 +38,6 @@
      </nav>
 </div>
 
-
-
-
-
   <div class="row2">
     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
       <a href="../../ManageMarket/html/ManageMarket.html" class = "btn btn-default btn-lg" role="button">Manage Market</a>
@@ -64,24 +53,20 @@
     </div>
   </div>
 
-
-
-
-
 </div>
 <script type="text/javascript">
-var el = document.querySelector('.notification');
-
-setInterval(function(){
-if(2==1) {
-  var count = Number(el.getAttribute('data-count')) || 0;
-  el.setAttribute('data-count', count + 1);
-  el.classList.remove('notify');
-  el.offsetWidth = el.offsetWidth;
-  el.classList.add('notify');
-  if(count === 0){
-    el.classList.add('show-count');
-} }}, 1000);
+// var el = document.querySelector('.notification');
+//
+// setInterval(function(){
+// if(2==1) {
+//   var count = Number(el.getAttribute('data-count')) || 0;
+//   el.setAttribute('data-count', count + 1);
+//   el.classList.remove('notify');
+//   el.offsetWidth = el.offsetWidth;
+//   el.classList.add('notify');
+//   if(count === 0){
+//     el.classList.add('show-count');
+// } }}, 1000);
 
 $(document).ready(function(){
 
@@ -111,11 +96,29 @@ $(document).ready(function(){
  });
 
  setInterval(function(){
-  load_unseen_notification();;
-}, 5000);
+  load_unseen_notification();
+}, 500);
 
 });
 
+function  Fun(id) {
+  //window.location.href ="../../ViewOrders/ViewSpecificOrder/php/ViewSpecificOrder.php?" + "id=" + id + "&st=0";
+}
+
+function DeleteNotification(id){
+  //Ajax request
+  xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        load_unseen_notification();
+      }
+  };
+  var PageToSendTo = "DeleteNotification.php?";
+  var VariablePlaceholder = "id=";
+  var UrlToSend = PageToSendTo + VariablePlaceholder + id;
+  xmlhttp.open("GET", UrlToSend, true);
+  xmlhttp.send();
+}
 </script>
 </body>
 </html>
