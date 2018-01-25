@@ -14,7 +14,13 @@ $last = <?php echo notificationOfUser($_SESSION['user']["email"]);?>;
 }
 ?>
 function deleteNotification(elem) {
-	alert(elem);
+	xmlhttp = new XMLHttpRequest();
+	xmlhttp.open("GET","deleteNotification.php?notificationID="+elem.id,true);
+	xmlhttp.send();
+	$(".fadeMe"+elem.id).parent().fadeOut( "slow", function() {
+    alert("faded");
+  });
+	//elem.parentElement.parentElement.parentElement.style.display = 'none';
 }
 function collapseNotification($id) {
 $("#collapseExample"+$id).collapse("toggle");
@@ -31,7 +37,7 @@ $("#collapseExample"+$id).collapse("toggle");
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link rel="stylesheet" type="text/css" title="stylesheet" href="headerStyle.css">
   <link rel="stylesheet" type="text/css" title="stylesheet" href="style.css">
-  <link rel="stylesheet" type="text/css" title="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" title="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css">
 </head>
 <body>
 <nav class="navbar navbar-default">
@@ -207,6 +213,7 @@ $result = getAllUserInfos($_SESSION['user']["email"]);
 <script>
 $(document).ready(function(){
 var tmpCount = 0;
+
  function load_unseen_notification(view = '')
  {
   $.ajax({

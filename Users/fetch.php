@@ -2,6 +2,7 @@
 //fetch.php;
 require_once 'dbConnection.php';
 $conn =connect();
+
 if(isset($_POST["view"]))
 {
  include("connect.php");
@@ -20,7 +21,7 @@ if(isset($_POST["view"]))
   {
    $output .= '
    <li>
-   <div class="col-xs-12 fadeMe'.$row["IDUserNotification"].'">
+   <div class="col-xs-12">
    <div class="col-xs-10">
     <a class="href="#">
 	
