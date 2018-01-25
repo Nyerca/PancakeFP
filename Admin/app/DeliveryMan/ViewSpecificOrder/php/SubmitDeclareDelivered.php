@@ -32,6 +32,14 @@ $stmt->bind_param("ssss", $Description, $emailUser['Email'], $idOrder, $Title);
 $Description = "Order ".$idOrder." has been delivered with success.";
 $Title = "New order has been delivered.";
 $stmt->execute();
+
+$stmt = $conn->prepare("INSERT INTO `usernotification` (`Description`, `Email`, `IDOrder`, `Title`) VALUES(?, ?, ?, ?)");
+$stmt->bind_param("ssss", $Description, $emailUser['Email'], $idOrder, $Title);
+
+$Description = "If you like, leave us a review! See you soon!";
+$Title = "Your order has been delivered with success.";
+$stmt->execute();
+
 $conn->close();
 header("Location: ../../php/WelcomeDelivery.php");
 ?>
