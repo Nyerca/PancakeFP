@@ -50,8 +50,9 @@ function setNotifications($val) {
 <body>
 
 <div id="menuNot" class="btn-group">
+<span class="label label-pill label-danger count" style="border-radius:10px;"></span>
 	<button data-toggle="dropdown" data-target="#notificationCheck" onclick="showNotifications()" data-count="<?php if(isset($_GET["numb"])) {  if($_GET["numb"] > 0) { echo  $_GET["numb"];} }?>"
-id="not" class="notification <?php if(isset($_GET["numb"])) {  if($_GET["numb"] > 0) { echo  "notify show-count";} }?>"></button>
+id="not" class="dropdown-toggle notification <?php if(isset($_GET["numb"])) {  if($_GET["numb"] > 0) { echo  "notify show-count";} }?>"></button>
 			
 			<div id="notificationCheck">
 			<ul class="dropdown-menu dropdown-menu-right">
