@@ -13,63 +13,8 @@ $last = <?php echo notificationOfUser($_SESSION['user']["email"]);?>;
 <?php
 }
 ?>
-function showNotifications() {
-	xmlhttp = new XMLHttpRequest();
-	xmlhttp.open("GET","processNotification.php",true);
-	xmlhttp.send();
-	getCurrent();
-	$last=0;
-	
-	xmlhttp2 = new XMLHttpRequest();
-	xmlhttp2.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
-			document.getElementById("notifications").innerHTML = this.responseText;
-		}
-	};
-	xmlhttp2.open("GET","showNotifications.php",true);
-	xmlhttp2.send();
-	
-	var el= document.getElementById("not");
-	el.classList.remove('show-count');
-	el.setAttribute('data-count', 0);
-}
-function addNotifications() {
-alert("add");
-	var el = document.querySelector('.notification');
-	var count = Number(el.getAttribute('data-count')) || 0;
-
-    el.setAttribute('data-count', count + 1);
-    el.classList.remove('notify');
-    el.offsetWidth = el.offsetWidth;
-    el.classList.add('notify');
-    if(count === 0){
-        el.classList.add('show-count');
-    }
-}
-function setNotifications($val) {
-	alert("lol");
-	var el = document.querySelector('.notification');
-    el.setAttribute('data-count', $val);
-    el.classList.remove('notify');
-    el.offsetWidth = el.offsetWidth;
-    el.classList.add('notify');
-    el.classList.add('show-count');
-}
 function deleteNotification(elem) {
-	xmlhttp = new XMLHttpRequest();
-	xmlhttp.open("GET","deleteNotification.php?notificationID="+elem.id,true);
-	xmlhttp.send();
-	$(".fadeMe"+elem.id).parent().parent().parent().fadeOut( "slow", function() {
-    xmlhttp2 = new XMLHttpRequest();
-	xmlhttp2.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
-			document.getElementById("notifications").innerHTML = this.responseText;
-		}
-	};
-	xmlhttp2.open("GET","showNotifications.php",true);
-	xmlhttp2.send();
-  });
-	//elem.parentElement.parentElement.parentElement.style.display = 'none';
+	alert(elem);
 }
 function collapseNotification($id) {
 $("#collapseExample"+$id).collapse("toggle");
@@ -146,8 +91,19 @@ $("#collapseExample"+$id).collapse("toggle");
 				<li><a href="userInformation.php">Modify account</a></li>                        
 			</ul>
 		</div>
-		<div id="notificationSpace"><b></b></div>
-		<div hidden id="currentNotification"><b></b></div>
+		
+		<div class="btn-group">
+		<ul>
+      <li class="dropdown">
+       <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-target="#notificationCheck"><span class="label label-pill label-danger count" style="border-radius:10px;"></span> <div id="bell">
+		</div></a>
+		<div id="notificationCheck">
+       <ul class="dropdown-menu dropdown-menu-right"></ul>
+	   </div>
+      </li>
+     </ul>
+	 </div>
+	 
 		<button id="shop" type="button" onclick="cart()"> 
 			<span class="glyphicon glyphicon-shopping-cart"></span>
 		</button>
@@ -227,76 +183,7 @@ if(!empty($_POST["logout"])) {
 	</script>
 	<?php
 }
-?>
-<script type="text/javascript">
-$( document ).ready(function() {
-	<?php
-	if (isset($_SESSION['user'])) {
-	?>
-xmlhttp = new XMLHttpRequest();
-	xmlhttp.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
-			document.getElementById("notificationSpace").innerHTML = this.responseText;
-		}
-	};
-	xmlhttp.open("GET","notify.php?numb="+'<?php echo notificationOfUser($_SESSION['user']["email"]);?>',true);
-	xmlhttp.send();
-	
-	xmlhttp2 = new XMLHttpRequest();
-	xmlhttp2.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
-			document.getElementById("currentNotification").innerHTML = this.responseText;
-		}
-	};
-	xmlhttp2.open("GET","currentNotification.php",true);
-	xmlhttp2.send();
-	<?php
-	}
-	?>
 
-});
-
-function refreshNotify($newN) {
-
-	xmlhttp = new XMLHttpRequest();
-	xmlhttp.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
-			document.getElementById("notificationSpace").innerHTML = this.responseText;
-		}
-	};
-	xmlhttp.open("GET","notify.php?numb="+$newN,true);
-	xmlhttp.send();
-}
-function getCurrent() {
-	xmlhttp2 = new XMLHttpRequest();
-	xmlhttp2.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
-			document.getElementById("currentNotification").innerHTML = this.responseText;
-		}
-	};
-	xmlhttp2.open("GET","currentNotification.php",true);
-	xmlhttp2.send();
-}
-<?php
-	if (isset($_SESSION['user'])) {
-	?>
-setInterval(function(){
-	document.getElementById("not").disabled = true; 
-	getCurrent();
-$newN = document.getElementById("currentNotification").innerHTML;
-
-if($newN > $last) {
-	$last= $newN;
-refreshNotify($newN);
-}
-document.getElementById("not").disabled = false; 
-}, 1000);
-<?php
-	}
-	?>
-</script>
-
-<?php
 	if (isset($_SESSION['user'])) {
       
 
@@ -316,3 +203,47 @@ $result = getAllUserInfos($_SESSION['user']["email"]);
 
     }
 	?>
+	
+<script>
+$(document).ready(function(){
+var tmpCount = 0;
+ function load_unseen_notification(view = '')
+ {
+  $.ajax({
+   url:"fetch.php",
+   method:"POST",
+   data:{view:view},
+   dataType:"json",
+   success:function(data)
+   {
+	$('#bell').html(data.notificationBell);
+    $('.dropdown-menu').html(data.notification);
+    if(data.unseen_notification > 0)
+    {
+     $('.count').html(data.unseen_notification);
+	 if(data.unseen_notification > tmpCount) {
+		tmpCount = data.unseen_notification;
+		} else {
+			$( "#not" ).attr( "class", "dropdown-toggle notification show-count" );
+		}
+    } else {
+		$( "#not" ).attr( "class", "dropdown-toggle notification" );
+		tmpCount = 0;
+	}
+   }
+  });
+ }
+
+ load_unseen_notification();
+
+ $(document).on('click', '.dropdown-toggle', function(){
+  $('.count').html('');
+  load_unseen_notification('yes');
+ });
+
+ setInterval(function(){
+  load_unseen_notification();;
+}, 5000);
+
+});
+</script>
