@@ -56,15 +56,15 @@ session_start();
 </div>
   <div>
   	<?php
-  			$query_sql="SELECT IDOrder, Email FROM orders WHERE Status=1 AND DeliveryManEmail='$mail'";
+  			$query_sql="SELECT * FROM orders WHERE Status=1 AND DeliveryManEmail='$mail'";
   			$result = $conn->query($query_sql);
   			if($result !== false){
   			?>
   			<table class="table table-striped">
   			  <thead>
   				<tr>
-  				  <th scope="row">Data e ora</th>
-  				  <th scope="row">Totale</th>
+  				  <th scope="row">Date and time</th>
+  				  <th scope="row">Total price</th>
   				</tr>
   			  </thead>
   			  <tbody>
@@ -73,8 +73,8 @@ session_start();
   					while($row = $result->fetch_assoc()) {
   						?>
   						<tr onclick="myFunction('<?php echo $row["IDOrder"] ?>')">
-  							<td><?php echo $row["IDOrder"]; ?></td>
-  							<td><?php echo $row["Email"]; ?></td>
+  							<td><?php echo $row["DateTime"]; ?></td>
+  							<td><?php echo $row["TotalPrice"]; ?></td>
   						</tr>
   						<?php
   					}
@@ -113,7 +113,7 @@ session_start();
   function Logout() {
     window.location.href = "DestroySession.php";
   }
-  
+
 </script>
 <script src="Notification.js"></script>
 </body>

@@ -45,8 +45,8 @@
   			<table class="table table-striped">
   			  <thead>
   				<tr>
-  				  <th scope="row">Data e ora</th>
-  				  <th scope="row">Totale</th>
+  				  <th scope="row">Date and time</th>
+  				  <th scope="row">Total price</th>
   				</tr>
   			  </thead>
   			  <tbody>
@@ -55,8 +55,8 @@
   					while($row = $result->fetch_assoc()) {
   						?>
   						<tr onclick="myFunction('<?php echo $row["IDOrder"] ?>', '<?php echo $status ?>')">
-  							<td><?php echo $row["IDOrder"]; ?></td>
-  							<td><?php echo $row["Email"]; ?></td>
+  							<td><?php echo $row["DateTime"]; ?></td>
+  							<td><?php echo $row["TotalPrice"]; ?></td>
   						</tr>
   						<?php
   					}

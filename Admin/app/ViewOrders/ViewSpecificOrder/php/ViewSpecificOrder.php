@@ -52,16 +52,11 @@ $RPancakes = $conn->query($query_sql2);
   				if ($result->num_rows > 0) {
   					$row = $result->fetch_assoc();
   						?>
-  						<tr>
-  							<td>Stato: </td>
-  							<td><?php echo $row["Status"]; ?></td>
-  						</tr>
-              <tr>
-                <td>Data e ora: </td>
+                <td>Data and time: </td>
   							<td><?php echo $row["DateTime"]; ?></td>
               </tr>
               <tr>
-                <td>Costo: </td>
+                <td>Total price: </td>
   							<td><?php echo $row["TotalPrice"]; ?></td>
               </tr>
               <?php
@@ -92,8 +87,8 @@ $RPancakes = $conn->query($query_sql2);
                 echo'</tr>';
               } else {
                 echo '<tr>';
-                echo '<td>Delivery mode:</td>';
-                echo '<td>cash</td>';
+                echo '<td>Payment mode:</td>';
+                echo '<td>Cash</td>';
                 echo'</tr>';
               }
               ?>
@@ -112,7 +107,7 @@ $RPancakes = $conn->query($query_sql2);
               echo '<figure class="figure">';
               echo '<img  class="figure-img img-fluid rounded" width="100" height="100" src="' . htmlspecialchars($row['Photo']) . '"/>';
               echo '<figcaption class="figure-caption"> Price:'.$row['Price'].'</figcaption>';
-              echo '<h4> Quantity: '.$row['Amount'].'</h4>';
+              echo '<figcaption class="figure-caption"> Quantity: '.$row['Amount'].'</figcaption>';
               echo '</figure>';
               echo '</div>';
             }
@@ -136,7 +131,7 @@ $RPancakes = $conn->query($query_sql2);
           echo '<figure class="figure">';
           echo '<img  class="figure-img img-fluid rounded" width="100" height="100" src="' . htmlspecialchars($row['Photo']) . '"/>';
           echo '<figcaption class="figure-caption"> Description:'.$row['Description'].'</figcaption>';
-          echo '<h4> Quantity: '.$row['Amount'].'</h4>';
+          echo '</figcaption> Quantity: '.$row['Amount'].'</figcaption> <br/>';
           if(isRemovedItem($row['Note'])) {
             echo '<b><em> Note: '.parseNote($row['Note']).'</em></b>';
           }
@@ -182,7 +177,7 @@ $RPancakes = $conn->query($query_sql2);
 <br/>
 <br/>
   <div class="row2">
-    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
       <button href="#" class = "btn btn-default btn-lg" role="button">Back</button>
     </div>
   </div>
