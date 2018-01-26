@@ -113,9 +113,6 @@ $RPancakes = $conn->query($query_sql2);
               echo '<img  class="figure-img img-fluid rounded" width="100" height="100" src="' . htmlspecialchars($row['Photo']) . '"/>';
               echo '<figcaption class="figure-caption"> Price:'.$row['Price'].'</figcaption>';
               echo '<h4> Quantity: '.$row['Amount'].'</h4>';
-              if(isRemovedItem($row['Note'])) {
-                echo '<h4> Note: '.parseNote($row['Note'])).'</h4>';
-              }
               echo '</figure>';
               echo '</div>';
             }
@@ -140,6 +137,9 @@ $RPancakes = $conn->query($query_sql2);
           echo '<img  class="figure-img img-fluid rounded" width="100" height="100" src="' . htmlspecialchars($row['Photo']) . '"/>';
           echo '<figcaption class="figure-caption"> Description:'.$row['Description'].'</figcaption>';
           echo '<h4> Quantity: '.$row['Amount'].'</h4>';
+          if(isRemovedItem($row['Note'])) {
+            echo '<b><em> Note: '.parseNote($row['Note']).'</em></b>';
+          }
           echo '</figure>';
           echo '</div>';
         }
@@ -166,7 +166,7 @@ $RPancakes = $conn->query($query_sql2);
   function parseNote($note) {
     $noteChunked = chunk_split($note,1,".");
     $noteChunked = explode(".", $noteChunked);
-    $missing = "missing: ";
+    $missing = "missing ";
     if($noteChunked[0] == 0) {
       $missing = $missing. " pancake ";
     }
