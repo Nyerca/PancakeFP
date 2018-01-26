@@ -311,7 +311,7 @@ class ShoppingCart {
 				$conn->query($sql3);
 			}
 		} else {
-			$totPrice = updateRoyalPrice($email, $idItem, $note);
+			$totPrice = updateRoyalPrice($idItem, $note);
 			$sql3 = "INSERT INTO orderroyalpancake (IDRoyalPancake, Email, IDOrder, Amount, Note,Price)
 				VALUES ('".$idItem."', '".$email."', '".$idUse."', '".$amount."', '".$note."', '".$totPrice."')";
 			$conn->query($sql3);
@@ -589,7 +589,7 @@ class ShoppingCart {
 			$sql = "UPDATE orderroyalpancake SET Amount = '".$amount."' WHERE Email = '".$email."' AND IDOrder = '".$idOrd."' AND IDRoyalPancake = '".$item."' AND Note= '".$note."'";
 				$conn->query($sql);
 			} else {
-				$totPrice = updateRoyalPrice($email, $item, $note);
+				$totPrice = updateRoyalPrice($item, $note);
 				$sql = "INSERT INTO orderroyalpancake (Note,Price,Email,IDOrder,IDRoyalPancake,Amount) VALUES ('".$note."', '".$totPrice."', '".$email."', '".$idOrd."', '".$item."', '1')";
 				$conn->query($sql);
 			}
@@ -652,12 +652,10 @@ class ShoppingCart {
 		return 0;
 	}
 	
-	function updateRoyalPrice($email, $item, $note) {
+	function updateRoyalPrice($item, $note) {
 		$conn =connect();
 		$notes = array(substr($note, 0, 1), substr($note, 1, 1), substr($note, 2, 1) );
-		print_r(array_values($notes));
 		$totalPrice = 0;
-		$idOrd= getOrderOfUserNotBought($email);
 		$sql = "SELECT * FROM iteminroyalpancake WHERE IDRoyalPancake = '".$item."'";
 		$result = $conn->query($sql);
 		if($result->num_rows >= 0)	{
@@ -675,13 +673,11 @@ class ShoppingCart {
 				}
 			}
 		}
-		echo $totalPrice."<br/>";
 		
 		if ($notes[0] + $notes[1] + $notes[2] > 1) {
 			$totalPrice = ($totalPrice * 70) / 100;
 		}
 		$totalPrice = number_format((float)$totalPrice, 2, '.', ''); 
-		echo $totalPrice."<br/>";
 		return $totalPrice;
 	}
 	

@@ -19,27 +19,57 @@ echo "session cart defined <br/>";
 }
  ?>
 <script type="text/javascript">
+function manage($royal, $thisNote, $category) {
+$oldNote = $thisNote.parentNode.parentNode.getAttribute("value");
+alert($oldNote);
+	var notes = [("" + $oldNote).substr(0, 1), ("" + $oldNote).substr(1, 1), ("" + $oldNote).substr(2, 1)];
+	if (parseInt(notes[0]) + parseInt(notes[1]) + parseInt(notes[2]) == 1 && notes[$category - 1] == "1") {
+		alert("Non puoi levare l'ultimo!");
+	} else {
+		$changeVal = $oldNote.substring($category-1, $category);
+		$changeVal ++;
+		$changeVal = $changeVal % 2;
+		$newNote = $oldNote.substr(0, $category-1) + $changeVal + $oldNote.substr($category);
+		if ( $newNote == "000" ) {
+			$newNote = $oldNote;
+		}
+		alert($newNote);
+		$thisNote.parentNode.parentNode.setAttribute("value", $newNote);
+		xmlhttp = new XMLHttpRequest();
+		xmlhttp.open("GET","royalNoteChange.php?IDRoyal="+$royal+"&oldNote="+$oldNote+"&newNote="+$newNote,true);
+		xmlhttp.send();
+		updateListinoChange();
+	}
+}
 function insert($email, $item, $amount) {
 xmlhttp = new XMLHttpRequest();
 xmlhttp.open("GET","carrelloChangeQuantity.php?eml=".concat($email)
 .concat("&idItm=").concat($item).concat("&amt=").concat($amount),true);
 xmlhttp.send();
+updateListinoChange();
 }
 function insertRoyal($email, $item, $amount, $note) {
+		
 xmlhttp = new XMLHttpRequest();
 xmlhttp.open("GET","carrelloChangeQuantityR.php?eml=".concat($email)
 .concat("&idItm=").concat($item).concat("&amt=").concat($amount).concat("&note=").concat($note),true);
 xmlhttp.send();
+updateListinoChange();
 }
 function insertOffline($item, $amount) {
+updateListinoChange();
 xmlhttp = new XMLHttpRequest();
 xmlhttp.open("GET","listinoChangeQuantityOffline.php?idItm=".concat($item).concat("&amt=").concat($amount),true);
 xmlhttp.send();
+updateListinoChange();
+
 }
 function insertRoyalOffline($item, $amount, $note) {
+updateListinoChange();
 xmlhttp = new XMLHttpRequest();
 xmlhttp.open("GET","listinoChangeQuantityOffline.php?idItm=".concat($item).concat("&amt=").concat($amount).concat("&note=").concat($note),true);
 xmlhttp.send();
+updateListinoChange();
 }
 
 function ifZero($val) {
@@ -49,7 +79,6 @@ function ifZero($val) {
 }
 </script>
 <script type="text/javascript">
-
 
 function show(categoryID) {
 	//window.location.href = "listino.php?showCat=" + categoryID;
@@ -62,6 +91,18 @@ function show(categoryID) {
 xmlhttp.open("GET","RoyalInner.php?showCat=" + categoryID,true);
 xmlhttp.send();
 }
+function getOffset(el) {
+  el = el.getBoundingClientRect();
+  return {
+    left: el.left + window.scrollX,
+    top: el.top + window.scrollY
+  }
+}
+
+function showMoreDesc(id) {
+      $('#' + id).collapse("toggle");
+}
+
 function AddToCart(id, name, price, amount) {
 	xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
@@ -83,7 +124,6 @@ function AddToCart(id, name, price, amount) {
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" type="text/css" title="stylesheet" href="listinoStyle.css">
 </head>
 <body>
 
@@ -176,24 +216,6 @@ function updateListinoChange() {
 	xmlhttp.open("GET","listinoChange.php",true);
 	xmlhttp.send();
 }
-function manage($royal, $thisNote, $category) {
-	
-	$oldNote = $thisNote.parentNode.getAttribute("value");
-	alert($oldNote);
-	$changeVal = $oldNote.substring($category-1, $category);
-	$changeVal ++;
-	$changeVal = $changeVal % 2;
-	$newNote = $oldNote.substr(0, $category-1) + $changeVal + $oldNote.substr($category);
-	if ( $newNote == "000" ) {
-		$newNote = $oldNote;
-	}
-	alert($newNote);
-	xmlhttp = new XMLHttpRequest();
-	xmlhttp.open("GET","royalNoteChange.php?IDRoyal="+$royal+"&oldNote="+$oldNote+"&newNote="+$newNote,true);
-	xmlhttp.send();
-	$thisNote.parentNode.setAttribute("value", $newNote);
-updateListinoChange();
-}
 
 $( document ).ready(function() {
 	xmlhttp = new XMLHttpRequest();
@@ -211,7 +233,7 @@ $( document ).ready(function() {
                 document.getElementById("txtHint3").innerHTML = this.responseText;
             }
         };
-xmlhttp2.open("GET","RoyalInner.php",true);
+xmlhttp2.open("GET","royalInner.php",true);
 xmlhttp2.send();
 
 });

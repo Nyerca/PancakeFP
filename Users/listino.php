@@ -21,13 +21,12 @@ echo "session cart defined <br/>";
  ?>
 <script type="text/javascript">
 function manage($royal, $thisNote, $category) {
-	
-	alert($thisNote);
+$oldNote = $thisNote.parentNode.parentNode.getAttribute("value");
+alert($oldNote);
+	var notes = [("" + $oldNote).substr(0, 1), ("" + $oldNote).substr(1, 1), ("" + $oldNote).substr(2, 1)];
 	if (parseInt(notes[0]) + parseInt(notes[1]) + parseInt(notes[2]) == 1 && notes[$category - 1] == "1") {
 		alert("Non puoi levare l'ultimo!");
 	} else {
-		$oldNote = "" + $thisNote;
-		alert($oldNote);
 		$changeVal = $oldNote.substring($category-1, $category);
 		$changeVal ++;
 		$changeVal = $changeVal % 2;
@@ -36,6 +35,7 @@ function manage($royal, $thisNote, $category) {
 			$newNote = $oldNote;
 		}
 		alert($newNote);
+		$thisNote.parentNode.parentNode.setAttribute("value", $newNote);
 		xmlhttp = new XMLHttpRequest();
 		xmlhttp.open("GET","royalNoteChange.php?IDRoyal="+$royal+"&oldNote="+$oldNote+"&newNote="+$newNote,true);
 		xmlhttp.send();
@@ -47,7 +47,7 @@ xmlhttp = new XMLHttpRequest();
 xmlhttp.open("GET","carrelloChangeQuantity.php?eml=".concat($email)
 .concat("&idItm=").concat($item).concat("&amt=").concat($amount),true);
 xmlhttp.send();
-updateListinoChange()
+updateListinoChange();
 }
 function insertRoyal($email, $item, $amount, $note) {
 		
@@ -55,7 +55,7 @@ xmlhttp = new XMLHttpRequest();
 xmlhttp.open("GET","carrelloChangeQuantityR.php?eml=".concat($email)
 .concat("&idItm=").concat($item).concat("&amt=").concat($amount).concat("&note=").concat($note),true);
 xmlhttp.send();
-updateListinoChange()
+updateListinoChange();
 }
 function insertOffline($item, $amount) {
 updateListinoChange();
@@ -66,6 +66,7 @@ updateListinoChange();
 
 }
 function insertRoyalOffline($item, $amount, $note) {
+updateListinoChange();
 xmlhttp = new XMLHttpRequest();
 xmlhttp.open("GET","listinoChangeQuantityOffline.php?idItm=".concat($item).concat("&amt=").concat($amount).concat("&note=").concat($note),true);
 xmlhttp.send();

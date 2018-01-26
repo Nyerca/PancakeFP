@@ -77,7 +77,7 @@ if(!empty($_SESSION["cart"])) {
 			$result2 = $conn->query($sql2);
 			if($result2->num_rows > 0) {
 				while($row2 = $result2->fetch_assoc()) {
-					$item = new Royal($_GET['itemChange'], $row2["RoyalName"], getRoyalPrice($_GET['itemChange'], 1,1,1));
+					$item = new Royal($_GET['itemChange'], $row2["RoyalName"], updateRoyalPrice($_GET['itemChange'], "111"));
 					$u = unserialize($_SESSION["cart"]);
 					$u->addItem($item, 1, "111");
 					$s = serialize($u);
@@ -202,7 +202,7 @@ updateOrderTotalPrice($email);
 											</div>
 									  </div>
 									  <div class="collapse foodMoreDesc container-fluid" id="moreDesc<?php echo $row2r["IDRoyalPancake"];?><?php echo $rowr['Note'];?>">
-									  <div class="row col-xs-12">
+									  <div value="<?php echo $rowr["Note"];?>" class="row col-xs-12">
 									  
 								<?php
 
@@ -214,9 +214,8 @@ updateOrderTotalPrice($email);
 			$row_nro = $result_nro->fetch_assoc();
 				echo "<div class='col col-xs-4'>";
 				$val = itemOwned($rowr['Note'],$row_nro['CategoryID']);
-				echo $rowr['Note'];
 				?>
-				<button onclick="manage(<?php echo $row2r['IDRoyalPancake'];?>,<?php echo $rowr['Note'];?>,<?php echo $row_nro['CategoryID'];?> )">
+				<button onclick="manage(<?php echo $row2r['IDRoyalPancake'];?>,this,<?php echo $row_nro['CategoryID'];?> )">
 				<?php
 				if($val == 0) {
 					echo '<img class="grey" height="60" src="' . htmlspecialchars($row_nro["Photo"]) . '"/>'; 
@@ -225,7 +224,9 @@ updateOrderTotalPrice($email);
 				}
 				
 				echo $row_nro["Name"];
-				echo "</button>";
+				?>
+				</button>
+				<?php
 				echo "</div>";
 
 		}
@@ -294,17 +295,17 @@ updateOrderTotalPrice($email);
 												  </div>
 												  <div class="responsive cartPart">
 														<div class="clearfix pull-right">
-															  <button id="<?php echo $item->getItem(); ?>" onclick="insertRoyalOffline('<?php echo $item->getItem(); ?>'<?php echo $item->getAmount() + 1; ?>, '<?php echo $item->getNote(); ?>')" class="btn btn-sm btn-primary addRemoveButton addButton addButton">+</button>
+															  <button id="<?php echo $item->getItem(); ?>" onclick="insertRoyalOffline('<?php echo $item->getItem(); ?>',<?php echo $item->getAmount() + 1; ?>, '<?php echo $item->getNote(); ?>')" class="btn btn-sm btn-primary addRemoveButton addButton addButton">+</button>
 															  <span>
 																	<?php echo $item->getAmount();?>
 															  </span>
-															  <button id="<?php echo $item->getItem(); ?>" onclick="insertRoyalOffline('<?php echo $item->getItem(); ?>'<?php echo $item->getAmount() - 1; ?>, '<?php echo $item->getNote(); ?>')" class="btn btn-sm btn-default addRemoveButton removeButton">-</button>
+															  <button id="<?php echo $item->getItem(); ?>" onclick="insertRoyalOffline('<?php echo $item->getItem(); ?>',<?php echo $item->getAmount() - 1; ?>, '<?php echo $item->getNote(); ?>')" class="btn btn-sm btn-default addRemoveButton removeButton">-</button>
 														</div>
 												  </div>
 											</div>
 									  </div>
 									  									  <div class="collapse foodMoreDesc container-fluid" id="OffmoreDesc<?php echo $item->getItem();?><?php echo $item->getNote();?>">
-									  <div class="row col-xs-12">
+									  <div value="<?php echo $item->getNote();?>" class="row col-xs-12">
 									  
 								<?php
 
@@ -316,7 +317,9 @@ updateOrderTotalPrice($email);
 			$row_nro = $result_nro->fetch_assoc();
 				echo "<div class='col col-xs-4'>";
 				$val = itemOwned($item->getNote(),$row_nro['CategoryID']);
-				echo "<button onclick='manage(".$item->getItem().", ".$item->getNote().", ".$row_nro['CategoryID'].")'>";
+				?>
+				<button onclick='manage(<?php echo $item->getItem();?>, this, <?php echo $row_nro['CategoryID'];?>)'>
+				<?php
 				if($val == 0) {
 					echo '<img class="grey" height="60" src="' . htmlspecialchars($row_nro["Photo"]) . '"/>'; 
 				} else {
