@@ -15,13 +15,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-<meta name="viewport" content="width = device-width, initial-scale = 1">
-<title>Manage staff</title>
-<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width = device-width, initial-scale = 1">
+  <title>Choose coffee</title>
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="../css/ManageStaff.css">
 </head>
 <body>
@@ -31,12 +31,23 @@
 <div class="container">
 
   <div class="row">
-    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-      <h1>Manage staff</h1>
-    </div>
-    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-      <input id="bellNotification" type="image" src="../../../res/bellNotification.png" name="bellNotification" alt="bellNotification" width="50" height="50"/>
-    </div>
+  <br/>
+  <br/>
+     <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+       <div class="navbar-header">
+        <a class="navbar-brand" href="#">Manage staff</a>
+       </div>
+       <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="label label-pill label-danger count" style="border-radius:10px;"></span> <span class="glyphicon glyphicon-envelope" style="font-size:18px;"></span></a>
+         <ul class="dropdown-menu">
+           <li class="divider"></li>
+         </ul>
+        </li>
+       </ul>
+      </div>
+     </nav>
   </div>
 
   <div class="row2">
@@ -112,6 +123,63 @@ function SubmitDelete() {
   $("#shared").text("1");
   DeleteDeliveryMan($("#saveid").text());
 }
+
+$(document).ready(function(){
+
+ function load_unseen_notification(view = '')
+ {
+  $.ajax({
+   url:"../../WelcomeBoss/php/fetch.php",
+   method:"POST",
+   data:{view:view},
+   dataType:"json",
+   success:function(data)
+   {
+    $('.dropdown-menu').html(data.notification);
+    if(data.unseen_notification > 0)
+    {
+     $('.count').html(data.unseen_notification);
+    }
+   }
+  });
+ }
+
+  load_unseen_notification();
+
+ $(document).on('click', '.dropdown-toggle', function(){
+  $('.count').html('');
+  load_unseen_notification('yes');
+ });
+
+ setInterval(function(){
+  load_unseen_notification();
+}, 1000);
+
+});
+
+
+function GoToOrder(id) {
+  window.location.href ="../../ViewOrders/ViewSpecificOrder/php/ViewSpecificOrder.php?" + "id=" + id + "&st=0";
+}
+
+function DeleteNotification(id){
+  //Ajax request
+  xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        load_unseen_notification();
+      }
+  };
+  var PageToSendTo = "../../WelcomeBoss/php/DeleteNotification.php?";
+  var VariablePlaceholder = "id=";
+  var UrlToSend = PageToSendTo + VariablePlaceholder + id;
+  xmlhttp.open("GET", UrlToSend, true);
+  xmlhttp.send();
+}
+
+function ViewAllNotification() {
+    window.location.href ="../../WelcomeBoss/php/ViewAllNotification.php";
+}
 </script>
 
 <!-- POP-UP, Note: this content is being shown only when an event is triggered -->
@@ -137,10 +205,5 @@ function SubmitDelete() {
 
   </div>
 </div>
-
-
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </body>
 </html>
