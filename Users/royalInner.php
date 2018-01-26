@@ -29,7 +29,7 @@ $conn =connect();
 		$category = 1;
 	}
 	//preparazione query
-	$sql = "SELECT * from royalpancake WHERE CategoryID =".$category;
+	$sql = "SELECT * from royalpancake WHERE Deleted=0 AND CategoryID =".$category;
 	$result = $conn->query($sql);
 	if($result->num_rows > 0) {
 		while($row = $result->fetch_assoc()) {

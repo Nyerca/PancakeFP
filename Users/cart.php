@@ -296,9 +296,9 @@ class ShoppingCart {
 		$conn =connect();
 		if($idO == -1) {
 			$idOrder = getNextIdOrderOfUser($email);
+
 			$idUse = $idOrder;
-			$status= "0";
-			$sql = $conn->quey("INSERT INTO Orders (Email, IDOrder, Status) VALUES ($email, $idOrder, $status)");
+			$sql ="INSERT INTO Orders (Email, IDOrder) VALUES ('".$email."','".$idOrder."')";
 			$conn->query($sql);
 		}
 
@@ -584,8 +584,15 @@ class ShoppingCart {
 		$amount=$amount+$change;
 		echo "<br/>AMOUNT--x".$amount."x--<br/>";
 		if($amount > 0) {
+			if(getRoyalNoteAmount($email, $item, $note) > 0) {
+			
 			$sql = "UPDATE orderroyalpancake SET Amount = '".$amount."' WHERE Email = '".$email."' AND IDOrder = '".$idOrd."' AND IDRoyalPancake = '".$item."' AND Note= '".$note."'";
 				$conn->query($sql);
+			} else {
+				$totPrice = updateRoyalPrice($email, $item, $note);
+				$sql = "INSERT INTO orderroyalpancake (Note,Price,Email,IDOrder,IDRoyalPancake,Amount) VALUES ('".$note."', '".$totPrice."', '".$email."', '".$idOrd."', '".$item."', '1')";
+				$conn->query($sql);
+			}
 			
 		} else {
 			echo "non mi dire2";
@@ -706,6 +713,18 @@ class ShoppingCart {
 		$conn->query($sql2);
 }
 
+function isStudent($email) {
+	$conn =connect();
+	$sql = "SELECT IsStudent FROM users WHERE Email = '".$email."'";
+		$result = $conn->query($sql);
+		if($result->num_rows >= 0)	{
+			while($row = $result->fetch_assoc()) {
+				return 1;
+			}
+		}
+	return 0;
+}
+
 function getTotalPrice($email) {
 		$conn =connect();
 		$idOrd= getOrderOfUserNotBought($email);
@@ -717,17 +736,29 @@ function getTotalPrice($email) {
 				$tot += $row["Amount"] *  $row["Price"];
 			}
 		}
-		$sql2 = "SELECT * FROM iteminorder WHERE Email = '".$email."' AND IDOrder = '".$idOrd."'";
+		$sql2 = "SELECT Price, Amount FROM item i, iteminorder io WHERE i.IDItem=io.IDItem AND Email = '".$email."' AND IDOrder = '".$idOrd."'";
 		$result2 = $conn->query($sql2);
 		if($result2->num_rows >= 0)	{
 			while($row2 = $result2->fetch_assoc()) {
 				$tot += $row2["Amount"] *  $row2["Price"];
 			}
 		}
+		if(isStudent($email) == 1) {
+			$tot = $tot - ($tot/10);
+			$tot = number_format($tot, 2, '.', '');
+		}
 		return $tot;
 }
 
-getTotalPrice("ef@gmail.com");
+function updateOrderTotalPrice($email) {
+		$conn =connect();
+		$tot = getTotalPrice($email);
+		$idOrd= getOrderOfUserNotBought($email);
+		$sql = "UPDATE orders SET TotalPrice = '".$tot."' WHERE Email = '".$email."' AND IDOrder = '".$idOrd."'";
+		$conn->query($sql);
+}
+
+
 //$cart= new ShoppingCart();
 //$item= new Item(1,"pomodoro", "2.40");
 //$item2= new Item(2,"susina", "2.2");

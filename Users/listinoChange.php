@@ -104,32 +104,11 @@ if(!empty($_SESSION["cart"])) {
 	}
 	
 }
-	
+updateOrderTotalPrice($email);
 ?>
 </div>
 
-
-
-
-
-<div class="container-fluid text-center">
-<img height="60px" id="getItems" class="img-responsive" src="cart.png" alt="preview shopping cart">
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<p id="totalPrice" hidden><?php echo getTotalPrice($email);?></p>
 
 
 
@@ -199,7 +178,7 @@ if(!empty($_SESSION["cart"])) {
 						
 							<div id="<?php echo $row2r["RoyalName"]; ?>" class="btn-group col-md-6 col-sm-6 col-xs-12">
 									<div class="thumbnail">
-									<p><?php echo getRoyalPrice($rowr["IDRoyalPancake"],1,1,1); ?></p>
+									<p><?php echo $rowr["Price"]?> <?php echo $rowr['Note'];?></p>
 									  <?php echo '<img width="200" src="' . htmlspecialchars($row2r["Photo"]) . '"/>'; ?>
 									  <div class="caption">
 											<div class="contentInline clearfix">
@@ -235,7 +214,10 @@ if(!empty($_SESSION["cart"])) {
 			$row_nro = $result_nro->fetch_assoc();
 				echo "<div class='col col-xs-4'>";
 				$val = itemOwned($rowr['Note'],$row_nro['CategoryID']);
-				echo "<button onclick='manage(".$row2r['IDRoyalPancake'].", ".$rowr['Note'].", ".$row_nro['CategoryID'].")'>";
+				echo $rowr['Note'];
+				?>
+				<button onclick="manage(<?php echo $row2r['IDRoyalPancake'];?>,<?php echo $rowr['Note'];?>,<?php echo $row_nro['CategoryID'];?> )">
+				<?php
 				if($val == 0) {
 					echo '<img class="grey" height="60" src="' . htmlspecialchars($row_nro["Photo"]) . '"/>'; 
 				} else {

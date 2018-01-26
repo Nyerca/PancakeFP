@@ -21,20 +21,26 @@ echo "session cart defined <br/>";
  ?>
 <script type="text/javascript">
 function manage($royal, $thisNote, $category) {
-	$oldNote = "" + $thisNote;
-	alert($oldNote);
-	$changeVal = $oldNote.substring($category-1, $category);
-	$changeVal ++;
-	$changeVal = $changeVal % 2;
-	$newNote = $oldNote.substr(0, $category-1) + $changeVal + $oldNote.substr($category);
-	if ( $newNote == "000" ) {
-		$newNote = $oldNote;
+	
+	alert($thisNote);
+	if (parseInt(notes[0]) + parseInt(notes[1]) + parseInt(notes[2]) == 1 && notes[$category - 1] == "1") {
+		alert("Non puoi levare l'ultimo!");
+	} else {
+		$oldNote = "" + $thisNote;
+		alert($oldNote);
+		$changeVal = $oldNote.substring($category-1, $category);
+		$changeVal ++;
+		$changeVal = $changeVal % 2;
+		$newNote = $oldNote.substr(0, $category-1) + $changeVal + $oldNote.substr($category);
+		if ( $newNote == "000" ) {
+			$newNote = $oldNote;
+		}
+		alert($newNote);
+		xmlhttp = new XMLHttpRequest();
+		xmlhttp.open("GET","royalNoteChange.php?IDRoyal="+$royal+"&oldNote="+$oldNote+"&newNote="+$newNote,true);
+		xmlhttp.send();
+		updateListinoChange();
 	}
-	alert($newNote);
-	xmlhttp = new XMLHttpRequest();
-	xmlhttp.open("GET","royalNoteChange.php?IDRoyal="+$royal+"&oldNote="+$oldNote+"&newNote="+$newNote,true);
-	xmlhttp.send();
-	updateListinoChange();
 }
 function insert($email, $item, $amount) {
 xmlhttp = new XMLHttpRequest();
@@ -96,30 +102,7 @@ function getOffset(el) {
 }
 
 function AddToCart(elem,id, name, price, amount) {
-	var img = elem.getElementsByTagName('img')[0];
-	elem.disabled = true;
-	var img2 = img.cloneNode(true);
-	img2.id = "fake" + id;
-	img2.style.zIndex="100";
-	img2.style.position = "absolute";
-	document.getElementById(""+name).insertBefore(img2, document.getElementById(""+name).childNodes[0]);
-var position = 0;
-var leftEl = 0;
-var p = $('div.thumbnail img').each(function() {
-  var id = $(this).attr("id").substring(2);
-  if(id == name) {
-
-	  position = getOffset(document.getElementById($(this).attr("id")));
-	  leftEl = $(this).attr("id");
-  }
-});
-
-alert($('#getItems').height());
-var newPos = getOffset(document.getElementById("getItems")).top +$('#getItems').height()/3 - getOffset(img).top;
-//var newPosL = $("#fake"+id).position().left;
-var newPosL = getOffset(document.getElementById("getItems")).left +$('#getItems').width()/2 - getOffset(img).left;
-$("#fake"+id).animate({opacity: '0.4', top: +newPos, left: newPosL}, 700, function() {
-   xmlhttp = new XMLHttpRequest();
+xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById("txtHint").innerHTML = this.responseText;
@@ -127,11 +110,6 @@ $("#fake"+id).animate({opacity: '0.4', top: +newPos, left: newPosL}, 700, functi
         };
 	xmlhttp.open("GET","listinoChange.php?inc=1&itemChange=".concat(id),true);
 	xmlhttp.send();
-   $("#fake"+id).fadeOut(300, function() { $("#fake"+id).remove(); 
-   elem.disabled = false;
-	});
-  });
-	
 	
 }
 
