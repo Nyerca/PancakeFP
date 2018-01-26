@@ -110,33 +110,18 @@ $("#collapseExample"+$id).collapse("toggle");
 		<p id="user_name"></p>
 		<div id="userMainPht" class="useravatar">
 		</div>	
-		<div id="menuCog" class="btn-group">
-			<button id="cog" type="button" data-toggle="dropdown" data-target="#cogDrop">
-				<span class="glyphicon glyphicon-cog"></span>
-			</button>
-		</div>
-		
-			
-		
-		<div id="cogDrop">
-			<ul class="dropdown-menu">
-				<li class="dropdown-header">Orders</li>
-				<li><a href="viewOrders.php">My orders</a></li>
-				<li class="dropdown-header">Account</li>
-				<li><a href="userInformation.php">Modify account</a></li>                        
-			</ul>
-		</div>
 		
 		<div class="btn-group">
-		<ul>
-      <li class="dropdown">
-       <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-target="#notificationCheck"><span class="label label-pill label-danger count" style="border-radius:10px;"></span> <div id="bell">
+
+      <div class="dropdown">
+       <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-target="#notificationCheck">
+	  
+	   <div id="bell">
 		</div></a>
 		<div id="notificationCheck">
        <ul class="dropdown-menu dropdown-menu-right"></ul>
 	   </div>
-      </li>
-     </ul>
+      </div>
 	 </div>
 	 
 		<button id="shop" type="button" onclick="cart()"> 
@@ -160,10 +145,23 @@ function createUserImgN($name) {
 	list.removeChild(list.childNodes[0]);
 	var x = document.createElement("IMG");
 	x.setAttribute("src", $name);
-	x.setAttribute("href", "profile.php");
 	x.setAttribute("width", "30");
 	x.setAttribute("height", "30");
 	x.setAttribute("alt", "User image");
+	
+	var element = document.createElement("a");
+	element.setAttribute("href", "profile.php");
+	element.appendChild(x);
+	list.appendChild(element);
+}
+function createUserWithoutPhoto() {
+	var list = document.getElementById("userMainPht");
+	list.removeChild(list.childNodes[0]);
+	var x = document.createElement("span");
+	x.setAttribute("class", "glyphicon glyphicon-user");
+	x.setAttribute("width", "30");
+	x.setAttribute("height", "30");
+
 	
 	var element = document.createElement("a");
 	element.setAttribute("href", "profile.php");
@@ -232,6 +230,14 @@ $result = getAllUserInfos($_SESSION['user']["email"]);
 
 		</script>
 		<?php
+		} else {
+			?>
+		<script type="text/javascript">
+
+			createUserWithoutPhoto();
+
+		</script>
+		<?php
 		}
 		
 	}
@@ -251,7 +257,7 @@ $(document).ready(function(){
 
  setInterval(function(){
   load_unseen_notification();
-}, 5000);
+}, 1000);
 
 });
 </script>

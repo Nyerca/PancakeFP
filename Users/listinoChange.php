@@ -112,7 +112,9 @@ if(!empty($_SESSION["cart"])) {
 
 
 
-
+<div class="container-fluid text-center">
+<img height="60px" id="getItems" class="img-responsive" src="cart.png" alt="preview shopping cart">
+</div>
 
 
 
@@ -152,7 +154,7 @@ if(!empty($_SESSION["cart"])) {
 							<div id="<?php echo $row2["Name"]; ?>" class="btn-group col-md-3 col-sm-6 col-xs-12">
 									<div class="thumbnail">
 									<p><?php echo $row2["Price"]; ?></p>
-									 <?php echo '<img width="200" src="' . htmlspecialchars($row2["Photo"]) . '"/>'; ?>
+									 <?php echo '<img id="id'.$row2["Name"].'" width="200" src="' . htmlspecialchars($row2["Photo"]) . '"/>'; ?>
 									  <div class="caption">
 											<div class="contentInline clearfix">
 												  <div class="responsive contentPart">

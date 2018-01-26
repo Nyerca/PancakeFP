@@ -33,24 +33,5 @@ function getStarPercentage($star) {
 	}
 }
 
-function saveUserPhoto($email, $file) {
-	$conn =connect();
-	$target = savePhoto($file);
-	$sql = "UPDATE users SET Photo = '".$target."' WHERE Email = '".$email."'";
-	$conn->query($sql);
-}
-
-function getUserPhoto($email) {
-	$conn =connect();
-	$target = savePhoto($file);
-	$sql = "SELECT Photo FROM users WHERE Email = '".$email."'";
-	$result = $conn->query($sql);
-	if($result->num_rows > 0)	{
-		while($row = $result->fetch_assoc()) {
-			return $row["Photo"];
-		}
-	}
-	return -1;
-}
 
 ?>

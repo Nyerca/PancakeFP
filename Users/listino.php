@@ -96,7 +96,6 @@ function getOffset(el) {
 }
 
 function AddToCart(elem,id, name, price, amount) {
-	
 	var img = elem.getElementsByTagName('img')[0];
 	elem.disabled = true;
 	var img2 = img.cloneNode(true);
@@ -106,16 +105,19 @@ function AddToCart(elem,id, name, price, amount) {
 	document.getElementById(""+name).insertBefore(img2, document.getElementById(""+name).childNodes[0]);
 var position = 0;
 var leftEl = 0;
-var p = $('form > div.row').each(function() {
-  var id = $(this).attr("id").substring(3);
+var p = $('div.thumbnail img').each(function() {
+  var id = $(this).attr("id").substring(2);
   if(id == name) {
-	  position = $(this).position();
+
+	  position = getOffset(document.getElementById($(this).attr("id")));
 	  leftEl = $(this).attr("id");
   }
 });
-var newPos = position.top - getOffset(img).top;
+
+alert($('#getItems').height());
+var newPos = getOffset(document.getElementById("getItems")).top +$('#getItems').height()/3 - getOffset(img).top;
 //var newPosL = $("#fake"+id).position().left;
-var newPosL = $("#fake"+id).position().left - getOffset(img).left;
+var newPosL = getOffset(document.getElementById("getItems")).left +$('#getItems').width()/2 - getOffset(img).left;
 $("#fake"+id).animate({opacity: '0.4', top: +newPos, left: newPosL}, 700, function() {
    xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {

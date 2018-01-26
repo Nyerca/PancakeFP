@@ -216,6 +216,24 @@ if(!empty($_POST["submit"])) {
 		<?php 
 	} else {
 		saveUserPhoto($_SESSION['user']["email"], $_FILES['image']);
+		$target = savePhoto($_FILES['image']);
+		?>
+		<script type="text/javascript">
+	var list = document.getElementById("userMainPht");
+	list.removeChild(list.childNodes[0]);
+	var x = document.createElement("IMG");
+	x.setAttribute("src",'<?php echo $target; ?>');
+	x.setAttribute("width", "30");
+	x.setAttribute("height", "30");
+	x.setAttribute("alt", "User image");
+	
+	var element = document.createElement("a");
+	element.setAttribute("href", "profile.php");
+	element.appendChild(x);
+	list.appendChild(element);
+	</script>
+	<?
+}
 	}
 	
 	$result = getAllUserInfos($_SESSION['user']["email"]);

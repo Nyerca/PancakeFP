@@ -51,7 +51,10 @@ function ViewReview() {
     	</div>
     </div>
 </div>
-
+				<?php
+require_once 'reviewUtility.php';
+if(getReviewNumber() > 0) {
+	?>
 	<div class="container">
 	<div class="row">
 		<h2>Reviews</h2>
@@ -82,12 +85,15 @@ function ViewReview() {
                     <span class="glyphicon glyphicon-chevron-right"></span>
                 </a>
 
+
             </div>
         </div>
 		</div>
 </div>
 </div>
-	
+				<?php
+}
+?>	
 
 </div>
 
@@ -98,7 +104,10 @@ function ViewReview() {
 
 </body>
 </html>
-
+				<?php
+require_once 'reviewUtility.php';
+if(getReviewNumber() > 0) {
+	?>
 <script type="text/javascript">
 $( document ).ready(function() {
 	 
@@ -147,3 +156,6 @@ xmlhttp2.send();
 
 });
 </script>
+				<?php
+}
+?>	

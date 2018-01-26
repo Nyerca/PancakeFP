@@ -706,7 +706,28 @@ class ShoppingCart {
 		$conn->query($sql2);
 }
 
+function getTotalPrice($email) {
+		$conn =connect();
+		$idOrd= getOrderOfUserNotBought($email);
+		$tot = 0;
+		$sql = "SELECT * FROM orderroyalpancake WHERE Email = '".$email."' AND IDOrder = '".$idOrd."'";
+		$result = $conn->query($sql);
+		if($result->num_rows >= 0)	{
+			while($row = $result->fetch_assoc()) {
+				$tot += $row["Amount"] *  $row["Price"];
+			}
+		}
+		$sql2 = "SELECT * FROM iteminorder WHERE Email = '".$email."' AND IDOrder = '".$idOrd."'";
+		$result2 = $conn->query($sql2);
+		if($result2->num_rows >= 0)	{
+			while($row2 = $result2->fetch_assoc()) {
+				$tot += $row2["Amount"] *  $row2["Price"];
+			}
+		}
+		return $tot;
+}
 
+getTotalPrice("ef@gmail.com");
 //$cart= new ShoppingCart();
 //$item= new Item(1,"pomodoro", "2.40");
 //$item2= new Item(2,"susina", "2.2");

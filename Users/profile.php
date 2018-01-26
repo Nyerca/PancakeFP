@@ -115,6 +115,22 @@ function createUserImg2($name) {
 	list2.appendChild(x);
 }
 
+function createUserImageWithoutPhoto() {
+	var list = document.getElementById("userPht");
+	list.removeChild(list.childNodes[0]);
+	var x = document.createElement("span");
+	x.setAttribute("id", "biggerGlyph");
+	x.setAttribute("class", "glyphicon glyphicon-user");
+
+	list.appendChild(x);
+	createUserImageWithoutPhotoBlurred();
+}
+function createUserImageWithoutPhotoBlurred() {
+	var list2 = document.getElementById("blurred");
+	list2.style.backgroundColor = "#FFB100";
+	list2.style.filter = "blur(25px)";
+}
+
 </script>
 <?php
 $result = getAllUserInfos($_SESSION['user']["email"]);
@@ -127,6 +143,14 @@ $result = getAllUserInfos($_SESSION['user']["email"]);
 			$("#usernameP").text("<?php echo $row["Username"];?>");
 		</script>
 		<?php
+		} else {
+			?>
+		<script type="text/javascript">
+			createUserImageWithoutPhoto();
+			$("#usernameP").text("<?php echo $row["Username"];?>");
+		</script>
+		<?php
+			
 		}
 		
 	}
