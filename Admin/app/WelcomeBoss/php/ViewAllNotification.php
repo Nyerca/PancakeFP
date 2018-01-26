@@ -31,24 +31,19 @@
      <nav class="navbar navbar-inverse">
       <div class="container-fluid">
        <div class="navbar-header">
-        <a class="navbar-brand" href="#">View all notifications</a>
+        <a class="navbar-brand" href="#">Welcome Boss</a>
        </div>
        <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="label label-pill label-danger count" style="border-radius:10px;"></span> <span class="glyphicon glyphicon-envelope" style="font-size:18px;"></span></a>
          <ul class="dropdown-menu">
-           <li>
-            <a onclick="" href="#">
-             <strong>View all notifications</strong><br />
-            </a>
-           </li>
            <li class="divider"></li>
          </ul>
         </li>
        </ul>
       </div>
      </nav>
-</div>
+   </div>
 
   <div>
   	<?php

@@ -21,7 +21,6 @@
   <div class="row">
   <br/>
   <br/>
-
      <nav class="navbar navbar-inverse">
       <div class="container-fluid">
        <div class="navbar-header">
@@ -37,7 +36,7 @@
        </ul>
       </div>
      </nav>
-</div>
+   </div>
 
   <div class="row2">
     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
