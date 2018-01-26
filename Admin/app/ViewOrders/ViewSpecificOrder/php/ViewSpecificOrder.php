@@ -85,6 +85,17 @@ $RPancakes = $conn->query($query_sql2);
                 echo '<td>In market</td>';
                 echo'</tr>';
               }
+              if(strlen($row["CardOwner"]) > 0) {
+                echo '<tr>';
+                echo '<td>Payment mode:</td>';
+                echo '<td>Credit card</td>';
+                echo'</tr>';
+              } else {
+                echo '<tr>';
+                echo '<td>Delivery mode:</td>';
+                echo '<td>cash</td>';
+                echo'</tr>';
+              }
               ?>
               <?php
   				}

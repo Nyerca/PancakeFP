@@ -38,11 +38,7 @@
   <div>
   	<?php
         $status = $_GET['st'];
-        if($status == -1) {
-  			   $query_sql="SELECT * FROM orders o, deliverymode d  WHERE o.IDDeliveryMode=d.IDDeliveryMode AND Address IS NULL AND Latitude IS NULL";
-        } else {
-          $query_sql="SELECT * FROM orders WHERE Status='$status'";
-        }
+  			$query_sql="SELECT * FROM orders o, deliverymode d  WHERE o.IDDeliveryMode=d.IDDeliveryMode AND Status='$status' AND ((Address IS NOT NULL AND CAP IS NOT NULL) OR (Latitude IS NOT NULL AND Longitude IS NOT NULL)) ";
         $result = $conn->query($query_sql);
   			if($result !== false){
   			?>

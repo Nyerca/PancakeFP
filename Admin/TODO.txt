@@ -6,10 +6,6 @@ BUG: in market approach is bugged semantically
 TOTEST: when click on "view all.." and then click to a specific order, need to set status of
 a order in GET, i setted "0" by default but need to be tested.
 
-BUG: to solve bug in deliverymannotification notification box
-
-
-//TODO: for ordes with status 2 remove "set delivery man"
 
 //TODO: payment visualization in order
 
