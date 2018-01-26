@@ -29,6 +29,15 @@ if ($conn->query($sql) === TRUE) {
     echo "Error updating record: " . $conn->error;
 }
 
+$stmt = $conn->prepare("INSERT INTO `deliverymannotification` (`Description`, `Email`, `IDDeliveryManNotification`, `Title`) VALUES(?, ?, ?, ?)");
+$stmt->bind_param("ssss", $Description, $fc, $idDMN, $Title);
+
+$Description = "Order with ID=".' '.$idOrder.' '."need to be delivered.";
+$idDMN = "1";
+$Title = "You have a new order to deliver!";
+$stmt->execute();
+
+
 $conn->close();
-header("Location: SetDelivery.php");
+header("Location: ../../../WelcomeBoss/php/WelcomeBoss.php");
 ?>

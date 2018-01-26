@@ -13,6 +13,8 @@ deliverymannotification)
 
 //TODO: payment visualization in order
 
+//TODO: do "note" note if some item is deselcted in royalpancake 
+
 //TODO: sql injection
 
 //TODO: encryption

@@ -40,7 +40,7 @@ create table DeliveryMan (
      constraint IDDeliveryMan primary key (Email));
 
 create table DeliveryManNotification (
-     IDDeliveryManNotification char(100) not null,
+     IDDeliveryManNotification int not null AUTO_INCREMENT,
      Title char(100) not null,
      Description char(100) not null,
 	 Email char(100) not null,
