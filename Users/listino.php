@@ -19,6 +19,20 @@ echo "session cart defined <br/>";
   }
 }
  ?>
+ <script type="text/javascript">
+function change(selected, cat) {
+	var value = selected.value;  
+	alert("value");
+	xmlhttp2 = new XMLHttpRequest();
+	xmlhttp2.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("txtHint3").innerHTML = this.responseText;
+            }
+        };
+xmlhttp2.open("GET","listinoInner.php?showCat=" + cat +"&underC="+value,true);
+xmlhttp2.send();
+}
+</script>
 <script type="text/javascript">
 function manage($royal, $thisNote, $category) {
 $oldNote = $thisNote.parentNode.parentNode.getAttribute("value");
@@ -146,12 +160,18 @@ function showMoreDesc(id) {
 		<div id="loginForm" class="row display-flex">
 			<div id="loginLogo" class="col-xs-12 col-sm-2">
 				<img id="logo" src="PF.png" alt="Logo">
-				<button type="button" class="btn btn-secondary" onclick="show(1)">Pancake</button>
-				<button type="button" class="btn btn-secondary" onclick="show(2)">Drink</button>
-				<button type="button" class="btn btn-secondary" onclick="show(3)">Coffee</button>
+				<?php
+				$result = getCategoryItems();
+				while($row = $result->fetch_assoc()) {
+					?>
+					<button type="button" class="btn btn-secondary" onclick="show(<?php echo $row["CategoryID"];?>)"><?php echo $row["CategoryName"];?></button>
+					<?php
+				}
+				?>
 			</div>
 			<div id="loginInsert" class="col-xs-12 col-sm-10" >
 				<h1>Crea un account!</h1>
+
 				<div id="txtHint3"><b>Person info will be listed here...</b></div>
 			</div>
 		</div>

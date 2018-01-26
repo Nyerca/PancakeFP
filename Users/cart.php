@@ -754,6 +754,20 @@ function updateOrderTotalPrice($email) {
 		$conn->query($sql);
 }
 
+function getCategoryItems() {
+	$conn =connect();
+		$sql = "SELECT * FROM categoryitem ORDER BY CategoryID";
+		$result = $conn->query($sql);
+		return $result;
+}
+
+function getUnderCategoryItems($categoryID) {
+	$conn =connect();
+	$sql = "SELECT DISTINCT i.UnderCategoryID, UnderCategoryName FROM item i, undercategoryitem ui WHERE i.UnderCategoryID = ui.UnderCategoryID AND CategoryID= '".$categoryID."'";
+		$result = $conn->query($sql);
+		return $result;
+}
+
 
 //$cart= new ShoppingCart();
 //$item= new Item(1,"pomodoro", "2.40");

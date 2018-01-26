@@ -4,6 +4,7 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 require_once 'imagesFunctions.php';
 ?>
+
 <html>
 <head>
   <title>Bootstrap Example</title>
@@ -17,6 +18,7 @@ require_once 'imagesFunctions.php';
 </head>
 
 <body>
+
 <?php
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
@@ -28,8 +30,32 @@ $conn =connect();
 	} else {
 		$category = 1;
 	}
-	//preparazione query
-	$sql = "SELECT * from item WHERE Deleted=0 AND CategoryID =".$category;
+	$_SESSIONS["cat"] = $category;
+	?>
+	<select onchange="change(this, <?php echo $category;?>)" >
+	<option value="-1">Show all</option>
+  <?php
+$result = getUnderCategoryItems($category);
+				while($row = $result->fetch_assoc()) {
+					if(isset($_GET["underC"]) && $_GET["underC"]==$row["UnderCategoryID"]) {
+						?>
+						<option selected="selected" value="<?php echo $row["UnderCategoryID"];?>"><?php echo $row["UnderCategoryName"];?></option>
+						<?php
+					} else {
+					?>
+					<option value="<?php echo $row["UnderCategoryID"];?>"><?php echo $row["UnderCategoryName"];?></option>
+					<?php
+					}
+				}
+				?>
+</select>
+	<?php	
+	
+	if(isset($_GET["underC"]) && $_GET["underC"]>=0) {
+		$sql = "SELECT * from item WHERE Deleted=0 AND CategoryID =".$_SESSIONS["cat"]." AND UnderCategoryID = ".$_GET["underC"];
+	} else {
+		$sql = "SELECT * from item WHERE Deleted=0 AND CategoryID =".$_SESSIONS["cat"];
+	}
 	$result = $conn->query($sql);
 	if($result->num_rows > 0) {
 		while($row = $result->fetch_assoc()) {
