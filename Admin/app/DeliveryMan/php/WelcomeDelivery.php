@@ -113,6 +113,7 @@ session_start();
   function Logout() {
     window.location.href = "DestroySession.php";
   }
+  
 </script>
 <script src="Notification.js"></script>
 </body>

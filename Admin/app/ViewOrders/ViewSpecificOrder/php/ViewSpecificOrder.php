@@ -135,7 +135,7 @@ $RPancakes = $conn->query($query_sql2);
 <?php
   $status = $_GET['st'];
   $row = $items->fetch_assoc();
-  if($status == 0 || (strlen($row["Address"]) == 0 && strlen($row["Longitude"]) == 0 )) {
+  if($status == 0){
     echo '<div class="row2">';
     echo '<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">';
     echo '<a href="../SetDelivery/php/SetDelivery.php?id='.$id.'" class = "btn btn-default btn-lg" role="button">Set delivery man</a>';

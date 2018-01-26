@@ -38,8 +38,12 @@
   <div>
   	<?php
         $status = $_GET['st'];
-  			$query_sql="SELECT IDOrder, Email FROM orders WHERE Status='$status'";
-  			$result = $conn->query($query_sql);
+        if($status == -1) {
+  			     $query_sql="SELECT * FROM orders o, deliverymode d  WHERE o.IDDeliveryMode=d.IDDeliveryMode AND Address IS NULL AND Latitude IS NULL";
+        } else {
+          $query_sql="SELECT * FROM orders o WHERE Status='$status'";
+        }
+        $result = $conn->query($query_sql);
   			if($result !== false){
   			?>
   			<table class="table table-striped">
