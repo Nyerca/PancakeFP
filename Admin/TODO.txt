@@ -7,9 +7,7 @@ TOTEST: when click on "view all.." and then click to a specific order, need to s
 a order in GET, i setted "0" by default but need to be tested.
 
 
-//TODO: payment visualization in order
-
-//TODO: do "note" note if some item is deselcted in royalpancake 
+//TODO: do "note" note if some item is deselected in royalpancake and set rigth attribute in order tables
 
 //TODO: sql injection
 

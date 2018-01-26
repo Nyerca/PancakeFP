@@ -36,7 +36,7 @@ create table DeliveryMan (
      Surname char(100) not null,
      FiscalCode char(100) not null,
      PhoneNumber char(100) not null,
-     Deleted char(100) not null,
+     Deleted char(1) DEFAULT "0",
      constraint IDDeliveryMan primary key (Email));
 
 create table DeliveryManNotification (
