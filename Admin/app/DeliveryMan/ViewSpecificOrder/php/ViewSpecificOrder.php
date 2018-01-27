@@ -205,7 +205,7 @@ $RPancakes = $conn->query($query_sql2);
 
 
   function GoToOrder(id) {
-    window.location.href ="../../../ViewOrders/ViewSpecificOrder/php/ViewSpecificOrder.php?" + "id=" + id + "&st=2";
+  
   }
 
   function DeleteNotification(id){
