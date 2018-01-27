@@ -16,12 +16,12 @@ if (session_status() == PHP_SESSION_NONE) {
         $stmt2->fetch();
         if($stmt2->num_rows > 0)
         {
-			
+
 			if (password_verify($_POST["pwd"], $pass)) {
-				
+
 				$_SESSION['admin']["email"] = $email;
 				$_SESSION['admin']["username"] = $username;
-				header("location: ../Admin/app/WelcomeBoss/html/WelcomeBoss.html");
+				header("location: ../Admin/app/WelcomeBoss/php/WelcomeBoss.php");
 			} else {
 				echo "wrong";
 			}

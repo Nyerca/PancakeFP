@@ -17,7 +17,7 @@
 <body>
 <?php
 session_start();
-if(!isset($_SESSION['delivery']["email"])) {
+if(!isset($_SESSION['admin']["email"])) {
   header("location: ../../../../Users/login.php");
 }
 
@@ -120,6 +120,12 @@ function DeleteNotification(id){
 function ViewAllNotification() {
     window.location.href ="ViewAllNotification.php";
 }
+
+
+  function Logout() {
+    window.location.href = "../../DeliveryMan/php/DestroySession.php";
+  }
+
 </script>
 </body>
 </html>
