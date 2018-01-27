@@ -23,7 +23,8 @@
 <body>
 <?php
 $id = $_GET["id"];
-$query_sql="SELECT * FROM orders o, iteminorder io, item i, deliverymode d WHERE o.IDOrder=io.IDOrder AND io.IDItem=i.IDItem AND io.Email=o.Email AND o.IDOrder='$id' AND o.IDDeliveryMode=d.IDDeliveryMode";
+$status = $_GET["st"];
+$query_sql="SELECT * FROM orders o, iteminorder io, item i WHERE o.IDOrder=io.IDOrder AND io.IDItem=i.IDItem AND io.Email=o.Email AND o.IDOrder='$id'";
 $items = $conn->query($query_sql);
 
 $query_sql2="SELECT * FROM orders o, orderroyalpancake orp , royalpancake r WHERE o.IDOrder=orp.IDOrder AND orp.IDRoyalPancake=r.IDRoyalPancake AND orp.Email=o.Email AND o.IDOrder='$id'";
@@ -54,7 +55,11 @@ $RPancakes = $conn->query($query_sql2);
 
   <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12">
   	<?php
-  			$query_sql="SELECT * FROM orders o, deliverymode d WHERE IDOrder='$id' AND o.IDDeliveryMode=d.IDDeliveryMode";
+      if($status == -1) {
+        $query_sql="SELECT * FROM orders WHERE IDOrder='$id'";
+      } else {
+        $query_sql="SELECT * FROM orders o, deliverymode d WHERE IDOrder='$id' AND o.IDDeliveryMode=d.IDDeliveryMode";
+      }
   			$result = $conn->query($query_sql);
   			if($result !== false){
   			?>
@@ -71,6 +76,7 @@ $RPancakes = $conn->query($query_sql2);
   							<td><?php echo $row["TotalPrice"]; ?></td>
               </tr>
               <?php
+              if($status != -1){
               if(strlen($row["Address"]) > 0) {
                 echo '<tr>';
                 echo '<td>Address: </td>';
@@ -85,12 +91,13 @@ $RPancakes = $conn->query($query_sql2);
                 echo '<td>Delivery mode:</td>';
                 echo '<td>Geolocalization</td>';
                 echo'</tr>';
-              } else {
+              }
+            } else {
                 echo '<tr>';
                 echo '<td>Delivery mode:</td>';
                 echo '<td>In market</td>';
                 echo'</tr>';
-              }
+            }
               if(strlen($row["CardOwner"]) > 0) {
                 echo '<tr>';
                 echo '<td>Payment mode:</td>';
@@ -155,7 +162,7 @@ $RPancakes = $conn->query($query_sql2);
 <?php
   $status = $_GET['st'];
   $row = $items->fetch_assoc();
-  if($status == 0){
+  if($status == 1){
     echo '<div class="row2">';
     echo '<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">';
     echo '<a href="../SetDelivery/php/SetDelivery.php?id='.$id.'" class = "btn btn-default btn-lg" role="button">Set delivery man</a>';

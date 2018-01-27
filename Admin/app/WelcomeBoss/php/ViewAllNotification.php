@@ -95,7 +95,7 @@
 function myFunction(fc) {
   var VariablePlaceholder = "id=";
   var UrlToSend = VariablePlaceholder + fc;
-  window.location.href = "../../ViewOrders/ViewSpecificOrder/php/ViewSpecificOrder.php?" + UrlToSend +"&st=0";
+  window.location.href = "../../ViewOrders/ViewSpecificOrder/php/ViewSpecificOrder.php?" + UrlToSend +"&st=-1";
 }
 
 </script>

@@ -159,7 +159,7 @@ $(document).ready(function(){
 
 
 function GoToOrder(id) {
-  window.location.href ="../../ViewOrders/ViewSpecificOrder/php/ViewSpecificOrder.php?" + "id=" + id + "&st=0";
+  window.location.href ="../../ViewOrders/ViewSpecificOrder/php/ViewSpecificOrderNotification.php?" + "id=" + id;
 }
 
 function DeleteNotification(id){

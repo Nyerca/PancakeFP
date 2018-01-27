@@ -49,7 +49,7 @@
       <a href="../../NewNotification/html/NewNotification.html" class = "btn btn-default btn-lg" role="button">New Notification</a>
     </div>
     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-      <a href="../../ViewOrders/html/AllOrders.html" class = "btn btn-default btn-lg" role="button">View Orders</a>
+      <a href="../../ViewOrders/html/AllOrders.php" class = "btn btn-default btn-lg" role="button">View Orders</a>
     </div>
   </div>
 
@@ -89,7 +89,7 @@ $(document).ready(function(){
 });
 
 function GoToOrder(id) {
-  window.location.href ="../../ViewOrders/ViewSpecificOrder/php/ViewSpecificOrder.php?" + "id=" + id + "&st=0";
+  window.location.href ="../../ViewOrders/ViewSpecificOrder/php/ViewSpecificOrderNotification.php?" + "id=" + id;
 }
 
 function DeleteNotification(id){

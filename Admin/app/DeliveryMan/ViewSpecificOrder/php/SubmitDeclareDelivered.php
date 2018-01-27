@@ -19,7 +19,7 @@ $result = $conn->query($sql);
 $emailUser = $result->fetch_assoc();
 
 
-$sql = "UPDATE orders SET Status ='2' WHERE IDOrder='$idOrder'";
+$sql = "UPDATE orders SET Status ='3' WHERE IDOrder='$idOrder'";
 if ($conn->query($sql) === TRUE) {
     echo "Record updated successfully";
 } else {

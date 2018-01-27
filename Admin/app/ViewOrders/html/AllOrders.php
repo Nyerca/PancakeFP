@@ -11,7 +11,6 @@
 <link rel="stylesheet" href="../css/ViewOrders.css">
 </head>
 <body>
-
 <div class="container">
 
   <div class="row">
@@ -38,13 +37,13 @@
 
   <div class="row2">
     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-      <a href="../php/ViewOrdersIncompelete.php?st=0" class = "btn btn-default btn-lg" role="button">Incomplete</a>
+      <a href="../php/ViewOrdersIncompelete.php?st=1" class = "btn btn-default btn-lg" role="button">Incomplete</a>
     </div>
     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-      <a href="../php/ViewOrders.php?st=1" class = "btn btn-default btn-lg" role="button">Delivered</a>
+      <a href="../php/ViewOrders.php?st=2" class = "btn btn-default btn-lg" role="button">Delivered</a>
     </div>
     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-      <a href="../php/ViewOrders.php?st=2" class = "btn btn-default btn-lg" role="button">Completed</a>
+      <a href="../php/ViewOrders.php?st=3" class = "btn btn-default btn-lg" role="button">Completed</a>
     </div>
     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
       <a href="../php/ViewOrders.php?st=-1" class = "btn btn-default btn-lg" role="button">In market</a>
@@ -88,7 +87,7 @@ $(document).ready(function(){
 
 
 function GoToOrder(id) {
-  window.location.href ="../../ViewOrders/ViewSpecificOrder/php/ViewSpecificOrder.php?" + "id=" + id + "&st=0";
+ window.location.href ="../../ViewOrders/ViewSpecificOrder/php/ViewSpecificOrderNotification.php?" + "id=" + id;
 }
 
 function DeleteNotification(id){

@@ -50,7 +50,7 @@
   	<?php
         $status = $_GET['st'];
         if($status == -1) {
-  			   $query_sql="SELECT * FROM orders o, deliverymode d  WHERE o.IDDeliveryMode=d.IDDeliveryMode AND Address IS NULL AND Latitude IS NULL";
+  			   $query_sql="SELECT * FROM orders WHERE IDDeliveryMode IS NULL";
         } else {
           $query_sql="SELECT * FROM orders WHERE Status='$status'";
         }
@@ -139,7 +139,7 @@ $(document).ready(function(){
 
 
 function GoToOrder(id) {
-  window.location.href ="../../ViewOrders/ViewSpecificOrder/php/ViewSpecificOrder.php?" + "id=" + id + "&st=0";
+  window.location.href ="../../ViewOrders/ViewSpecificOrder/php/ViewSpecificOrderNotification.php?" + "id=" + id;
 }
 
 function DeleteNotification(id){

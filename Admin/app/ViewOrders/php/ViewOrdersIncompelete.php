@@ -49,7 +49,9 @@
   <div>
   	<?php
         $status = $_GET['st'];
-  			$query_sql="SELECT * FROM orders o, deliverymode d  WHERE o.IDDeliveryMode=d.IDDeliveryMode AND Status='$status' AND ((Address IS NOT NULL AND CAP IS NOT NULL) OR (Latitude IS NOT NULL AND Longitude IS NOT NULL)) ";
+  		//	$query_sql="SELECT * FROM orders o, deliverymode d  WHERE o.IDDeliveryMode=d.IDDeliveryMode AND Status='$status' AND ((Address IS NOT NULL AND CAP IS NOT NULL) OR (Latitude IS NOT NULL AND Longitude IS NOT NULL)) ";
+      $query_sql="SELECT * FROM orders o WHERE Status='$status' AND IDDeliveryMode IS NOT NULL";
+
         $result = $conn->query($query_sql);
   			if($result !== false){
   			?>
@@ -135,7 +137,7 @@ $(document).ready(function(){
 
 
 function GoToOrder(id) {
-  window.location.href ="../../ViewOrders/ViewSpecificOrder/php/ViewSpecificOrder.php?" + "id=" + id + "&st=0";
+  window.location.href ="../../ViewOrders/ViewSpecificOrder/php/ViewSpecificOrderNotification.php?" + "id=" + id;
 }
 
 function DeleteNotification(id){

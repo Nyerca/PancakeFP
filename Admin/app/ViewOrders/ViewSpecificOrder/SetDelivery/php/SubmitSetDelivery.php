@@ -22,7 +22,7 @@ if ($conn->query($sql) === TRUE) {
     echo "Error updating record: " . $conn->error;
 }
 
-$sql = "UPDATE orders SET Status ='1' WHERE IDOrder='$idOrder'";
+$sql = "UPDATE orders SET Status ='2' WHERE IDOrder='$idOrder'";
 if ($conn->query($sql) === TRUE) {
     echo "Record updated successfully";
 } else {
@@ -33,7 +33,7 @@ $stmt = $conn->prepare("INSERT INTO `deliverymannotification` (`Description`, `E
 $stmt->bind_param("sss", $Description, $fc, $Title);
 
 $Description = "Order with ID=".' '.$idOrder.' '."need to be delivered.";
-$Title = "You have a new order to deliver!";
+$Title = "New order to deliver!";
 $stmt->execute();
 
 

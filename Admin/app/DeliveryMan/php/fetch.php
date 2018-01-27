@@ -28,7 +28,7 @@ if(isset($_POST["view"]))
     <button onclick=DeleteNotification('.$row["IDDeliveryManNotification"].') type="button" class="close" data-toggle="modal" data-target="#myModal aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
-    <div >
+    <div onclick=ViewAllNotification() >
      <strong >'.$row["Title"].'</strong><br />
      <small><em>'.$row["Description"].'</em></small>
      </div>
@@ -37,6 +37,12 @@ if(isset($_POST["view"]))
    <li class="divider"></li>
    ';
   }
+  $output = $output.'<li>
+   <a onclick="ViewAllNotification()" href="#">
+    <small><em>View all..</em></small>
+   </a>
+  </li>
+  <li class="divider"></li>';
  }
  else
  {
