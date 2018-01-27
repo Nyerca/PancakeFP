@@ -45,6 +45,7 @@ span.round-tab {
     position: absolute;
     left: 0;
     text-align: center;
+	padding-top:25%;
     font-size: 25px;
 }
 span.round-tab i{

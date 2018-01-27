@@ -150,26 +150,27 @@ function showMoreDesc(id) {
 </head>
 <body>
 
-
 <?php require 'header.php' ?>
-
+<div id="bodyBack">
 <img id="bannerTop" class="img-responsive" src="bannerTop.png" alt="Logo">
 <div id="bodyDiv" class="container text-center">
 
 	<div id="bodyContent">	
-		<div id="loginForm" class="row display-flex">
-			<div id="loginLogo" class="col-xs-12 col-sm-2">
-				<img id="logo" src="PF.png" alt="Logo">
+		<div id="orderForm" class="row display-flex">
+			<div id="spaceDiv" class="container-fluid col-xs-12 col-sm-2">
+				<i id="fork" class="glyphicon glyphicon-cutlery"></i>
+
 				<?php
 				$result = getCategoryItems();
 				while($row = $result->fetch_assoc()) {
 					?>
-					<button type="button" class="btn btn-secondary" onclick="show(<?php echo $row["CategoryID"];?>)"><?php echo $row["CategoryName"];?></button>
+					<button type="button" class="btn button-clk col-xs-4 col-sm-12" onclick="show(<?php echo $row["CategoryID"];?>)"><?php echo $row["CategoryName"];?></button>
 					<?php
 				}
 				?>
+
 			</div>
-			<div id="loginInsert" class="col-xs-12 col-sm-10" >
+			<div class="col-xs-12 col-sm-10" >
 				<h1>Crea un account!</h1>
 
 				<div id="txtHint3"><b>Person info will be listed here...</b></div>
@@ -177,7 +178,7 @@ function showMoreDesc(id) {
 		</div>
 	</div>
 </div>
-
+</div>
 <div id="txtHint"><b>Person info will be listed here...</b></div>
 
 

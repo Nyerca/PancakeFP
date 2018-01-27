@@ -69,7 +69,7 @@ $("#collapseExample"+$id).collapse("toggle");
   <link rel="stylesheet" type="text/css" title="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css">
 </head>
 <body>
-<nav class="navbar navbar-default">
+<nav id="headerContainer" class="navbar navbar-default">
 
 
 	<div class="container-fluid">
@@ -87,14 +87,13 @@ $("#collapseExample"+$id).collapse("toggle");
 			</a>
 		</div>
 
-		<div class="collapse navbar-collapse" id="myNavbar">
-			<ul class="nav navbar-nav">
-				<li><a href="listino.php">Order</a></li>
-				<li><a href="royalPancake.php">Royal Pancakes</a></li>
-				<li><a href="contact.php">Contact</a></li>
-				<li><a href="studente.php">Sei studente?</a></li>
-				<li id="signUp"><a href="registrazione.php"><span class="glyphicon glyphicon-user"></span>Sign Up</a></li>
-				<li id="signIn"><a href="login.php"><span class="glyphicon glyphicon-log-in"></span>Login</a></li>
+		<div class="collapse navbar-collapse " id="myNavbar">
+			<ul class="nav navbar-nav col-xs-12">
+				<li class="headerOpt"><a href="listino.php">Order</a></li>
+				<li class="headerOpt"><a href="royalPancake.php">Royal Pancakes</a></li>
+				<li class="headerOpt"><a href="studente.php">Sei studente?</a></li>
+				<li class="headerOpt" id="signUp"><a href="registrazione.php"><span class="glyphicon glyphicon-user"></span>Sign Up</a></li>
+				<li class="headerOpt" id="signIn"><a href="login.php"><span class="glyphicon glyphicon-log-in"></span>Login</a></li>
 				<li id="signOut">
 				<form action="" method="post" id="frmLogout">
 					<input type="submit" name="logout" value="Logout" class="btn btn-default"></button>	

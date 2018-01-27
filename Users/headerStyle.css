@@ -1,3 +1,10 @@
+.headerOpt {
+	border: 1px solid black;
+	margin-top:1%;
+	margin-right:1%;
+}
+
+
 #notifyContainer {
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);

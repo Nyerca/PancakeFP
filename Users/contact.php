@@ -10,12 +10,12 @@ require_once 'dbConnection.php';
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" type="text/css" title="stylesheet" href="reviewStyle.css">
+  <link rel="stylesheet" type="text/css" title="stylesheet" href="style.css">
 </head>
 <body>
 
 <?php require 'header.php' ?>
-  
+ <div id="bodyBack">
 <div id="bodyDiv" class="container text-center">    
 	<div id="bodyContent">
 	<div id="firstReview">
@@ -59,7 +59,7 @@ require_once 'dbConnection.php';
 	</div>
 	</div>
 </div>
-
+</div>
 <?php require 'footer.php' ?>
 
 </body>

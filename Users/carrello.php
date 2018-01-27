@@ -219,24 +219,24 @@ function CheckPay() {
                 <ul class="nav nav-tabs" role="tablist">
 
                     <li role="presentation" class="active">
-                        <a href="#step1" aria-controls="step1" role="tab" title="Step 1">
+                        <a href="#step1" aria-controls="step1" role="tab" title="Preview">
                             <span class="round-tab">
-                                <i class="glyphicon glyphicon-folder-open"></i>
+                                <i class="glyphicon glyphicon-shopping-cart"></i>
                             </span>
                         </a>
                     </li>
 
                     <li role="presentation" class="disabled">
-                        <a href="#step2" aria-controls="step2" role="tab" title="Step 2">
+                        <a href="#step2" aria-controls="step2" role="tab" title="Delivery">
                             <span class="round-tab">
-                                <i class="glyphicon glyphicon-pencil"></i>
+                                <i class="glyphicon glyphicon-road"></i>
                             </span>
                         </a>
                     </li>
                     <li role="presentation" class="disabled">
-                        <a href="#step3" aria-controls="step3" role="tab" title="Step 3">
+                        <a href="#step3" aria-controls="step3" role="tab" title="Payment">
                             <span class="round-tab">
-                                <i class="glyphicon glyphicon-picture"></i>
+                                <i class="glyphicon glyphicon-euro"></i>
                             </span>
                         </a>
                     </li>

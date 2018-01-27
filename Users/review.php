@@ -15,7 +15,7 @@ require_once 'dbConnection.php';
 <body>
 
 <?php require 'header.php' ?>
-  
+<div id="bodyBack">
 <div id="bodyDiv" class="container text-center">    
 	<div id="bodyContent">
 		<div id="firstReview">
@@ -68,7 +68,7 @@ require_once 'dbConnection.php';
 		</div>
 	</div>
 </div>
-
+</div>
 <?php require 'footer.php' ?>
 
 </body>

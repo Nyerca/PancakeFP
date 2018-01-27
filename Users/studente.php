@@ -27,7 +27,7 @@ if(!empty($_POST["controllo"]) && !empty($_SESSION['user'])) {
 <body>
 
 <?php require 'header.php' ?>
-
+<div id="bodyBack">
 <div id="bodyDiv" class="container text-center">
 	<h2>Discover the advantages of being a student</h2>
 	<p id="descS">If you are a student you will have free shipping and a 10% discount for each product.</p>
@@ -43,7 +43,7 @@ if(!empty($_POST["controllo"]) && !empty($_SESSION['user'])) {
 		</fieldset>
 	</form>
 </div>
-
+</div>
 <?php require 'footer.php' ?>
 
 </body>

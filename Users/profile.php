@@ -24,9 +24,9 @@ if (!isset($_SESSION['user'])) {
 <body>
 
 <?php require 'header.php' ?>
-  
-<div id="bodyDiv" class="container text-center">    
-	<div class="col-xs-10 col-xs-offset-1">
+<div id="bodyBack">
+<div id="bodyDivProfile" class="container text-center">    
+
     <div class="card hovercard">
         <div id="blurred" class="card-background">
         </div>
@@ -68,11 +68,11 @@ if (!isset($_SESSION['user'])) {
       </div>
     </div>
     
-    </div>
+
             
     
 </div>
-
+</div>
 <?php require 'footer.php' ?>
 
 </body>

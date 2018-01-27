@@ -768,6 +768,13 @@ function getUnderCategoryItems($categoryID) {
 		return $result;
 }
 
+function getRandomItems() {
+	$conn =connect();
+	$sql = "SELECT * FROM item ORDER BY RAND() LIMIT 5";
+	$result = $conn->query($sql);
+	return $result;
+}
+
 
 //$cart= new ShoppingCart();
 //$item= new Item(1,"pomodoro", "2.40");

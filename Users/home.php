@@ -13,27 +13,31 @@ function ViewReview() {
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Pacifico" />
   <link rel="stylesheet" type="text/css" title="stylesheet" href="style.css">
   <link rel="stylesheet" type="text/css" title="stylesheet" href="reviewChange.css">
 </head>
 <body>
 
 <?php require 'header.php' ?>
-  
-<div id="bodyDiv" class="container text-center">    
+<div id="bodyBack">
+<img class="img-responsive" src="breakfast.jpeg" alt="Best Pancake Website in the world">
+<div id="bodyDiv" class="container text-center">
 
 	<div id="bodyContent">
-		<h3>What We Do</h3><br>
+		<h3>Welcome!</h3><br>
 		<div class="well">
-			<p>We prepare the best pancakes in the city! 
-			We only use fresh and genuine products purchased from the local market. 
-			Our pancakes are the best, try them!</p>
+			<p>Welcome in the world of pancakes, the world of doraemon, the world of flavour and the world of special prices!</p>
 		</div>
 	</div>
 	
+	
 	<div class="container">
-	<div class="row-fluid">
-        <div class="col-xs-12 col-sm-8">
+	<div class="row col-xs-12">
+		<div class="col-xs-12">
+		<p class="homeInfos">Where we are</p>
+		</div>
+        <div id="shadow" class="col-xs-12 col-sm-8">
         	<iframe width="100%" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" 
 			 src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJXYBY6JakLBMR8evItrbN89Y&key=AIzaSyAyyNlt6JQ-5Na8Sqq73AMh57zXfdd9gBI">
 			</iframe>
@@ -94,11 +98,18 @@ if(getReviewNumber() > 0) {
 				<?php
 }
 ?>	
-
+<div class="container-fluid"  id="itmPhotos">
+<div id="insideText" class="container content">
+<p class="homeInfos">Awesome Recipes</p>
+<p class="subt">TASTE THE FRESH</p>
+<p>We provide our costomers a convenient shop. You can find everything you need for your breakfast and discover the taste of the best pancakes ever made!</p>
+<p>The flavour is not the only thing we offer, we also have the lowest prices! What are you waiting for? Come to visit us!</p>
+</div>
+</div>
 </div>
 
 
-
+</div>
 <?php require 'footer.php'; ?>
 
 
@@ -109,8 +120,8 @@ require_once 'reviewUtility.php';
 if(getReviewNumber() > 0) {
 	?>
 <script type="text/javascript">
-$( document ).ready(function() {
-	 
+$( document ).ready(function() { 
+
 	
 	$("#carousel-reviews").on('slide.bs.carousel', function () {
 		if($('#carousel-reviews .active').index('#carousel-reviews .item')==0) {

@@ -32,7 +32,7 @@ $conn =connect();
 	}
 	$_SESSIONS["cat"] = $category;
 	?>
-	<select onchange="change(this, <?php echo $category;?>)" >
+	<select class="col-xs-12" onchange="change(this, <?php echo $category;?>)" >
 	<option value="-1">Show all</option>
   <?php
 $result = getUnderCategoryItems($category);

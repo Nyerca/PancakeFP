@@ -60,8 +60,8 @@
 <script type="text/javascript">
 function Register() {
 <?php
-require 'dbConnection.php';
-	
+require_once 'dbConnection.php';
+require_once 'password_compatibility_library.php';
 	if(isset($_POST["email"]) && isset($_POST["user"]) && isset($_POST["pwd"])){ 
 		//connessione al db
 		$conn =connect();
@@ -69,18 +69,24 @@ require 'dbConnection.php';
 		//preparazione query
 		if(!empty($_POST["tel"])) {
 			$stmt = $conn->prepare("INSERT INTO Users (Email,Password,Username,PhoneNumber) VALUES(?,?,?,?)");
-			$stmt->bind_param("ssss", $email, $pwd, $user, $tel);
+			$stmt->bind_param("ssss", $email, $user_password_hash, $user, $tel);
 			$tel = $_POST["tel"];
 
 		} else {			
 			$stmt = $conn->prepare("INSERT INTO Users (Email,Password,Username) VALUES(?,?,?)");
-			$stmt->bind_param("sss", $email, $pwd, $user);
+			$stmt->bind_param("sss", $email, $user_password_hash, $user);
 
 		}
 
 		$email = $_POST["email"];
 		$pwd = $_POST["pwd"];
 		$user = $_POST["user"];
+
+
+                // crypt the user's password with PHP 5.5's password_hash() function, results in a 60 character
+                // hash string. the PASSWORD_DEFAULT constant is defined by the PHP 5.5, or if you are using
+                // PHP 5.3/5.4, by the password hashing compatibility library
+        $user_password_hash = password_hash($pwd, PASSWORD_DEFAULT);
 		
 		$stmt->execute();
 
