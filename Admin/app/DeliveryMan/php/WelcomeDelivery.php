@@ -6,6 +6,9 @@ session_start();
   $database = "dbfp";
 
   $conn = new mysqli($servername, $username, $password, $database);
+  if(!isset($_SESSION['admin']["email"])) {
+    header("location: ../../../../Users/login.php");
+  }
   $mail = $_SESSION['delivery']["email"];
   $query_sql="SELECT * FROM deliveryman WHERE Email='$mail'";
   $result = $conn->query($query_sql);

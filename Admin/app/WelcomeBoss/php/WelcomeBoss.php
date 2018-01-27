@@ -15,7 +15,13 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
+<?php
+session_start();
+if(!isset($_SESSION['delivery']["email"])) {
+  header("location: ../../../../Users/login.php");
+}
 
+ ?>
 <div class="container">
 
   <div class="row">
@@ -52,7 +58,11 @@
       <a href="../../ViewOrders/html/AllOrders.php" class = "btn btn-default btn-lg" role="button">View Orders</a>
     </div>
   </div>
-
+  <div class="row3">
+    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+      <span onclick="Logout()" class="glyphicon glyphicon-log-out">Logout</span>
+    </div>
+  </div>
 </div>
 <script type="text/javascript">
 $(document).ready(function(){
