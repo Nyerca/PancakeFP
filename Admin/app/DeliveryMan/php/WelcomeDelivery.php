@@ -6,7 +6,7 @@ session_start();
   $database = "dbfp";
 
   $conn = new mysqli($servername, $username, $password, $database);
-  if(!isset($_SESSION['admin']["email"])) {
+  if(!isset($_SESSION['delivery']["email"])) {
     header("location: ../../../../Users/login.php");
   }
   $mail = $_SESSION['delivery']["email"];

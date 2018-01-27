@@ -1,30 +1,23 @@
 <?php
 require_once 'dbConnection.php';
-require_once 'password_compatibility_library.php';
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
 	if(isset($_POST["email"]) ){
 		$conn = connect();
-		$stmt2 = $conn->prepare("SELECT Email, Username, Password FROM admin WHERE Email=?");
+		$stmt2 = $conn->prepare("SELECT Email, Username FROM admin WHERE Email=?");
 		$emails = $_POST["email"];
 		$stmt2->bind_param("s", $emails);
 		$stmt2->execute();
-		$stmt2->bind_result($email, $username, $pass);
+		$stmt2->bind_result($email, $username);
         $stmt2->store_result();
         $stmt2->fetch();
         if($stmt2->num_rows > 0)
         {
-			
-			if (password_verify($_POST["pwd"], $pass)) {
-				
-				$_SESSION['admin']["email"] = $email;
-				$_SESSION['admin']["username"] = $username;
-				header("location: ../Admin/app/WelcomeBoss/html/WelcomeBoss.html");
-			} else {
-				echo "wrong";
-			}
+			$_SESSION['admin']["email"] = $email;
+			$_SESSION['admin']["username"] = $username;
+			header("location: ../Admin/app/WelcomeBoss/php/WelcomeBoss.php");
 		}
 
 		$stmt3 = $conn->prepare("SELECT Email FROM deliveryman WHERE Email=?");
@@ -36,12 +29,8 @@ if (session_status() == PHP_SESSION_NONE) {
         $stmt3->fetch();
         if($stmt3->num_rows > 0)
         {
-			if (password_verify($_POST["pwd"], $pass)) {
-				$_SESSION['delivery']["email"] = $email;
-				header("location: ../Admin/app/DeliveryMan/php/WelcomeDelivery.php");
-			} else {
-				echo "wrong";
-			}
+			$_SESSION['delivery']["email"] = $email;
+			header("location: ../Admin/app/DeliveryMan/php/WelcomeDelivery.php");
 		}
 
 
@@ -56,26 +45,23 @@ if (session_status() == PHP_SESSION_NONE) {
         $stmt->fetch();
         if($stmt->num_rows > 0)
         {
-			if (password_verify($_POST["pwd"], $pass)) {
-				require_once 'cart.php';
-				$user = "user";
-				$_SESSION['user']["email"] = $email;
-				$_SESSION['user']["username"] = $username;
+			require_once 'cart.php';
+			$user = "user";
+			$_SESSION['user']["email"] = $email;
+			$_SESSION['user']["username"] = $username;
 
-				if(!empty($_SESSION["cart"])) {
-					$u = unserialize($_SESSION["cart"]);
-					$u->moveToDb($email);
-					unset($_SESSION["cart"]);
-				}
-
-				if (isset($_SESSION['url'])) {
-					header("location: ".$_SESSION['url']);
-				} else {
-					header("location: home.php");
-				}
-			} else {
-				echo "wrong";
+			if(!empty($_SESSION["cart"])) {
+				$u = unserialize($_SESSION["cart"]);
+				$u->moveToDb($email);
+				unset($_SESSION["cart"]);
 			}
+
+			if (isset($_SESSION['url'])) {
+				header("location: ".$_SESSION['url']);
+			} else {
+				header("location: home.php");
+			}
+
 
         }
 
@@ -114,11 +100,12 @@ if (session_status() == PHP_SESSION_NONE) {
 				<form method="post" action="login.php">
 					<div class="form-group">
 						<label for="email">Email address:</label>
-						<input required="true" type="email" class="form-control" id="email" name="email">
+						<input type="email" class="form-control" id="email" name="email">
 					</div>
 					<div class="form-group">
 						<label for="pwd">Password:</label>
-						<input required="true" type="password" class="form-control" id="pwd" name="pwd">
+						<input type="password" class="form-control" id="pwd">
+						<p>Password dimenticata?</p>
 					</div>
 					<div class="checkbox">
 						<label><input type="checkbox"> Remember me</label>
