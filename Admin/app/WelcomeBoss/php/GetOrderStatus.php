@@ -1,6 +1,9 @@
 <?php
 include("connect.php");
-
+session_start();
+if(!isset($_SESSION['admin']["email"])) {
+  header("location: ../../../../Users/login.php");
+}
 $idOrder = $_GET['id'];
 $sql = "SELECT * FROM orders WHERE IDOrder='$idOrder'";
 $result = $conn->query($sql);

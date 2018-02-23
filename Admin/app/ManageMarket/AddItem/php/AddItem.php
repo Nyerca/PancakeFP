@@ -1,5 +1,8 @@
 <?php
-
+session_start();
+if(!isset($_SESSION['admin']["email"])) {
+  header("location: ../../../../../Users/login.php");
+}
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -20,11 +23,26 @@ if ($conn->connect_error) {
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width = device-width, initial-scale = 1">
-  <title>Manage market</title>
+  <title>Add item</title>
   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <link rel="stylesheet" href="../css/AddItem.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style media="screen">
+    #drop {
+      background-color: white;
+    }
+    @media screen and (max-width: 766px) {
+
+        #back {
+          width: 63%;
+        }
+
+        #sub {
+          width: 130%;
+        }
+    }
+  </style>
 </head>
 <body>
 
@@ -35,13 +53,16 @@ if ($conn->connect_error) {
   <br/>
      <nav class="navbar navbar-inverse">
       <div class="container-fluid">
+        <div class="navbar-header">
+         <img onclick="ReturnHome()" id="logo" src="https://fpwealth.com/wp-content/uploads/2015/09/fp-logo-large.png" width="50" height="50" alt="logo">
+        </div>
        <div class="navbar-header">
         <a class="navbar-brand" href="#">Add item</a>
        </div>
        <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
-         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="label label-pill label-danger count" style="border-radius:10px;"></span> <span class="glyphicon glyphicon-envelope" style="font-size:18px;"></span></a>
-         <ul class="dropdown-menu">
+         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="label label-pill label-danger count" style="border-radius:10px;"></span> <span class="glyphicon glyphicon-envelope" style="font-size:20px;"></span></a>
+         <ul id="drop" class="dropdown-menu">
            <li class="divider"></li>
          </ul>
         </li>
@@ -50,15 +71,35 @@ if ($conn->connect_error) {
      </nav>
    </div>
 
+
   <div class="container">
-    <form action="SubmitInsert.php" method="post" enctype="multipart/form-data">
-      <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <label for="name">Name</label> <input type="text" class="form-control" id="name" name="name" ><br/>
+    <form  action="SubmitInsert.php" class="well form-horizontal" method="post" enctype="multipart/form-data" id="contact_form">
+      <legend>Add new item</legend>
+
+      <!-- Text input-->
+
+      <div class="form-group">
+      <label class="col-md-4 control-label">Name</label>
+      <div class="col-md-4 inputGroupContainer">
+      <div class="input-group">
+      <span class="input-group-addon"><i class="glyphicon glyphicon-plus"></i></span>
+      <input id="name" name="name" required placeholder="Item name" class="form-control"  type="text">
       </div>
-      <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <label for="surname">Description</label> <input type="text" class="form-control" id="description" name="description"><br/>
+      </div>
       </div>
 
+      <div class="form-group">
+      <label class="col-md-4 control-label">Description</label>
+      <div class="col-md-4 inputGroupContainer">
+      <div class="input-group">
+      <span class="input-group-addon"><i class="glyphicon glyphicon-align-left"></i></span>
+      <input id="description" name="description" required placeholder="Description" class="form-control"  type="text">
+      </div>
+      </div>
+      </div>
+<div class="">
+
+<br/>
       <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
         <select onchange="CheckIfPancake()" lass="selectpicker" name="categoryitem" id="categoryitem">
             <?php
@@ -74,7 +115,7 @@ if ($conn->connect_error) {
             ?>
         </select>
       </div>
-
+</div>
       <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
         <select class="selectpicker" name="undercategoryitem" id="undercategoryitem">
             <?php
@@ -119,12 +160,12 @@ if ($conn->connect_error) {
       </div>
     </div>
     <div class="row2">
-      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-          <a onclick="#" href="#" class = "btn btn-default btn-lg" role="button">Back</a>
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+          <a id="back" onclick="" href="../../html/ManageMarket.php" class = "btn btn-warning btn-lg" role="button">Back</a>
       </div>
-      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
         <label for="submit">
-          <input type="submit" value="Add" class = "btn btn-default btn-lg" >
+          <input id="sub" type="submit" value="Add" class = "btn btn-warning btn-lg" >
         </label>
       </div>
       </div>
@@ -132,6 +173,11 @@ if ($conn->connect_error) {
 </div>
 
 <script type="text/javascript">
+
+  function ReturnHome() {
+    window.location.href = "../../../WelcomeBoss/php/WelcomeBoss.php";
+  }
+
   function CheckIfPancake() {
     if($("#categoryitem").val() == "drink" || "coffee") {
        $("#seasoning").fadeOut();

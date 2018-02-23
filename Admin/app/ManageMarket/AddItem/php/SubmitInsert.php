@@ -1,5 +1,8 @@
 <?php
-
+session_start();
+if(!isset($_SESSION['admin']["email"])) {
+  header("location: ../../../../../Users/login.php");
+}
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -13,7 +16,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-//HARDCODED
+//HARDCODED (6 seasoning)
 $numberOfSeasoning = 7;
 $defaultPancakePrice = 3;
 $a=array();
@@ -50,7 +53,7 @@ $stmt->bind_param("sssssss", $mainCategory, $Deleted, $Description, $Name, $Phot
 if(!isset($_POST["name"]) || !isset($_POST["description"])) {
   die("Fill all the fields.");
 }
-$Photo='../../../../res/'.basename($_FILES['image']['name']);
+$Photo='../res/'.basename($_FILES['image']['name']);
 if(move_uploaded_file($_FILES['image']['tmp_name'], $Photo)) {
   echo "true";
 } else {
@@ -83,5 +86,5 @@ for($i = 0; $i < count($a); $i++) {
 }
 
 $conn->close();
-header("Location: AddItem.php");
+header("Location: ../../ViewItem/php/ViewItem.php?fil=1");
 ?>

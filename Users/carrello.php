@@ -20,57 +20,132 @@ function nextOne() {
     $active.next().removeClass('disabled');
     nextTab($active);
 }
-
+function checkItems(val) {
+	<?php
+	if(!empty($_SESSION['user'])) {
+		?>
+	if(val == 0) {
+		alert("There are no items.");
+	} else {
+		nextOne();
+	}
+	<?php
+	} else { 
+	?>
+		alert("In order to buy you have to be logged in");
+		window.location.href = "login.php";
+	<?php } ?>
+}
+function CheckLengths() {
+	if(document.querySelector('input[name="optradio"]:checked').value==1) {
+		if(document.querySelector('input[name="optradio2"]:checked').value==1) {
+			$addr = document.getElementById("address").value;
+			$cap = document.getElementById("cap").value;
+			if($addr.length <= 0 || $cap.length <=0) {
+				alert("Insert a correct address");
+				return false;
+			}
+		}
+	}
+	if(document.querySelector('input[name="optradioPay"]:checked').value==1) {
+		$cc = document.getElementById("cc").value;
+	$owner = document.getElementById("owner").value;
+	$expire = document.getElementById("expire").value;
+		if($expire.length <= 0 || $cc.length !=16 || $owner.length <=0) {
+			alert("Insert a correct payment");
+			return false;
+		}
+	}
+	return true;
+}
 function end() {
 	$stringPay = "";
 	$stringAddr = "";
 	if(timeCheck()==true) {
-	if(document.querySelector('input[name="optradio"]:checked').value==1) {
-		if(document.querySelector('input[name="optradio2"]:checked').value==1) {
-			$stringAddr = CheckAddress();
-		} else {
-			$stringAddr = stringGeo;
+		if(CheckLengths()==true) {
+			if(document.querySelector('input[name="optradio"]:checked').value==1) {
+				if(document.querySelector('input[name="optradio2"]:checked').value==1) {
+					$stringAddr = CheckAddress();
+				} else {
+					$stringAddr = stringGeo;
+				}
+			}
+			$dateTime = DeliverSupport();
+			if(document.querySelector('input[name="optradioPay"]:checked').value==1) {
+				$stringPay = CheckPay();
+			}
+			
+			xmlhttp = new XMLHttpRequest();
+			xmlhttp.open("GET","shoppingChange.php?data="+$dateTime+"" + $stringAddr + "" + $stringPay,true);
+			xmlhttp.send();
+			
+			var $active = $('.wizard .nav-tabs li.active');
+			$active.next().removeClass('disabled');
+			nextTab($active);
+			$active.addClass('disabled');
+			$active.prev().addClass('disabled');
+			$active.prev().prev().addClass('disabled');
 		}
-	}
-	$dateTime = DeliverSupport();
-	if(document.querySelector('input[name="optradioPay"]:checked').value==1) {
-		$stringPay = CheckPay();
-	}
-	
-	xmlhttp = new XMLHttpRequest();
-	xmlhttp.open("GET","shoppingChange.php?data="+$dateTime+"" + $stringAddr + "" + $stringPay,true);
-	xmlhttp.send();
-	
-	var $active = $('.wizard .nav-tabs li.active');
-    $active.next().removeClass('disabled');
-    nextTab($active);
-	$active.addClass('disabled');
-	$active.prev().addClass('disabled');
-	$active.prev().prev().addClass('disabled');
+	} else {
+		alert("Insert a correct date.");
 	}
 }
 
+function manage($royal, $thisNote, $category) {
+$oldNote = $thisNote.parentNode.parentNode.getAttribute("value");
+
+	var notes = [("" + $oldNote).substr(0, 1), ("" + $oldNote).substr(1, 1), ("" + $oldNote).substr(2, 1)];
+	if (parseInt(notes[0]) + parseInt(notes[1]) + parseInt(notes[2]) == 1 && notes[$category - 1] == "1") {
+		alert("You cannot remove the last one!");
+	} else {
+		$changeVal = $oldNote.substring($category-1, $category);
+		$changeVal ++;
+		$changeVal = $changeVal % 2;
+		$newNote = $oldNote.substr(0, $category-1) + $changeVal + $oldNote.substr($category);
+		if ( $newNote == "000" ) {
+			$newNote = $oldNote;
+		}
+		$thisNote.parentNode.parentNode.setAttribute("value", $newNote);
+		xmlhttp = new XMLHttpRequest();
+		xmlhttp.open("GET","royalNoteChange.php?IDRoyal="+$royal+"&oldNote="+$oldNote+"&newNote="+$newNote,true);
+		xmlhttp.send();
+		updateListinoChange();
+	}
+}
 function insert($email, $item, $amount) {
+updateListinoChange();
 xmlhttp = new XMLHttpRequest();
 xmlhttp.open("GET","carrelloChangeQuantity.php?eml=".concat($email)
 .concat("&idItm=").concat($item).concat("&amt=").concat($amount),true);
 xmlhttp.send();
+updateListinoChange();
 }
 function insertRoyal($email, $item, $amount, $note) {
+updateListinoChange();
 xmlhttp = new XMLHttpRequest();
 xmlhttp.open("GET","carrelloChangeQuantityR.php?eml=".concat($email)
 .concat("&idItm=").concat($item).concat("&amt=").concat($amount).concat("&note=").concat($note),true);
 xmlhttp.send();
+updateListinoChange();
 }
 function insertOffline($item, $amount) {
+updateListinoChange();
 xmlhttp = new XMLHttpRequest();
 xmlhttp.open("GET","listinoChangeQuantityOffline.php?idItm=".concat($item).concat("&amt=").concat($amount),true);
 xmlhttp.send();
+updateListinoChange();
+
 }
 function insertRoyalOffline($item, $amount, $note) {
+updateListinoChange();
 xmlhttp = new XMLHttpRequest();
 xmlhttp.open("GET","listinoChangeQuantityOffline.php?idItm=".concat($item).concat("&amt=").concat($amount).concat("&note=").concat($note),true);
 xmlhttp.send();
+updateListinoChange();
+}
+
+function showMoreDesc(id) {
+      $('#' + id).collapse("toggle");
 }
 
 function ifZero($val) {
@@ -89,7 +164,7 @@ function timeCheck() {
 	if (anno == d.getFullYear()) {
 		var cMese = d.getMonth() + 1;
 		if (mese == cMese) {
-			if(giorno == d.getDay()) {
+			if(giorno == d.getDate()) {
 				var m = d.getMinutes();
 				var h = d.getHours();
 				var insTime = $("#time").val();
@@ -97,15 +172,12 @@ function timeCheck() {
 				var insH = insTime.substring(0, 2);
 				if (insH == h) {
 					if (insM>= m) {
-						alert("ok2");
 						return true;
 					}
 				} else if(insH > h) {
-					alert("ok2");
 					return true;
 				}
-			}else if (giorno > d.getDay()) {
-				alert("ok1");
+			}else if (giorno > d.getDate()) {
 				return true;
 			}
 		} else if (mese > cMese) {
@@ -149,6 +221,7 @@ function CheckAddress() {
 	}
 }
 
+
 function showPosition(position) {
 	xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
@@ -177,8 +250,6 @@ function Deliver() {
 	} else {
 		if(document.querySelector('input[name="optradio2"]:checked').value==1) {
 			CheckAddress();
-		} else {
-			alert("Geolocalizzami DA IMPLEMENTARE");
 		}
 	}
 }
@@ -194,7 +265,7 @@ function CheckPay() {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
+  <title>Cart</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -257,14 +328,27 @@ function CheckPay() {
                         <h2>Carrello</h2>
 						<form class="form-horizontal" method="post">
 						<div class="container-fluid text-center">
-							<div id="txtHint"><b>Person info will be listed here...</b></div>
+							<div id="txtHint"></div>
 						</div>
 
+						<p id="totPrice">Totale : <?php 
+						
+						if(!empty($_SESSION["cart"])) {	
+						$u = unserialize($_SESSION["cart"]);
+						echo $u->getPrice();
+						} else if(!empty($_SESSION['user'])) {
+							$email = $_SESSION['user']["email"];
+							if(isStudent($email) == 1) {
+								echo '<s>'. getFullPriceNotStudent($email) . '</s>   >  '; 
+							}
+						echo getTotalPrice($email); 
+						} else {
+							echo 0;
+						}?><span class="glyphicon glyphicon-euro"></span></p>
 
 						</form>
                         <ul class="list-inline pull-right">
-							<li><button type="button" class="btn btn-default prev-step">Previous</button></li>
-                            <li><button type="button" onclick="nextOne()" class="btn btn-primary next-step">Continue</button></li>
+                            <li><button type="button" onclick="checkItems('<?php echo getTotalPrice($email); ?>')" class="btn btn-primary next-step">Continue</button></li>
                         </ul>
                     </div>
                     <div class="tab-pane" role="tabpanel" id="step2">
@@ -333,7 +417,6 @@ if(!empty($_POST["avanti"])) {
 	</script>
 	<?php
 	} else {
-		echo cartEmpty($_SESSION['user']["email"]);
 		if(cartEmpty($_SESSION['user']["email"]) > 0) {
 			?>
 	<script type="text/javascript">
@@ -360,9 +443,7 @@ $(document).ready(function () {
 	
 $(".nav-tabs a").click(function(){
    if ($(this).parent().attr('class') == "disabled") {
-		alert("is disabled");
 	} else {
-		alert("ooook");
 		$(this).tab('show');
 	}
     });
@@ -370,11 +451,9 @@ $(".nav-tabs a").click(function(){
 	
     //Wizard
     $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
-alert("b");
         var $target = $(e.target);
     
         if ($target.parent().hasClass('disabled')) {
-			alert("a");
             return false;
         }
     });
@@ -410,23 +489,7 @@ function home() {
 	window.location.href= "home.php";
 }
 
-function popRoyal(nomeItem, note) {
 
-	//window.location.href = "listino.php?item=" + nomeItem + "&showCat=" + categoryID;
-
-xmlhttp = new XMLHttpRequest();
-xmlhttp.open("GET","royalPopup.php?item="+nomeItem+"&note="+note,true);
-xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-				
-                //document.getElementById("txtHint2").innerHTML = this.responseText;
-				$("#modCont").html(this.responseText);
-				$("#popItemInfo").modal("toggle");
-            }
-        };
-xmlhttp.send();
-
-}
 function updateListinoChange() {
 	xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
@@ -436,24 +499,6 @@ function updateListinoChange() {
         };
 	xmlhttp.open("GET","listinoChange.php",true);
 	xmlhttp.send();
-}
-function manage($royal, $thisNote, $category) {
-	
-	$oldNote = $thisNote.parentNode.getAttribute("value");
-	alert($oldNote);
-	$changeVal = $oldNote.substring($category-1, $category);
-	$changeVal ++;
-	$changeVal = $changeVal % 2;
-	$newNote = $oldNote.substr(0, $category-1) + $changeVal + $oldNote.substr($category);
-	if ( $newNote == "000" ) {
-		$newNote = $oldNote;
-	}
-	alert($newNote);
-	xmlhttp = new XMLHttpRequest();
-	xmlhttp.open("GET","royalNoteChange.php?IDRoyal="+$royal+"&oldNote="+$oldNote+"&newNote="+$newNote,true);
-	xmlhttp.send();
-	$thisNote.parentNode.setAttribute("value", $newNote);
-updateListinoChange();
 }
 </script>
 <script type="text/javascript">
@@ -465,7 +510,7 @@ $( document ).ready(function() {
 	document.getElementById('dateField').valueAsDate = d;
   var m = d.getMinutes();
   var h = d.getHours();
-  alert(m);
+
   if(m<10) {
 	  var m = "0".concat(m);
   }
@@ -495,7 +540,7 @@ function Address(address) {
 	if(address==1) {
 		$("#indirizzoSelected").show();
 	} else {
-		alert("geolocalizzazione in corso");
+		alert("Geolocalization...");
 		Geolocalization();
 		$("#indirizzoSelected").hide();
 	}

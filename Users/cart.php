@@ -133,6 +133,14 @@ class ShoppingCart {
 	public function __construct(){
     }
 	
+	public function getPrice() {
+		$tot = 0;
+		for ($i=0;$i<$this->nItem; $i++) {
+			$tot += ($this->arrayItem[$i]->getPrice() * $this->arrayItem[$i]->getAmount() );
+		}		
+		return $tot;
+	}
+	
 	public function getArrayItem() {
 		$tmpArr = array();
 		$k = 0;
@@ -291,14 +299,13 @@ class ShoppingCart {
 	
 	function searchForActiveOrderRoyal($email, $idItem, $amount, $note) {
 		$idO = getOrderOfUserNotBought($email);
-		echo "idO = ".$idO." <br/>";
 		$idUse = $idO;
 		$conn =connect();
 		if($idO == -1) {
 			$idOrder = getNextIdOrderOfUser($email);
-
+			$status= "0";
 			$idUse = $idOrder;
-			$sql ="INSERT INTO Orders (Email, IDOrder) VALUES ('".$email."','".$idOrder."')";
+			$sql ="INSERT INTO Orders (Email, IDOrder, Status) VALUES ('".$email."','".$idOrder."','".$status."')";
 			$conn->query($sql);
 		}
 
@@ -445,7 +452,7 @@ class ShoppingCart {
 	
 	function getNextIdOrderOfUser($email) {
 		$conn =connect();
-		$sql = "SELECT MAX(IDOrder) as max FROM orders WHERE Email = '".$email."'";
+		$sql = "SELECT MAX(IDOrder) as max FROM orders";
 		
 		$result = $conn->query($sql);
 		if($result->num_rows > 0)	{
@@ -582,7 +589,6 @@ class ShoppingCart {
 		$idOrd= getOrderOfUserNotBought($email);
 		$amount=getRoyalNoteAmount($email, $item, $note);
 		$amount=$amount+$change;
-		echo "<br/>AMOUNT--x".$amount."x--<br/>";
 		if($amount > 0) {
 			if(getRoyalNoteAmount($email, $item, $note) > 0) {
 			
@@ -595,13 +601,11 @@ class ShoppingCart {
 			}
 			
 		} else {
-			echo "non mi dire2";
 			$sql2 = "DELETE FROM orderroyalpancake WHERE Email = '".$email."' AND IDOrder = '".$idOrd."' AND IDRoyalPancake = '".$item."' AND Note= '".$note."'";
 			$conn->query($sql2);
 			$sql3 = "SELECT * FROM orderroyalpancake WHERE Email = '".$email."' AND IDOrder = '".$idOrd."'";
 			$result = $conn->query($sql3);
 			if($result->num_rows < 1)	{
-				echo "non mi dire3";
 				$sql4 = "DELETE FROM orders WHERE Email = '".$email."' AND IDOrder = '".$idOrd."'";
 				$conn->query($sql4);
 				return 1;
@@ -613,7 +617,6 @@ class ShoppingCart {
 	function getRoyalNoteAmount($email, $item, $note) {
 		$conn =connect();
 		$idOrd= getOrderOfUserNotBought($email);
-		echo $note;
 		//SELECT Amount FROM orderroyalpancake WHERE Email = 'ef@gmail.com' AND IDRoyalPancake = '1' AND IDOrder = '3' AND Note='101';
 		$sql = "SELECT Amount FROM orderroyalpancake WHERE Email = '".$email."' AND IDRoyalPancake = ".$item." AND IDOrder = '".$idOrd."' AND Note= '".$note."'";
 		$result = $conn->query($sql);
@@ -626,10 +629,6 @@ class ShoppingCart {
 	}
 	
 	function updateRoyalInOrderAmount($email, $item, $note, $amount) {
-		echo $email;
-		echo $item;
-		echo $note;
-		echo $amount;
 		$conn =connect();
 		$idOrd= getOrderOfUserNotBought($email);
 		if($amount > 0) {
@@ -637,13 +636,11 @@ class ShoppingCart {
 				$conn->query($sql);
 			
 		} else {
-			echo "non mi dire2";
 			$sql2 = "DELETE FROM orderroyalpancake WHERE Email = '".$email."' AND IDOrder = '".$idOrd."' AND IDRoyalPancake = '".$item."' AND Note= '".$note."'";
 			$conn->query($sql2);
 			$sql3 = "SELECT * FROM orderroyalpancake WHERE Email = '".$email."' AND IDOrder = '".$idOrd."'";
 			$result = $conn->query($sql3);
 			if($result->num_rows < 1)	{
-				echo "non mi dire3";
 				$sql4 = "DELETE FROM orders WHERE Email = '".$email."' AND IDOrder = '".$idOrd."'";
 				$conn->query($sql4);
 				return 1;
@@ -703,8 +700,8 @@ class ShoppingCart {
 		$sql = "SELECT MAX(IDOrder) AS max FROM orders WHERE Email = '".$email."'";
 		$result = $conn->query($sql);
 		$row = $result->fetch_assoc();
-		$title = "Un nuovo ordine!";
-		$description = "C'e' un nuovo ordine da preparare.";
+		$title = "There's a new Order!!";
+		$description = "A new order has to be prepared.";
 		$sql2 = 'INSERT INTO adminnotification(Title,Description,Email,IDOrder) VALUES ("'.$title.'", "'.$description.'", "'.$email.'", "'.$row["max"].'");';
 		$conn->query($sql2);
 }
@@ -715,7 +712,7 @@ function isStudent($email) {
 		$result = $conn->query($sql);
 		if($result->num_rows >= 0)	{
 			while($row = $result->fetch_assoc()) {
-				return 1;
+				if($row["IsStudent"] == "1") {return 1; }
 			}
 		}
 	return 0;
@@ -746,6 +743,27 @@ function getTotalPrice($email) {
 		return $tot;
 }
 
+function getFullPriceNotStudent($email) {
+		$conn =connect();
+		$idOrd= getOrderOfUserNotBought($email);
+		$tot = 0;
+		$sql = "SELECT * FROM orderroyalpancake WHERE Email = '".$email."' AND IDOrder = '".$idOrd."'";
+		$result = $conn->query($sql);
+		if($result->num_rows >= 0)	{
+			while($row = $result->fetch_assoc()) {
+				$tot += $row["Amount"] *  $row["Price"];
+			}
+		}
+		$sql2 = "SELECT Price, Amount FROM item i, iteminorder io WHERE i.IDItem=io.IDItem AND Email = '".$email."' AND IDOrder = '".$idOrd."'";
+		$result2 = $conn->query($sql2);
+		if($result2->num_rows >= 0)	{
+			while($row2 = $result2->fetch_assoc()) {
+				$tot += $row2["Amount"] *  $row2["Price"];
+			}
+		}
+		return $tot;
+}
+
 function updateOrderTotalPrice($email) {
 		$conn =connect();
 		$tot = getTotalPrice($email);
@@ -771,6 +789,20 @@ function getUnderCategoryItems($categoryID) {
 function getRandomItems() {
 	$conn =connect();
 	$sql = "SELECT * FROM item ORDER BY RAND() LIMIT 5";
+	$result = $conn->query($sql);
+	return $result;
+}
+
+function getCategoryRoyals() {
+	$conn =connect();
+		$sql = "SELECT * FROM categoryroyalpancakes ORDER BY CategoryID";
+		$result = $conn->query($sql);
+		return $result;
+}
+
+function getSeasoningOfItem($item) {
+	$conn =connect();
+	$sql = "SELECT * FROM seasoninginitem si, seasoning s WHERE si.IDSeasoning = s.IDSeasoning AND si.IDItem = '".$item."'";
 	$result = $conn->query($sql);
 	return $result;
 }

@@ -9,7 +9,6 @@ $conn =connect();
 if(isset($_POST["view"]) && isset($_SESSION['user']))
 {
 
- include("connect.php");
  if($_POST["view"] != '')
  {
   $update_query = "UPDATE usernotification SET Status=1 WHERE Status=0 AND Email ='".$_SESSION['user']["email"]."'";
@@ -35,8 +34,8 @@ if(isset($_POST["view"]) && isset($_SESSION['user']))
 	   $a = '<a href="#">';
    }
    $output .= $a.'
-    
-	
+
+
      <strong>'.$row["Title"].'</strong><br />
      <small><em>'.$row["Description"].'</em></small>
     </a>
@@ -52,7 +51,7 @@ if(isset($_POST["view"]) && isset($_SESSION['user']))
   }
    $output .= '
    <li>
-    <a href="#">
+    <a href="profile.php?notification=1">
      <strong>View All</strong><br />
     </a>
    </li>
@@ -61,10 +60,14 @@ if(isset($_POST["view"]) && isset($_SESSION['user']))
 
  else
  {
-  $output .= '<li><a href="#" class="text-bold text-italic">No Notification Found</a></li>';
+  $output .= '<li><a href="#" class="text-bold text-italic">No Notification Found</a></li><li>
+    <a href="profile.php?notification=1">
+     <strong>View All</strong><br />
+    </a>
+   </li>';
  }
 
- 
+
 
 
 

@@ -27,6 +27,17 @@
       text-align: center;
     }
 
+    #back {
+      width: 70%;
+    }
+
+    #sub {
+      width: 150%;
+    }
+
+    #logo {
+      float: left;
+    }
 }
 
 #bellNotification {

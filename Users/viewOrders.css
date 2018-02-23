@@ -7,8 +7,8 @@
 	.shop-tracking-status .order-status-timeline .order-status-timeline-completion{
 		height:8px;margin:1px;border-radius:7px;background:#cf7400;width:0px
 		}
-.shop-tracking-status .order-status-timeline .order-status-timeline-completion.c1{width:40%}
-.shop-tracking-status .order-status-timeline .order-status-timeline-completion.c2{width:100%}
+.shop-tracking-status .order-status-timeline .order-status-timeline-completion.c2{width:40%}
+.shop-tracking-status .order-status-timeline .order-status-timeline-completion.c3{width:100%}
 
 .shop-tracking-status .image-order-status{
 	border:1px solid #ddd;padding:7px;box-shadow:0px 0px 10px 0px #999;background-color:#fdfdfd;position:absolute;margin-top:-35px
@@ -52,4 +52,11 @@
 
 .shop-tracking-status .image-order-status-completed .status:after{
 	font-family:FontAwesome;content:"\f054";padding-left:5px;vertical-align:middle
+}
+
+#shadow {
+    border: 1px solid;
+    padding: 10%;
+	margin-bottom:5%;
+    box-shadow: 5px 10px 30px #888888;
 }

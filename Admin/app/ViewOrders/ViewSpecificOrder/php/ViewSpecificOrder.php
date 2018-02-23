@@ -1,4 +1,8 @@
 <?php
+session_start();
+if(!isset($_SESSION['admin']["email"])) {
+  header("location: ../../../../../Users/login.php");
+}
   $servername="localhost";
   $username ="root";
   $password ="";
@@ -18,6 +22,11 @@
   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style media="screen">
+    #drop {
+      background-color: white;
+    }
+  </style>
 <link rel="stylesheet" href="../../css/ViewOrders.css">
 </head>
 <body>
@@ -38,13 +47,16 @@ $RPancakes = $conn->query($query_sql2);
   <br/>
      <nav class="navbar navbar-inverse">
       <div class="container-fluid">
+        <div class="navbar-header">
+         <img onclick="ReturnHome()" id="logo" src="https://fpwealth.com/wp-content/uploads/2015/09/fp-logo-large.png" width="50" height="50" alt="logo">
+        </div>
        <div class="navbar-header">
         <a class="navbar-brand" href="#">Order</a>
        </div>
        <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
-         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="label label-pill label-danger count" style="border-radius:10px;"></span> <span class="glyphicon glyphicon-envelope" style="font-size:18px;"></span></a>
-         <ul class="dropdown-menu">
+         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="label label-pill label-danger count" style="border-radius:10px;"></span> <span class="glyphicon glyphicon-envelope" style="font-size:20px;"></span></a>
+         <ul id="drop" class="dropdown-menu">
            <li class="divider"></li>
          </ul>
         </li>
@@ -68,45 +80,45 @@ $RPancakes = $conn->query($query_sql2);
   				if ($result->num_rows > 0) {
   					$row = $result->fetch_assoc();
   						?>
-                <td>Data and time: </td>
-  							<td><?php echo $row["DateTime"]; ?></td>
+                <th id="date">Data and time: </th>
+  							<td headers="date"><?php echo $row["DateTime"]; ?></td>
               </tr>
               <tr>
-                <td>Total price: </td>
-  							<td><?php echo $row["TotalPrice"]; ?></td>
+                <th id="price">Total price: </th>
+  							<td headers="price"><?php echo $row["TotalPrice"]; ?></td>
               </tr>
               <?php
               if($status != -1){
               if(strlen($row["Address"]) > 0) {
                 echo '<tr>';
-                echo '<td>Address: </td>';
-        				echo '<td>'.$row["Address"].'</td>';
+                echo '<th id="address">Address: </th>';
+        				echo '<td headers="address">'.$row["Address"].'</td>';
                 echo'</tr>';
                 echo '<tr>';
-                echo '<td>CAP: </td>';
-                echo '<td>'.$row["CAP"].'</td>';
+                echo '<th id="cap">CAP: </th>';
+                echo '<td headers="cap">'.$row["CAP"].'</td>';
                 echo'</tr>';
               } else if(strlen($row['Latitude']) > 0 ) {
                 echo '<tr>';
-                echo '<td>Delivery mode:</td>';
-                echo '<td>Geolocalization</td>';
+                echo '<th id="dmode">Delivery mode:</th>';
+                echo '<td headers="dmode">Geolocalization</td>';
                 echo'</tr>';
               }
             } else {
                 echo '<tr>';
-                echo '<td>Delivery mode:</td>';
-                echo '<td>In market</td>';
+                echo '<th id="market">Delivery mode:</th>';
+                echo '<td headers="market">In market</td>';
                 echo'</tr>';
             }
               if(strlen($row["CardOwner"]) > 0) {
                 echo '<tr>';
-                echo '<td>Payment mode:</td>';
-                echo '<td>Credit card</td>';
+                echo '<th id="credit">Payment mode:</th>';
+                echo '<td headers="credit">Credit card</td>';
                 echo'</tr>';
               } else {
                 echo '<tr>';
-                echo '<td>Payment mode:</td>';
-                echo '<td>Cash</td>';
+                echo '<th id="cash">Payment mode:</th>';
+                echo '<td headers="cash">Cash</td>';
                 echo'</tr>';
               }
               ?>
@@ -123,7 +135,7 @@ $RPancakes = $conn->query($query_sql2);
               echo '<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">';
               echo '<h4>'.$row['Name'].'</h4>';
               echo '<figure class="figure">';
-              echo '<img  class="figure-img img-fluid rounded" width="100" height="100" src="' . htmlspecialchars($row['Photo']) . '"/>';
+              echo '<img alt="pancake" class="figure-img img-fluid rounded" width="100" height="100" src="../../../../' . htmlspecialchars($row['Photo']) . '"/>';
               echo '<figcaption class="figure-caption"> Price:'.$row['Price'].'</figcaption>';
               echo '<figcaption class="figure-caption"> Quantity: '.$row['Amount'].'</figcaption>';
               echo '</figure>';
@@ -147,7 +159,7 @@ $RPancakes = $conn->query($query_sql2);
           echo '<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">';
           echo '<h4>'.$row['RoyalName'].'</h4>';
           echo '<figure class="figure">';
-          echo '<img  class="figure-img img-fluid rounded" width="100" height="100" src="' . htmlspecialchars($row['Photo']) . '"/>';
+          echo '<img alt="pancake" class="figure-img img-fluid rounded" width="100" height="100" src="../../../../' . htmlspecialchars($row['Photo']) . '"/>';
           echo '<figcaption class="figure-caption"> Description:'.$row['Description'].'</figcaption>';
           echo '</figcaption> Quantity: '.$row['Amount'].'</figcaption> <br/>';
           if(isRemovedItem($row['Note'])) {
@@ -196,11 +208,17 @@ $RPancakes = $conn->query($query_sql2);
 <br/>
   <div class="row2">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-      <button href="#" class = "btn btn-default btn-lg" role="button">Back</button>
+      <a href="../../html/AllOrders.php" class = "btn btn-warning btn-lg" role="button">Back</a>
     </div>
   </div>
 </div>
 <script type="text/javascript">
+
+function ReturnHome() {
+  window.location.href = "../../../WelcomeBoss/php/WelcomeBoss.php";
+}
+
+
 $(document).ready(function(){
 
  function load_unseen_notification(view = '')
@@ -236,7 +254,7 @@ $(document).ready(function(){
 
 
 function GoToOrder(id) {
-  window.location.href ="../../../ViewOrders/ViewSpecificOrder/php/ViewSpecificOrder.php?" + "id=" + id + "&st=0";
+  window.location.href ="../../../ViewOrders/ViewSpecificOrder/php/ViewSpecificOrder.php?" + "id=" + id + "&st=1";
 }
 
 function DeleteNotification(id){

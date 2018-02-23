@@ -7,7 +7,7 @@ create table Admin (
 create table AdminNotification (
      IDAdminNotification int not null AUTO_INCREMENT,
      Title char(100) not null,
-     Description char(100) not null,
+     Description char(255) not null,
 	 Email char(100) not null,
 	 IDOrder char(100) not null,
 	 Status char(1) DEFAULT "0",
@@ -42,7 +42,7 @@ create table DeliveryMan (
 create table DeliveryManNotification (
      IDDeliveryManNotification int not null AUTO_INCREMENT,
      Title char(100) not null,
-     Description char(100) not null,
+     Description char(255) not null,
 	 Email char(100) not null,
 	 Status char(1) DEFAULT "0",
      constraint IDNotificationD primary key (IDDeliveryManNotification));
@@ -59,7 +59,7 @@ create table Item (
      Name char(100) not null,
      Photo char(100) not null,
      IDItem int not null AUTO_INCREMENT,
-     Description char(100) not null,
+     Description char(255) not null,
      Price char(100) not null,
      CategoryID int not null,
      UnderCategoryID int null,
@@ -104,7 +104,7 @@ create table Review (
      Email char(100) not null,
      IDReview char(100) not null,
      Title char(100) not null,
-     Description char(100) not null,
+     Description char(255) not null,
      Vote char(100) not null,
      constraint IDReview primary key (Email, IDReview));
 
@@ -112,7 +112,7 @@ create table RoyalPancake (
      RoyalName char(100) not null,
      IDRoyalPancake int not null AUTO_INCREMENT,
      Photo char(100) not null,
-     Description char(100) not null,
+     Description char(255) not null,
      CategoryID int not null,
      Deleted char(1) DEFAULT "0",
      constraint IDRoyalPancake primary key (IDRoyalPancake));
@@ -131,7 +131,7 @@ create table SeasoningInItem (
 create table UserNotification (
      IDUserNotification int not null AUTO_INCREMENT,
      Title char(100) not null,
-     Description char(100) not null,
+     Description char(255) not null,
      Email char(100) not null,
 	 IDOrder char(100),
 	 Status char(1) DEFAULT "0",

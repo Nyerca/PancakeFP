@@ -1,4 +1,8 @@
 <?php
+session_start();
+if(!isset($_SESSION['admin']["email"])) {
+  header("location: ../../../../Users/login.php");
+}
   $servername="localhost";
   $username ="root";
   $password ="";
@@ -19,6 +23,11 @@
   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style media="screen">
+    #drop {
+      background-color: white;
+    }
+  </style>
 <link rel="stylesheet" href="../css/ViewOrders.css">
 </head>
 <body>
@@ -31,13 +40,16 @@
   <br/>
      <nav class="navbar navbar-inverse">
       <div class="container-fluid">
+        <div class="navbar-header">
+         <img onclick="ReturnHome()" id="logo" src="https://fpwealth.com/wp-content/uploads/2015/09/fp-logo-large.png" width="50" height="50" alt="logo">
+        </div>
        <div class="navbar-header">
-        <a class="navbar-brand" href="#">View incomplete orders</a>
+        <a class="navbar-brand" href="#">View orders</a>
        </div>
        <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="label label-pill label-danger count" style="border-radius:10px;"></span> <span class="glyphicon glyphicon-envelope" style="font-size:18px;"></span></a>
-         <ul class="dropdown-menu">
+         <ul id="drop" class="dropdown-menu">
            <li class="divider"></li>
          </ul>
         </li>
@@ -58,8 +70,8 @@
   			<table class="table table-striped">
   			  <thead>
   				<tr>
-  				  <th scope="row">Date and time</th>
-  				  <th scope="row">Total price</th>
+  				  <th id="date" scope="row">Date and time</th>
+  				  <th id="price" scope="row">Total price</th>
   				</tr>
   			  </thead>
   			  <tbody>
@@ -68,8 +80,8 @@
   					while($row = $result->fetch_assoc()) {
   						?>
   						<tr onclick="myFunction('<?php echo $row["IDOrder"] ?>', '<?php echo $status ?>')">
-  							<td><?php echo $row["DateTime"]; ?></td>
-  							<td><?php echo $row["TotalPrice"]; ?></td>
+  							<td headers="date"><?php echo $row["DateTime"]; ?></td>
+  							<td headers="price"><?php echo $row["TotalPrice"]; ?></td>
   						</tr>
   						<?php
   					}
@@ -88,13 +100,18 @@
 <br/>
   <div class="row2">
   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-    <a href="#" class = "btn btn-default btn-lg" role="button">Back</a>
+    <a href="../html/AllOrders.php" class = "btn btn-warning btn-lg" role="button">Back</a>
   </div>
 
 </div>
 
 
 <script type="text/javascript">
+
+function ReturnHome() {
+  window.location.href = "../../WelcomeBoss/php/WelcomeBoss.php";
+}
+
 function myFunction(fc, status) {
   var VariablePlaceholder = "id=";
   var UrlToSend = VariablePlaceholder + fc;

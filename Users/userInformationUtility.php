@@ -34,14 +34,18 @@ function updatePassword($email, $pO, $pN, $pNr) {
 		$result = $conn->query($sql);
 		if($result->num_rows > 0)	{
 			while($row = $result->fetch_assoc()) {
-				$curr = $row["Password"];
-				if($curr == $pO) {
-					$sql2 = "UPDATE Users SET Password ='".$pN."' WHERE Email = '".$email."'";
+				if (password_verify($pO, $row["Password"])) {
+					$user_password_hash2 = password_hash($pN, PASSWORD_DEFAULT);
+					$sql2 = "UPDATE Users SET Password ='".$user_password_hash2."' WHERE Email = '".$email."'";
 					$conn->query($sql2);
+				} else {
+					return 1;
 				}
+				
 			}
 		}
 	}
+	return 0;
 }
 
 function saveUserPhoto($email, $file) {

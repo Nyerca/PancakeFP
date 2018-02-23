@@ -23,7 +23,6 @@ function addNotifications() {
     }
 }
 function setNotifications($val) {
-	alert($val);
 	var el = document.querySelector('.notification');
     el.setAttribute('data-count', $val);
     el.classList.remove('notify');
@@ -38,7 +37,7 @@ function setNotifications($val) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
+  <title>Notify</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -56,7 +55,7 @@ id="not" class="dropdown-toggle notification <?php if(isset($_GET["numb"])) {  i
 			
 			<div id="notificationCheck">
 			<ul class="dropdown-menu dropdown-menu-right">
-				<div id="notifications"><b>Person info will be listed here...</b></div>
+				<div id="notifications"></div>
 
               <li class="divider"></li>
               <li><a class="text-center" href="">View All</a></li>                  

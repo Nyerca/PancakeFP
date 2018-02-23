@@ -1,5 +1,9 @@
 <?php
 session_start();
+if(!isset($_SESSION['admin']["email"])) {
+  header("location: ../../../../../Users/login.php");
+}
+
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -50,5 +54,5 @@ $stmt->execute();
 $stmt->close();
 
 $conn->close();
-header("Location: AddRoyalPancake.php");
+header("Location: ../../ViewRoyalPancake/php/ViewRoyalPancake.php?fil=1");
 ?>

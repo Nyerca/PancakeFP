@@ -1,5 +1,8 @@
 <?php
-
+session_start();
+if(!isset($_SESSION['admin']["email"])) {
+  header("location: ../../../../Users/login.php");
+}
 if(isset($_POST["view"]))
 {
  include("connect.php");
@@ -17,23 +20,23 @@ if(isset($_POST["view"]))
   while($row = mysqli_fetch_array($result))
   {
    $output .= '
-   <li>
+   <li style="background-color: white;">
     <a>
-    <button onclick=DeleteNotification('.$row["IDAdminNotification"].') type="button" class="close" data-toggle="modal" data-target="#myModal aria-label="Close">
+    <button onclick=DeleteNotification('.$row["IDAdminNotification"].') type="button" class="close" data-toggle="modal"  data-target="#myModal aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
     <div onclick=GoToOrder('.$row["IDOrder"].')>
-     <strong >'.$row["Title"].'</strong><br />
-     <small><em>'.$row["Description"].'</em></small>
+     <strong style="color:black;">'.$row["Title"].'</strong><br />
+     <small><em style="color:black;">'.$row["Description"].'</em></small>
      </div>
     </a>
    </li>
    <li class="divider"></li>
    ';
   }
-  $output = $output.'<li>
+  $output = $output.'<li style="background-color: white;">
    <a onclick="ViewAllNotification()" href="#">
-    <small><em>View all..</em></small>
+    <small><em style="color:black;">View all..</em></small>
    </a>
   </li>
   <li class="divider"></li>';

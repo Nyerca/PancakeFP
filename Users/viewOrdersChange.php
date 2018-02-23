@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <body>
 
 <?php
@@ -18,35 +19,27 @@ if(!isset($_GET["ord"])) {
 		while($row = $result->fetch_assoc()) {
 			
 		?>
-			<div id="orders" class="col-xs-12 col-sm-4">
+			<div id="orders" class="col col-xs-12 col-sm-4 well">
 				<div class="col-xs-6">
-				<p>Data</p>
+				<p>Date</p>
 				</div>
 				<div class="col-xs-6">
-					<p>Prezzo</p>
+					<p>Price</p>
 				</div>
 				<button class="col-xs-12" name="item" type="submit" onclick="SelectOrder('<?php echo $row["IDOrder"]; ?>')">
-					<p><?php echo $row["DateTime"]; ?>
-					<?php echo $row["TotalPrice"]; ?></p>
+					
+					<div class="col-xs-6">
+				<p><?php echo $row["DateTime"]; ?>
+				</div>
+				<div class="col-xs-6">
+					<strong><?php echo $row["TotalPrice"]; ?></strong></p>
+				</div>
+					
+					
 				</button>
 			</div>
 		<?php
 		}
-	}
-	$rows = $rows % 3;
-	while(3 - $rows > 0 && $rows!=0) {
-		$rows++;
-		?>
-		<div id="orders" class="col-sm-4"> 
-			<div class="col-xs-6"><p>a</p>
-			</div>
-				<div class="col-xs-6"><p>a</p>
-				</div>
-				<div class="col-xs-12"><p>s</p>
-				</div>
-		</div>
-		<?php
-		
 	}
 
 ?>

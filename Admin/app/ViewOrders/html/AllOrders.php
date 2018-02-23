@@ -1,3 +1,10 @@
+<?php
+session_start();
+if(!isset($_SESSION['admin']["email"])) {
+  header("location: ../../../../Users/login.php");
+}
+ ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +15,15 @@
   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style media="screen">
+    #drop {
+      background-color: white;
+    }
+
+    #inmarket {
+      color: #FFA240;
+    }
+  </style>
 <link rel="stylesheet" href="../css/ViewOrders.css">
 </head>
 <body>
@@ -18,13 +34,16 @@
   <br/>
      <nav class="navbar navbar-inverse">
       <div class="container-fluid">
+        <div class="navbar-header">
+         <img onclick="ReturnHome()" id="logo" src="https://fpwealth.com/wp-content/uploads/2015/09/fp-logo-large.png" width="50" height="50" alt="logo">
+        </div>
        <div class="navbar-header">
         <a class="navbar-brand" href="#">View orders</a>
        </div>
        <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="label label-pill label-danger count" style="border-radius:10px;"></span> <span class="glyphicon glyphicon-envelope" style="font-size:18px;"></span></a>
-         <ul class="dropdown-menu">
+         <ul id="drop" class="dropdown-menu">
            <li class="divider"></li>
          </ul>
         </li>
@@ -46,12 +65,16 @@
       <a href="../php/ViewOrders.php?st=3" class = "btn btn-default btn-lg" role="button">Completed</a>
     </div>
     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-      <a href="../php/ViewOrders.php?st=-1" class = "btn btn-default btn-lg" role="button">In market</a>
+      <a id="inmarket" href="../php/ViewOrders.php?st=-1" class = "btn btn-default btn-lg" role="button">In market</a>
     </div>
   </div>
 </div>
 
 <script type="text/javascript">
+function ReturnHome() {
+  window.location.href = "../../WelcomeBoss/php/WelcomeBoss.php";
+}
+
 $(document).ready(function(){
 
  function load_unseen_notification(view = '')

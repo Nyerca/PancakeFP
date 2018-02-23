@@ -27,4 +27,8 @@
     .row {
       text-align: center;
     }
+
+    #logo {
+      float: left;
+    }
 }

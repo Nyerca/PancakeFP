@@ -1,14 +1,15 @@
 <?php
 session_start();
+if(!isset($_SESSION['delivery']["email"])) {
+  header("location: ../../../../Users/login.php");
+}
   $servername="localhost";
   $username ="root";
   $password ="";
   $database = "dbfp";
 
   $conn = new mysqli($servername, $username, $password, $database);
-  if(!isset($_SESSION['delivery']["email"])) {
-    header("location: ../../../../Users/login.php");
-  }
+
   $mail = $_SESSION['delivery']["email"];
   $query_sql="SELECT * FROM deliveryman WHERE Email='$mail'";
   $result = $conn->query($query_sql);
@@ -28,24 +29,39 @@ session_start();
   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style media="screen">
+    #drop {
+      background-color: white;
+    }
+
+    #logout {
+      color:black;
+    }
+  </style>
 <link rel="stylesheet" href="../css/DeliveryOrders.css">
 </head>
 <body>
 
 
 <div class="container">
+    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+      <span  id="logout" onclick="Logout()" class="glyphicon glyphicon-log-out">Logout</span>
+    </div>
   <div class="row">
   <br/>
   <br/>
      <nav class="navbar navbar-inverse">
       <div class="container-fluid">
+        <div class="navbar-header">
+         <img onclick="ReturnHome()" id="logo" src="https://fpwealth.com/wp-content/uploads/2015/09/fp-logo-large.png" width="50" height="50" alt="logo">
+        </div>
        <div class="navbar-header">
         <a class="navbar-brand" href="#">Welcome <?php echo  $nameDelivery.' '.$surnameDelivery ?></a>
        </div>
        <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="label label-pill label-danger count" style="border-radius:10px;"></span> <span class="glyphicon glyphicon-envelope" style="font-size:18px;"></span></a>
-         <ul class="dropdown-menu">
+         <ul id="drop" class="dropdown-menu">
            <li class="divider"></li>
          </ul>
         </li>
@@ -94,15 +110,14 @@ session_start();
   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
     <a href="#" class = "btn btn-default btn-lg" role="button">Back</a>
   </div>
-  <div class="row3">
-    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-      <span onclick="Logout()" class="glyphicon glyphicon-log-out">Logout</span>
-    </div>
-  </div>
 </div>
 
 
 <script type="text/javascript">
+function ReturnHome() {
+  window.location.href = "WelcomeDelivery.php";
+}
+
   function myFunction(fc) {
     var VariablePlaceholder = "id=";
     var UrlToSend = VariablePlaceholder + fc;

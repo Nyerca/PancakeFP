@@ -7,7 +7,7 @@ if (session_status() == PHP_SESSION_NONE) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
+  <title>Pagamento</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -24,10 +24,12 @@ if (session_status() == PHP_SESSION_NONE) {
 		<div class="row">
 			<h1>Pagamento</h1>
 			<div class="radio">
-			  <label><input type="radio" value="0" name="optradioPay" onclick="Card(0)" checked="checked">Contanti</label>
+			  <label hidden for="optradioPay0">Cash</label>
+			  <input id="optradioPay0" type="radio" value="0" name="optradioPay" onclick="Card(0)" checked="checked">Cash
 			</div>
 			<div class="radio">
-			  <label><input type="radio" value="1" name="optradioPay" onclick="Card(1)">Carta</label>
+			  <label hidden for="optradioPay1">Card</label>
+			  <input id="optradioPay1" type="radio" value="1" name="optradioPay" onclick="Card(1)">Card
 			</div>
 		</div>
 		
@@ -35,15 +37,15 @@ if (session_status() == PHP_SESSION_NONE) {
 		<div id="cardSelected" class="form-group">
 		
 			<div class="row">
-				<label class="col-sm-5 col-lg-2" for="cc">Numero carta:</label>
+				<label class="col-sm-5 col-lg-2" for="cc">Card number:</label>
 				<div class="col-sm-7 col-lg-4">
-					<input id="cc" class="form-control" type="text" name="cc">
+					<input id="cc" class="form-control" type="number" name="cc">
 				</div>
-				<label class="col-sm-5 col-lg-2" for="owner">Intestatario:</label>
+				<label class="col-sm-5 col-lg-2" for="owner">Owner:</label>
 				<div class="col-sm-7 col-lg-4">
 					<input id="owner" class="form-control" type="text" name="owner">
 				</div>
-				<label class="col-sm-5 col-lg-2" for="expire">Data scadenza:</label>
+				<label class="col-sm-5 col-lg-2" for="expire">Expire date:</label>
 				<div class="col-sm-7 col-lg-4">
 					<input id="expire" class="form-control" type="month" name="expire">
 				</div>

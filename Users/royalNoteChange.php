@@ -11,7 +11,8 @@ if(!empty($_SESSION["cart"])) {
 	$result2 = $conn->query($sql2);
 	if($result2->num_rows > 0) {
 		while($row2 = $result2->fetch_assoc()) {
-			$item = new Royal($_GET['IDRoyal'], $row2["RoyalName"], getRoyalPrice($_GET['IDRoyal'], 1,1,1));
+			
+			$item = new Royal($_GET['IDRoyal'], $row2["RoyalName"], updateRoyalPrice($_GET['IDRoyal'], $_GET['newNote']));
 			$u = unserialize($_SESSION["cart"]);
 			$u->changeItemNotes($item, $_GET['oldNote'], $_GET['newNote']);
 			$s = serialize($u);

@@ -12,7 +12,7 @@ if (!isset($_SESSION['user'])) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
+  <title>Profile</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -20,6 +20,7 @@ if (!isset($_SESSION['user'])) {
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link rel="stylesheet" type="text/css" title="stylesheet" href="profile.css">
  <link rel="stylesheet" type="text/css" title="stylesheet" href="style.css">
+  <link rel="stylesheet" type="text/css" title="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css">
 </head>
 <body>
 
@@ -32,24 +33,24 @@ if (!isset($_SESSION['user'])) {
         </div>
         <div id="userPht" class="useravatar">
         </div>
-        <div class="card-info"> <span id="usernameP" class="card-title">Pamela Anderson</span>
+        <div class="card-info"> <span id="usernameP" class="card-title">name</span>
 
         </div>
     </div>
     <div class="btn-pref btn-group btn-group-justified btn-group-lg" role="group" aria-label="...">
         <div class="btn-group" role="group">
-            <button type="button" id="myReviews" class="btn btn-primary" href="#tab1" data-toggle="tab"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                <div class="hidden-xs">Stars</div>
+            <button type="button" id="myInformation" class="btn btn-primary" href="#tab1" data-toggle="tab"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                <div class="hidden-xs">Account Information</div>
             </button>
         </div>
         <div class="btn-group" role="group">
-            <button type="button" id="myOrders" class="btn btn-default" href="#tab2" data-toggle="tab"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
-                <div class="hidden-xs">Favorites</div>
+            <button type="button" id="myOrders" class="btn btn-default" href="#tab2" data-toggle="tab"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>
+                <div class="hidden-xs">Orders</div>
             </button>
         </div>
         <div class="btn-group" role="group">
-            <button type="button" id="myInformation" class="btn btn-default" href="#tab3" data-toggle="tab"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                <div class="hidden-xs">Following</div>
+            <button type="button" id="myNotification" class="btn btn-default" href="#tab3" data-toggle="tab"><span class="glyphicon glyphicon-bell" aria-hidden="true"></span>
+                <div class="hidden-xs">Notifications</div>
             </button>
         </div>
     </div>
@@ -63,7 +64,12 @@ if (!isset($_SESSION['user'])) {
           <?php require 'viewOrders.php' ?>
         </div>
         <div class="tab-pane fade in" id="tab3">
-          
+          <div class="container">
+<?php require 'viewNotifications.php' ?>
+</div>
+
+
+
         </div>
       </div>
     </div>
@@ -83,7 +89,18 @@ if (!isset($_SESSION['user'])) {
 if(isset($_GET["orderN"])) {
 	?>
 	$( "#myOrders" ).trigger( "click" );
+	$(".btn-pref .btn").removeClass("btn-primary").addClass("btn-default");
+    // $(".tab").addClass("active"); // instead of this do the below 
+    $("#myOrders").removeClass("btn-default").addClass("btn-primary");   
 	SelectOrder(<?php echo $_GET["orderN"];?>);
+	<?php
+}
+if(isset($_GET["notification"])) {
+	?>
+	$( "#myNotification" ).trigger( "click" );
+	$(".btn-pref .btn").removeClass("btn-primary").addClass("btn-default");
+    // $(".tab").addClass("active"); // instead of this do the below 
+    $("#myNotification").removeClass("btn-default").addClass("btn-primary");   
 	<?php
 }
 ?>
@@ -102,7 +119,7 @@ function createUserImg($name) {
 	x.setAttribute("src", $name);
 	x.setAttribute("width", "60");
 	x.setAttribute("height", "60");
-	x.setAttribute("alt", "User image");
+	x.setAttribute("alt", "");
 	list.appendChild(x);
 
 }
@@ -111,7 +128,7 @@ function createUserImg2($name) {
 	list2.removeChild(list2.childNodes[0]);
 	var x = document.createElement("IMG");
 	x.setAttribute("src", $name);
-	x.setAttribute("alt", "User image");
+	x.setAttribute("alt", "");
 	list2.appendChild(x);
 }
 

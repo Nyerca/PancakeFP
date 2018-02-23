@@ -1,4 +1,9 @@
 <?php
+session_start();
+if(!isset($_SESSION['admin']["email"])) {
+  header("location: ../../../../../Users/login.php");
+}
+
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -24,7 +29,7 @@ $stmt->bind_param("sssss", $mainCategory, $Deleted, $Description, $Photo, $Royal
 if(!isset($_POST["name"]) || !isset($_POST["description"])) {
   die("Fill all the fields.");
 }
-$Photo='../../../../res/'.basename($_FILES['image']['name']);
+$Photo='../res/'.basename($_FILES['image']['name']);
 if(move_uploaded_file($_FILES['image']['tmp_name'], $Photo)) {
   echo "true";
 } else {

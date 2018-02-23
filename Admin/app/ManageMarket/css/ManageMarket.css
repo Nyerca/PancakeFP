@@ -22,8 +22,8 @@
     .row {
       text-align: center;
     }
-}
 
-#bellNotification {
-  margin: 4%;
+    #logo {
+      float: left;
+    }
 }

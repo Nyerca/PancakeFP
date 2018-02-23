@@ -1,5 +1,8 @@
 <?php
 session_start();
+if(!isset($_SESSION['admin']["email"])) {
+  header("location: ../../../../../Users/login.php");
+}
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -23,6 +26,11 @@ if ($conn->connect_error) {
   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style media="screen">
+    #drop {
+      background-color: white;
+    }
+  </style>
 <link rel="stylesheet" href="../css/AddRoyalPancake.css">
 </head>
 <body>
@@ -39,7 +47,7 @@ if ($conn->connect_error) {
          <ul class="nav navbar-nav navbar-right">
           <li class="dropdown">
            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="label label-pill label-danger count" style="border-radius:10px;"></span> <span class="glyphicon glyphicon-envelope" style="font-size:18px;"></span></a>
-           <ul class="dropdown-menu">
+           <ul id="drop" class="dropdown-menu">
              <li class="divider"></li>
            </ul>
           </li>
@@ -58,7 +66,7 @@ if ($items->num_rows > 0) {
     echo '<div class="items" id='.$row['IDItem'].' onclick=Selected('.$row['IDItem'].')>';
     echo '<h4>'.$row['Name'].'</h4>';
     echo '<figure class="figure">';
-    echo '<img  class="figure-img img-fluid rounded" width="100" height="100" src="' . htmlspecialchars($row['Photo']) . '"/>';
+    echo '<img  class="figure-img img-fluid rounded" width="100" height="100" src="../../../../' . htmlspecialchars($row['Photo']) . '"/>';
     echo '<figcaption class="figure-caption"> Price:'.$row['Price'].'</figcaption>';
     echo '</figure>';
     echo '</div>';
@@ -71,7 +79,7 @@ $conn->close();
 <script type="text/javascript">
   function Selected(idItem) {
     $(".items").css("background-color", "#ffffff");
-    $("#"+idItem).css("background-color", "red");
+    $("#"+idItem).css("background-color", "rgba(255, 162, 64, 0.3)");
     document.getElementById('coffee').innerHTML = idItem;
   }
 
@@ -115,7 +123,7 @@ $conn->close();
 
 
   function GoToOrder(id) {
-    window.location.href ="../../../ViewOrders/ViewSpecificOrder/php/ViewSpecificOrder.php?" + "id=" + id + "&st=0";
+    window.location.href ="../../../ViewOrders/ViewSpecificOrder/php/ViewSpecificOrder.php?" + "id=" + id + "&st=1";
   }
 
   function DeleteNotification(id){
@@ -143,7 +151,7 @@ $conn->close();
 </div>
 <div class="row2">
   <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-      <a onclick="#" href="#" class = "btn btn-default btn-lg" role="button">Back</a>
+      <a href="AddRoyalPancake.php" class = "btn btn-default btn-lg" role="button">Back</a>
   </div>
   <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
     <a onclick="SubmitCoffee()" class = "btn btn-default btn-lg" role="button">Add</a>

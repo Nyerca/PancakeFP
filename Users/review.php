@@ -4,7 +4,7 @@ require_once 'dbConnection.php';
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
+  <title>Review</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -16,13 +16,13 @@ require_once 'dbConnection.php';
 
 <?php require 'header.php' ?>
 <div id="bodyBack">
-<div id="bodyDiv" class="container text-center">    
+<div id="bodyDiv" style="background-color: #c6d8f4" class="container text-center">
 	<div id="bodyContent">
 		<div id="firstReview">
-			<h1>Scrivi la tua recensione</h1><br>
-			
-			<div class="container">  
-				<p>Scegli il numero di stelle</p>
+			<h1>Write your review!</h1><br>
+
+			<div class="container">
+				<p>Chose the number of stars</p>
 				<button id="star1" type="button" onclick="Shine(1)">
 					<span id="s1" class="glyphicon glyphicon-star-empty">
 				</button>
@@ -42,26 +42,27 @@ require_once 'dbConnection.php';
 
 			<form class="form-horizontal"  action="" method="post">
 				<div class="form-group">
+				<label hidden class="control-label col-sm-3" for="stars">Stars:</label>
 					<input class="form-control" type="text" id="stars" name="stars">
 				</div>
-				
+
 				<div class="form-group">
-					<label class="control-label col-sm-3" for="title">Titolo:</label>
+					<label class="control-label col-sm-3" for="title">Title:</label>
 					<div class="col-sm-6 col-sm-offset-1">
-						<input type="text" class="form-control" id="title" placeholder="Enter title" name="title">
+						<input type="text" required="true" class="form-control" id="title" placeholder="Enter title" name="title">
 					</div>
 				</div>
-				   
+
 				<div class="form-group">
 					<label class="control-label col-sm-3" for="comment">Review:</label>
-					<div class="col-sm-10 col-sm-offset-1">
-						<textarea class="form-control" rows="5" id="comment" placeholder="Enter your review." name="comment"></textarea>
+					<div class="col-sm-6 col-sm-offset-1">
+						<textarea class="form-control" required="true" rows="5" id="comment" placeholder="Enter your review." name="comment"></textarea>
 					</div>
 				</div>
-				  
-				<div class="form-group">        
+
+				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-10">
-						<input type="submit" class="btn btn-default" name="review" value="Review">
+						<input type="submit" class="btn btn-default" name="review" style="margin-left:-20%;" value="Review">
 					</div>
 				</div>
 			</form>
@@ -90,7 +91,7 @@ $( document ).ready(function() {
 			}
 		}
 	}
-	
+
 	$("#star1").hover(function (){hover1(1);});
 	$("#star2").hover(function (){hover1(2);});
 	$("#star3").hover(function (){hover1(3);});
@@ -102,7 +103,7 @@ function Shine(number) {
 	$i = 0;
 	sNumber = number;
 	$('#stars').val(number);
-	alert($('#stars').val());
+
 	while($i <= number) {
 		$("#s".concat($i)).attr("class", "glyphicon glyphicon-star");
 		$i = $i + 1;
@@ -118,7 +119,7 @@ function Shine(number) {
 unset($_SESSION['url']);
 if(!empty($_POST["review"])) {
 	if (!isset($_SESSION['user'])) {
-		
+
 		$_SESSION['url'] = "review.php";
 		$_SESSION['title'] =  $_POST['title'];
 		$_SESSION['comment'] = $_POST['comment'];
@@ -137,7 +138,7 @@ if(!empty($_POST["review"])) {
 			$conn =connect();
 			$email = $_SESSION['user']["email"];
 			$sql = "SELECT MAX(IDReview) as max FROM Review WHERE Email = '".$email."'";
-			
+
 			$result = $conn->query($sql);
 			if($result->num_rows > 0)	{
 				while($row = $result->fetch_assoc()) {
@@ -150,9 +151,9 @@ if(!empty($_POST["review"])) {
 			$title = $_POST['title'];
 			$comment = $_POST['comment'];
 			$stars = $_POST['stars'];
-			
+
 			$stmt->bind_param("sssss", $email, $id, $title, $comment, $stars);
-			
+
 			$stmt->execute();
 			$stmt->fetch();
 			$stmt->close();

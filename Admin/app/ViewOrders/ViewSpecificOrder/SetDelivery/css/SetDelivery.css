@@ -22,11 +22,12 @@
     .row {
       text-align: center;
     }
+    
+    #logo {
+      float: left;
+    }
 }
 
-#bellNotification {
-  margin: 4%;
-}
 
 .mans {
   background-color: #afeece;

@@ -1,4 +1,8 @@
 <?php
+session_start();
+if(!isset($_SESSION['admin']["email"])) {
+  header("location: ../../../../Users/login.php");
+}
 $servername="localhost";
 $username ="root";
 $password ="";
@@ -27,5 +31,5 @@ while($row = $result->fetch_assoc()) {
 }
 
 $conn->close();
-header('Location: ../html/NewNotification.html');
+header('Location: ../../WelcomeBoss/php/WelcomeBoss.php');
 ?>

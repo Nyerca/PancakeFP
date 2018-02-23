@@ -58,7 +58,7 @@ $("#collapseExample"+$id).collapse("toggle");
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
+  <title>Header</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -69,68 +69,56 @@ $("#collapseExample"+$id).collapse("toggle");
   <link rel="stylesheet" type="text/css" title="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css">
 </head>
 <body>
-<nav id="headerContainer" class="navbar navbar-default">
 
 
-	<div class="container-fluid">
-	
-		<div id="menuPhone" class="btn-group">
-			<button id="menuButton" type="button" class="navbar-toggle" onclick="collapse()">
-				<img id="menu" src="menu.png" alt="menuIcon">
-			</button>
-		</div>
+<nav id="divHead" class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" onclick="navcollapse()">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="home.php"><img id="logo" class="img-responsive" src="../res/PF.png" alt="Logo"></a>
 
-
-		<div id="navHead" class="navbar-header">
-			<a href="home.php">
-				<img id="logo" class="img-responsive" src="PF.png" alt="Logo">
-			</a>
-		</div>
-
-		<div class="collapse navbar-collapse " id="myNavbar">
-			<ul class="nav navbar-nav col-xs-12">
-				<li class="headerOpt"><a href="listino.php">Order</a></li>
-				<li class="headerOpt"><a href="royalPancake.php">Royal Pancakes</a></li>
-				<li class="headerOpt"><a href="studente.php">Sei studente?</a></li>
-				<li class="headerOpt" id="signUp"><a href="registrazione.php"><span class="glyphicon glyphicon-user"></span>Sign Up</a></li>
-				<li class="headerOpt" id="signIn"><a href="login.php"><span class="glyphicon glyphicon-log-in"></span>Login</a></li>
-				<li id="signOut">
-				<form action="" method="post" id="frmLogout">
-					<input type="submit" name="logout" value="Logout" class="btn btn-default"></button>	
-				</form>
-				</li>
-			</ul>
-
-			
-		</div>
-		
-		
-
-		<p id="user_name"></p>
-		<div id="userMainPht" class="useravatar">
-		</div>	
-		
-		<div class="btn-group">
+<div id="bellBtn" class="btn-group">
 
       <div class="dropdown">
        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-target="#notificationCheck">
-	  
+
 	   <div id="bell">
 		</div></a>
 		<div id="notificationCheck">
-       <ul class="dropdown-menu dropdown-menu-right"></ul>
+       <ul class="dropdown-menu"></ul>
 	   </div>
       </div>
 	 </div>
-	 
-		<button id="shop" type="button" onclick="cart()"> 
+
+    </div>
+    <div class="collapse navbar-collapse" id="myNav">
+      <ul class="nav navbar-nav text-center">
+				<li><a class="black" href="listino.php">Pancakes</a></li>
+				<li id="firstLi"><a class="black" href="royalPancake.php">Royal Pancakes</a></li>
+				<li><a class="black" href="studente.php">Student?</a></li>
+				<li id="signUp"><a class="black" href="registrazione.php"><span class="glyphicon glyphicon-user"></span>Sign Up</a></li>
+				<li id="signIn"><a class="black" href="login.php"><span class="glyphicon glyphicon-log-in"></span>Login</a></li>
+				<li id="signOut">
+				<form action="" method="post" id="frmLogout">
+					<input id="lgout" type="submit" name="logout" value="Logout"></button>
+				</form>
+				</li>
+				<li><div class="marg padLeftPhoto" id="userMainPht" class="useravatar">
+				</div><a class="hideDesk black" href="profile.php">Profile</a></li>
+	 <li><button id="shop" type="button" onclick="cart()">
 			<span class="glyphicon glyphicon-shopping-cart"></span>
-		</button>
-		
-		
-	</div>
-	
+		</button><a class="hideDesk black" href="carrello.php">Cart</a></li>
+
+
+      </ul>
+    </div>
+  </div>
 </nav>
+
 
 </body>
 </html>
@@ -143,11 +131,11 @@ function createUserImgN($name) {
 	var list = document.getElementById("userMainPht");
 	list.removeChild(list.childNodes[0]);
 	var x = document.createElement("IMG");
-	x.setAttribute("src", $name);
+	x.setAttribute("src", "../res/" + $name);
 	x.setAttribute("width", "30");
 	x.setAttribute("height", "30");
-	x.setAttribute("alt", "User image");
-	
+	x.setAttribute("alt", "Profile");
+
 	var element = document.createElement("a");
 	element.setAttribute("href", "profile.php");
 	element.appendChild(x);
@@ -156,12 +144,13 @@ function createUserImgN($name) {
 function createUserWithoutPhoto() {
 	var list = document.getElementById("userMainPht");
 	list.removeChild(list.childNodes[0]);
-	var x = document.createElement("span");
-	x.setAttribute("class", "glyphicon glyphicon-user");
+	var x = document.createElement("IMG");
+	x.setAttribute("src", "../res/user.png");
 	x.setAttribute("width", "30");
 	x.setAttribute("height", "30");
+	x.setAttribute("alt", "Profile");
 
-	
+
 	var element = document.createElement("a");
 	element.setAttribute("href", "profile.php");
 	element.appendChild(x);
@@ -184,12 +173,11 @@ $( document ).ready(function() {
 		$("#signIn").hide();
 		$("#signOut").show();
 		$("#menuCog").show();
-		$("#user_name").append("<?php echo $usr ?>");
 		$("#userImg").show();
 	} else {
 		$("#signOut").hide();
 		$("#userImg").hide();
-		$("#user_name").hide();
+
 		$("#menuCog").hide();
 	}
 });
@@ -198,8 +186,12 @@ function collapse() {
 $("#myNavbar").collapse("toggle");
 }
 
+function navcollapse() {
+$("#myNav").collapse("toggle");
+}
+
 function cart() {
-window.location.href= "carrello.php";	
+window.location.href= "carrello.php";
 }
 </script>
 
@@ -217,7 +209,7 @@ if(!empty($_POST["logout"])) {
 }
 
 	if (isset($_SESSION['user'])) {
-      
+
 
 $result = getAllUserInfos($_SESSION['user']["email"]);
 	while($row = $result->fetch_assoc()) {
@@ -238,12 +230,12 @@ $result = getAllUserInfos($_SESSION['user']["email"]);
 		</script>
 		<?php
 		}
-		
+
 	}
 
     }
 	?>
-	
+
 <script>
 $(document).ready(function(){
 

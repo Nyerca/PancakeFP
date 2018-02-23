@@ -1,5 +1,8 @@
 <?php
 session_start();
+if(!isset($_SESSION['delivery']["email"])) {
+  header("location: ../../../../Users/login.php");
+}
 $mail2 = $_SESSION['delivery']["email"];
 if(isset($_POST["view"]))
 {
@@ -23,26 +26,21 @@ if(isset($_POST["view"]))
   while($row = mysqli_fetch_array($result))
   {
    $output .= '
-   <li>
+   <li style="background-color: white;">
     <a>
-    <button onclick=DeleteNotification('.$row["IDDeliveryManNotification"].') type="button" class="close" data-toggle="modal" data-target="#myModal aria-label="Close">
+    <button onclick=DeleteNotification('.$row["IDDeliveryManNotification"].') type="button" class="close" data-toggle="modal data-target="#myModal aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
     <div onclick=ViewAllNotification() >
-     <strong >'.$row["Title"].'</strong><br />
-     <small><em>'.$row["Description"].'</em></small>
+     <strong style="color:black;">'.$row["Title"].'</strong><br />
+     <small><em style="color:black;">'.$row["Description"].'</em></small>
      </div>
     </a>
    </li>
    <li class="divider"></li>
    ';
   }
-  $output = $output.'<li>
-   <a onclick="ViewAllNotification()" href="#">
-    <small><em>View all..</em></small>
-   </a>
-  </li>
-  <li class="divider"></li>';
+
  }
  else
  {

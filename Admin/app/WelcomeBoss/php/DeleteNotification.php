@@ -1,5 +1,9 @@
 <?php
 include("connect.php");
+session_start();
+if(!isset($_SESSION['admin']["email"])) {
+  header("location: ../../../../Users/login.php");
+}
 // sql to delete a record
 $idNotification = $_GET['id'];
 $sql = "DELETE FROM adminnotification WHERE IDAdminNotification='$idNotification'";

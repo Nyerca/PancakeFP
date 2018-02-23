@@ -29,10 +29,6 @@
 
 }
 
-#textAreaDescription {
+#description {
   overflow-x: hidden;
-}
-
-#bellNotification {
-  margin: 4%;
 }

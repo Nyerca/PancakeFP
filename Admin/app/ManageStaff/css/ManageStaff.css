@@ -22,15 +22,17 @@
     .row {
       text-align: center;
     }
+
+    #logo {
+      float: left;
+    }
 }
 
-#bellNotification {
-  margin: 4%;
-}
 
 .mans {
-  background-color: #afeece;
+  background-color: #FFA240;
   margin: 2%;
+  border-radius: 25px;
 }
 
 #close {

@@ -1,5 +1,8 @@
 <?php
 session_start();
+if(!isset($_SESSION['admin']["email"])) {
+  header("location: ../../../../../Users/login.php");
+}
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -19,10 +22,18 @@ if ($conn->connect_error) {
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width = device-width, initial-scale = 1">
-  <title>View royal pancakes</title>
+  <title>View royal pancake</title>
   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style media="screen">
+    #drop {
+      background-color: white;
+    }
+    .items {
+      border-radius: 20px;
+    }
+  </style>
 <link rel="stylesheet" href="../css/ViewItem.css">
 </head>
 <body>
@@ -35,13 +46,16 @@ if ($conn->connect_error) {
     <br/>
        <nav class="navbar navbar-inverse">
         <div class="container-fluid">
+          <div class="navbar-header">
+           <img onclick="ReturnHome()" id="logo" src="https://fpwealth.com/wp-content/uploads/2015/09/fp-logo-large.png" width="50" height="50" alt="logo">
+          </div>
          <div class="navbar-header">
-          <a class="navbar-brand" href="#">View royal pancakes</a>
+          <a class="navbar-brand" href="#">View royal pancake</a>
          </div>
          <ul class="nav navbar-nav navbar-right">
           <li class="dropdown">
-           <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="label label-pill label-danger count" style="border-radius:10px;"></span> <span class="glyphicon glyphicon-envelope" style="font-size:18px;"></span></a>
-           <ul class="dropdown-menu">
+           <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="label label-pill label-danger count" style="border-radius:10px;"></span> <span class="glyphicon glyphicon-envelope" style="font-size:20px;"></span></a>
+           <ul id="drop" class="dropdown-menu">
              <li class="divider"></li>
            </ul>
           </li>
@@ -74,16 +88,16 @@ $query_sql="SELECT * FROM royalpancake WHERE CategoryID=$idFil AND Deleted = 0";
 $royal = $conn->query($query_sql);
 if ($royal->num_rows > 0) {
   while($row = $royal->fetch_assoc()) {
-    echo '<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">';
+    echo '<div id="forx" class="col-lg-12 col-md-12 col-sm-12 col-xs-12"">';
     echo '<div class="items" id='.$row['IDRoyalPancake'].' onclick=Selected('.$row['IDRoyalPancake'].') style="display: block;">';
     echo '<div>';
-    echo '<button type="button" class="close" data-toggle="modal" data-target="#myModal" onclick="SaveId('.$row["IDRoyalPancake"].')" aria-label="Close">';
+    echo '<button type="button" class="close" data-toggle="modal" data-target="#myModal" style="font-size:200%;" onclick="SaveId('.$row["IDRoyalPancake"].')" aria-label="Close">';
     echo '<span aria-hidden="true">&times;</span>';
     echo '</button>';
     echo '</div>';
     echo '<p>'.$row['RoyalName'].'</p>';
     echo '<figure class="figure">';
-    echo '<img  class="figure-img img-fluid rounded" width="100" height="100" src="' . htmlspecialchars($row['Photo']) . '"/>';
+    echo '<img  class="figure-img img-fluid rounded" width="100" height="100" src="../../../../' . htmlspecialchars($row['Photo']) . '"/>';
     echo '<figcaption class="figure-caption"> Price: <p>'.calculatePrice($row['IDRoyalPancake']).'</p></figcaption>';
     echo '<figcaption class="figure-caption"> Description: <p>'.$row['Description'].'</p></figcaption>';
     echo '</figure>';
@@ -112,9 +126,14 @@ $conn->close();
 ?>
 
 <script type="text/javascript">
+
+  function ReturnHome() {
+    window.location.href = "../../../WelcomeBoss/php/WelcomeBoss.php";
+  }
+
   function Selected(idItem) {
     $(".items").css("background-color", "#ffffff");
-    $("#"+idItem).css("background-color", "red");
+    $("#"+idItem).css("background-color", "#FFA240");
     document.getElementById('royalpancake').innerHTML = idItem;
   }
 
@@ -220,8 +239,8 @@ $conn->close();
 
 </div>
 <div class="row2">
-  <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12">
-      <a onclick="#" href="#" class = "btn btn-default btn-lg" role="button">Back</a>
+  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <a href="../../html/ManageMarket.php" class = "btn btn-warning btn-lg" role="button">Back</a>
   </div>
 </div>
 

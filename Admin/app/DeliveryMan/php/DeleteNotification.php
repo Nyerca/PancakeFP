@@ -1,5 +1,8 @@
 <?php
 session_start();
+if(!isset($_SESSION['delivery']["email"])) {
+  header("location: ../../../../Users/login.php");
+}
 $mail3 = $_SESSION['delivery']["email"];
 
 $servername="localhost";

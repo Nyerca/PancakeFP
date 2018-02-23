@@ -36,8 +36,8 @@ $stmt->execute();
 $stmt = $conn->prepare("INSERT INTO `usernotification` (`Description`, `Email`, `IDOrder`, `Title`) VALUES(?, ?, ?, ?)");
 $stmt->bind_param("ssss", $Description, $emailUser['Email'], $idOrder, $Title);
 
-$Description = "If you like, leave us a review! See you soon!";
-$Title = "Your order has been delivered with success.";
+$Description = "Leave us a review!";
+$Title = "Order delivered.";
 $stmt->execute();
 
 $conn->close();

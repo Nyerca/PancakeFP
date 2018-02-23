@@ -51,8 +51,8 @@ $i=0;
 							    <ins class="ab zmin sprite sprite-i-triangle block"></ins>
 					        </div>
 							<div class="person-text rel">
-								<?php echo '<img height="60" src="' . htmlspecialchars($row2["Photo"]) . '"/>'; ?>
-								<a title="" href="#"><?php echo $row2["Username"]; ?></a>
+								<?php echo '<img alt="" height="60" src="' . htmlspecialchars($row2["Photo"]) . '"/>'; ?>
+								<p><?php echo $row2["Username"]; ?></p>
 							</div>
 						</div>
 

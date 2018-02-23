@@ -9,13 +9,12 @@ $conn =connect();
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
+  <title>SingleOrder</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" type="text/css" title="stylesheet" href="userInformationStyle.css">
   <link rel="stylesheet" type="text/css" title="stylesheet" href="viewOrders.css">
   </head>
 <body>
@@ -26,27 +25,20 @@ if($result->num_rows > 0) {
 ?>
  
 	<div id="bodyContent">
-		<h1>Ordine:</h1>		
+		<h2>Order:</h2>		
 			<div class="row shop-tracking-status">
     
-    <div class="col-xs-12">
-        <div class="well">
+    <div  id="shadow"  class="col-xs-12">
 
-            <h4>Your order status:</h4>
+
+            <h3>Your order status:</h3>
 
 
             <div class="order-status">
 
                 <div class="order-status-timeline">
-                    <!-- class names: c0 c1 c2 -->
-                    <div class="order-status-timeline-completion c<?php
-					if($row["IDDeliveryMode"]!="" && $row["FiscalCode"] != "") {
-						echo "1";
-					} else {
-						echo "0";
-					}
-					?>
-					"></div>
+                    <!-- class names: c2 c3 -->
+                    <div class="order-status-timeline-completion c<?php echo $row["Status"];?>"></div>
                 </div>
 
                 <div class="image-order-status image-order-status-new active img-circle">
@@ -65,7 +57,6 @@ if($result->num_rows > 0) {
                 </div>
 
             </div>
-        </div>
     </div>
 
 </div>
@@ -74,19 +65,19 @@ if($result->num_rows > 0) {
 		
 		
 		<div id="orderInfos" class="col-xs-12 col-sm-6">
-			<p>Data e ora:</p>
+			<p>Date:</p>
 		</div>
 		<div id="orderInfos" class="col-xs-12 col-sm-6">
 			<p><?php echo $row["DateTime"]; ?></p>
 		</div>
 		<div id="orderInfos" class="col-xs-12 col-sm-6">
-			<p>Costo:</p>
+			<p>Price:</p>
 		</div>
 		<div id="orderInfos" class="col-xs-12 col-sm-6">
 			<p><?php echo $row["TotalPrice"]; ?></p>
 		</div>
 		<div id="orderInfos" class="col-xs-12 col-sm-6">
-			<p>Pagamento:</p>
+			<p>Payment:</p>
 		</div>
 		<?php
 			if($row["CardOwner"]=="") {
@@ -101,20 +92,20 @@ if($result->num_rows > 0) {
 			<p><?php echo $text; ?></p>
 		</div>
 		<div id="orderInfos" class="col-xs-12 col-sm-6">
-			<p>Consegna:</p>
+			<p>Delivery:</p>
 		</div>
 		<?php
 			if($row["IDDeliveryMode"]=="") {
-				$text2 = "In negozio";
+				$text2 = "In store";
 			} else {
 				$sql2 = "SELECT * FROM deliverymode WHERE IDDeliveryMode=".$row["IDDeliveryMode"];	
 				$result2 = $conn->query($sql2);
 				if($result2->num_rows > 0) {
 							while($row2 = $result2->fetch_assoc()) {
 								if(!$row2["Address"]=="") {
-									$text2 = "Domicilio indirizzo";
+									$text2 = "Domicile address";
 								} else {
-									$text2 = "Domicilio geolocalizzato";
+									$text2 = "Domicile geolocalization";
 								}
 							}
 				}
